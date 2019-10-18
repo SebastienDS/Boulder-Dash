@@ -9,19 +9,45 @@ from tkinter import *
 from tkinter import font
 import subprocess
 import sys
+
 # from tkinter import _tkinter
 # from time import *
 # import os
 
-__all__ = ['ignore_exception', 'auto_update', 'cree_fenetre',
-           'ferme_fenetre', 'mise_a_jour', 'ligne', 'fleche',
-           'polygone', 'rectangle', 'cercle', 'point', 'marque',
-           'image', 'texte', 'longueur_texte', 'hauteur_texte',
-           'efface_tout', 'efface', 'efface_marque', 'attente_clic',
-           'attente_touche', 'attente_clic_ou_touche', 'clic',
-           'capture_ecran', 'donne_evenement', 'type_evenement',
-           'clic_x', 'clic_y', 'touche', 'TypeEvenementNonValide',
-           'FenetreNonCree', 'FenetreDejaCree']
+__all__ = [
+    "ignore_exception",
+    "auto_update",
+    "cree_fenetre",
+    "ferme_fenetre",
+    "mise_a_jour",
+    "ligne",
+    "fleche",
+    "polygone",
+    "rectangle",
+    "cercle",
+    "point",
+    "marque",
+    "image",
+    "texte",
+    "longueur_texte",
+    "hauteur_texte",
+    "efface_tout",
+    "efface",
+    "efface_marque",
+    "attente_clic",
+    "attente_touche",
+    "attente_clic_ou_touche",
+    "clic",
+    "capture_ecran",
+    "donne_evenement",
+    "type_evenement",
+    "clic_x",
+    "clic_y",
+    "touche",
+    "TypeEvenementNonValide",
+    "FenetreNonCree",
+    "FenetreDejaCree",
+]
 
 
 class CustomCanvas:
@@ -39,8 +65,9 @@ class CustomCanvas:
         self.root = Tk()
 
         # canvas attached to the root object
-        self.canvas = Canvas(self.root, width=width,
-                             height=height, highlightthickness=0)
+        self.canvas = Canvas(
+            self.root, width=width, height=height, highlightthickness=0
+        )
 
         # binding of the different events
         self.root.protocol("WM_DELETE_WINDOW", self.event_quit)
@@ -97,6 +124,7 @@ __img = dict()
 # Exceptions
 #############################################################################
 
+
 class TypeEvenementNonValide(Exception):
     pass
 
@@ -118,6 +146,7 @@ def ignore_exception(function):
             return function(*args, **kwargs)
         except Exception:
             exit(0)
+
     return dec
 
 
@@ -127,6 +156,7 @@ def auto_update(function):
         retval = function(*args, **kwargs)
         __canevas.canvas.update()
         return retval
+
     return dec
 
 
@@ -137,7 +167,8 @@ def cree_fenetre(largeur, hauteur):
     global __canevas
     if __canevas is not None:
         raise FenetreDejaCree(
-            'La fenêtre a déjà été crée avec la fonction "cree_fenetre".')
+            'La fenêtre a déjà été crée avec la fonction "cree_fenetre".'
+        )
     __canevas = CustomCanvas(largeur, hauteur)
 
 
@@ -148,7 +179,8 @@ def ferme_fenetre():
     global __canevas
     if __canevas is None:
         raise FenetreNonCree(
-            "La fenêtre n'a pas été crée avec la fonction \"cree_fenetre\".")
+            'La fenêtre n\'a pas été crée avec la fonction "cree_fenetre".'
+        )
     __canevas.root.destroy()
     __canevas = None
 
@@ -161,7 +193,8 @@ def mise_a_jour():
     global __canevas
     if __canevas is None:
         raise FenetreNonCree(
-            "La fenêtre n'a pas été crée avec la fonction \"cree_fenetre\".")
+            'La fenêtre n\'a pas été crée avec la fonction "cree_fenetre".'
+        )
     __canevas.update()
 
 
@@ -172,7 +205,8 @@ def mise_a_jour():
 
 # Formes géométriques
 
-def ligne(ax, ay, bx, by, couleur='black', epaisseur=1, tag=''):
+
+def ligne(ax, ay, bx, by, couleur="black", epaisseur=1, tag=""):
     """
     Trace un segment reliant le point ``(ax, ay)`` au point ``(bx, by)``.
 
@@ -187,13 +221,11 @@ def ligne(ax, ay, bx, by, couleur='black', epaisseur=1, tag=''):
     """
     global __canevas
     return __canevas.canvas.create_line(
-        ax, ay, bx, by,
-        fill=couleur,
-        width=epaisseur,
-        tag=tag)
+        ax, ay, bx, by, fill=couleur, width=epaisseur, tag=tag
+    )
 
 
-def fleche(ax, ay, bx, by, couleur='black', epaisseur=1, tag=''):
+def fleche(ax, ay, bx, by, couleur="black", epaisseur=1, tag=""):
     """
     Trace une flèche du point ``(ax, ay)`` au point ``(bx, by)``.
 
@@ -208,18 +240,22 @@ def fleche(ax, ay, bx, by, couleur='black', epaisseur=1, tag=''):
     """
     global __canevas
     x, y = (bx - ax, by - ay)
-    n = (x**2 + y**2)**.5
-    x, y = x/n, y/n    
-    points = [bx, by, bx-x*5-2*y, by-5*y+2*x, bx-x*5+2*y, by-5*y-2*x]
+    n = (x ** 2 + y ** 2) ** 0.5
+    x, y = x / n, y / n
+    points = [
+        bx,
+        by,
+        bx - x * 5 - 2 * y,
+        by - 5 * y + 2 * x,
+        bx - x * 5 + 2 * y,
+        by - 5 * y - 2 * x,
+    ]
     return __canevas.canvas.create_polygon(
-        points, 
-        fill=couleur, 
-        outline=couleur,
-        width=epaisseur,
-        tag=tag)
+        points, fill=couleur, outline=couleur, width=epaisseur, tag=tag
+    )
 
 
-def polygone(points, couleur='black', remplissage='', epaisseur=1, tag=''):
+def polygone(points, couleur="black", remplissage="", epaisseur=1, tag=""):
     """
     Trace un polygone dont la liste de points est fournie.
 
@@ -231,15 +267,11 @@ def polygone(points, couleur='black', remplissage='', epaisseur=1, tag=''):
     """
     global __canevas
     return __canevas.canvas.create_polygon(
-        points, 
-        fill=remplissage, 
-        outline=couleur,
-        width=epaisseur,
-        tag=tag)
+        points, fill=remplissage, outline=couleur, width=epaisseur, tag=tag
+    )
 
 
-def rectangle(ax, ay, bx, by,
-              couleur='black', remplissage='', epaisseur=1, tag=''):
+def rectangle(ax, ay, bx, by, couleur="black", remplissage="", epaisseur=1, tag=""):
     """
     Trace un rectangle noir ayant les point ``(ax, ay)`` et ``(bx, by)``
     comme coins opposés.
@@ -256,14 +288,11 @@ def rectangle(ax, ay, bx, by,
     """
     global __canevas
     return __canevas.canvas.create_rectangle(
-        ax, ay, bx, by,
-        outline=couleur,
-        fill=remplissage,
-        width=epaisseur,
-        tag=tag)
+        ax, ay, bx, by, outline=couleur, fill=remplissage, width=epaisseur, tag=tag
+    )
 
 
-def cercle(x, y, r, couleur='black', remplissage='', epaisseur=1, tag=''):
+def cercle(x, y, r, couleur="black", remplissage="", epaisseur=1, tag=""):
     """ 
     Trace un cercle de centre ``(x, y)`` et de rayon ``r`` en noir.
 
@@ -278,15 +307,28 @@ def cercle(x, y, r, couleur='black', remplissage='', epaisseur=1, tag=''):
     """
     global __canevas
     return __canevas.canvas.create_oval(
-        x - r, y - r, x + r, y + r,
+        x - r,
+        y - r,
+        x + r,
+        y + r,
         outline=couleur,
         fill=remplissage,
         width=epaisseur,
-        tag=tag)
+        tag=tag,
+    )
 
 
-def arc(x, y, r, ouverture=90, depart=0, couleur='black', remplissage='',
-        epaisseur=1, tag=''):
+def arc(
+    x,
+    y,
+    r,
+    ouverture=90,
+    depart=0,
+    couleur="black",
+    remplissage="",
+    epaisseur=1,
+    tag="",
+):
     """
     Trace un arc de cercle de centre ``(x, y)``, de rayon ``r`` et
     d'angle d'ouverture ``ouverture`` (défaut : 90 degrés, dans le sens
@@ -306,18 +348,21 @@ def arc(x, y, r, ouverture=90, depart=0, couleur='black', remplissage='',
     """
     global __canevas
     return __canevas.canvas.create_arc(
-        x - r, y - r, x + r, y + r,
+        x - r,
+        y - r,
+        x + r,
+        y + r,
         extent=ouverture,
         start=init,
         style=ARC,
         outline=couleur,
         fill=remplissage,
         width=epaisseur,
-        tag=tag)
+        tag=tag,
+    )
 
 
-
-def point(x, y, couleur='black', epaisseur=1, tag=''):
+def point(x, y, couleur="black", epaisseur=1, tag=""):
     """
     Trace un point aux coordonnées ``(x, y)`` en noir.
 
@@ -328,11 +373,11 @@ def point(x, y, couleur='black', epaisseur=1, tag=''):
     :param str tag: étiquette d'objet (défaut : pas d'étiquette)
     :return: identificateur d'objet
     """
-    return ligne(x, y, x + epaisseur, y + epaisseur,
-                 couleur, epaisseur, tag)
+    return ligne(x, y, x + epaisseur, y + epaisseur, couleur, epaisseur, tag)
 
 
 # Marques
+
 
 def marque(x, y, couleur="red"):
     """
@@ -348,16 +393,27 @@ def marque(x, y, couleur="red"):
     global __canevas
     efface_marque()
     __canevas.marqueh = ligne(
-        x - __canevas.tailleMarque, y,
-        x + __canevas.tailleMarque, y, couleur, tag='marque')
+        x - __canevas.tailleMarque,
+        y,
+        x + __canevas.tailleMarque,
+        y,
+        couleur,
+        tag="marque",
+    )
     __canevas.marquev = ligne(
-        x, y - __canevas.tailleMarque,
-        x, y + __canevas.tailleMarque, couleur, tag='marque')
+        x,
+        y - __canevas.tailleMarque,
+        x,
+        y + __canevas.tailleMarque,
+        couleur,
+        tag="marque",
+    )
 
 
 # Image
 
-def image(x, y, fichier, ancrage='center', tag=''):
+
+def image(x, y, fichier, ancrage="center", tag=""):
     """
     Affiche l'image contenue dans ``fichier`` avec ``(x, y)`` comme centre. Les
     valeurs possibles du point d'ancrage sont ``'center'``, ``'nw'``, etc.
@@ -372,16 +428,17 @@ def image(x, y, fichier, ancrage='center', tag=''):
     global __canevas
     global __img
     img = PhotoImage(file=fichier)
-    img_object = __canevas.canvas.create_image(
-        x, y, anchor=ancrage, image=img, tag=tag)
+    img_object = __canevas.canvas.create_image(x, y, anchor=ancrage, image=img, tag=tag)
     __img[img_object] = img
     return img_object
 
 
 # Texte
 
-def texte(x, y, chaine,
-          couleur='black', ancrage='nw', police="Purisa", taille=24, tag=''):
+
+def texte(
+    x, y, chaine, couleur="black", ancrage="nw", police="Purisa", taille=24, tag=""
+):
     """
     Affiche la chaîne ``chaine`` avec ``(x, y)`` comme point d'ancrage (par
     défaut le coin supérieur gauche).
@@ -398,9 +455,8 @@ def texte(x, y, chaine,
     global __canevas
     __canevas.set_font(police, taille)
     return __canevas.canvas.create_text(
-        x, y,
-        text=chaine, font=__canevas.tkfont, tag=tag,
-        fill=couleur, anchor=ancrage)
+        x, y, text=chaine, font=__canevas.tkfont, tag=tag, fill=couleur, anchor=ancrage
+    )
 
 
 def longueur_texte(chaine):
@@ -427,6 +483,7 @@ def hauteur_texte():
 #############################################################################
 # Effacer
 #############################################################################
+
 
 def efface_tout():
     """
@@ -455,7 +512,7 @@ def efface_marque():
     """
     Efface la marque créée par la fonction :py:func:``marque``.
     """
-    efface('marque')
+    efface("marque")
 
 
 #############################################################################
@@ -526,17 +583,25 @@ def capture_ecran(file):
     Fait une capture d'écran sauvegardée dans ``file.png``.
     """
     global __canevas
-    __canevas.canvas.postscript(file=file + ".ps", height=__canevas.height,
-                                width=__canevas.width, colormode="color")
+    __canevas.canvas.postscript(
+        file=file + ".ps",
+        height=__canevas.height,
+        width=__canevas.width,
+        colormode="color",
+    )
     subprocess.call(
         "convert -density 150 -geometry 100% -background white -flatten",
-        file + ".ps", file + ".png", shell=True)
+        file + ".ps",
+        file + ".png",
+        shell=True,
+    )
     subprocess.call("rm", file + ".ps", shell=True)
 
 
 #############################################################################
 # Gestions des évènements
 #############################################################################
+
 
 def donne_evenement():
     """ 
@@ -545,7 +610,8 @@ def donne_evenement():
     global __canevas
     if __canevas is None:
         raise FenetreNonCree(
-            "La fenêtre n'a pas été crée avec la fonction \"cree_fenetre\".")
+            'La fenêtre n\'a pas été crée avec la fonction "cree_fenetre".'
+        )
     if len(__canevas.eventQueue) == 0:
         return "RAS", ""
     else:
@@ -569,7 +635,8 @@ def clic_x(evenement):
     nom, ev = evenement
     if not (nom == "ClicDroit" or nom == "ClicGauche" or nom == "Deplacement"):
         raise TypeEvenementNonValide(
-            'On ne peut pas utiliser "clic_x" sur un évènement de type', nom)
+            'On ne peut pas utiliser "clic_x" sur un évènement de type', nom
+        )
     return ev.x
 
 
@@ -581,7 +648,8 @@ def clic_y(evenement):
     nom, ev = evenement
     if not (nom == "ClicDroit" or nom == "ClicGauche" or nom == "Deplacement"):
         raise TypeEvenementNonValide(
-            'On ne peut pas utiliser "clic_y" sur un évènement de type', nom)
+            'On ne peut pas utiliser "clic_y" sur un évènement de type', nom
+        )
     return ev.y
 
 
@@ -593,5 +661,6 @@ def touche(evenement):
     nom, ev = evenement
     if not (nom == "Touche"):
         raise TypeEvenementNonValide(
-            'On peut pas utiliser "touche" sur un évènement de type', nom)
+            'On peut pas utiliser "touche" sur un évènement de type', nom
+        )
     return ev.keysym
