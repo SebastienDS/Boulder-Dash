@@ -39,9 +39,9 @@ dico = {
 
 
 def affichage(carte):
-    """Affiche le  carte"""
-    for y in range(len(carte)):		#y = ligne
-    	for x in range(len(carte)): #x = colonne
+    """Affiche la carte"""
+    for y in range(len(carte)):			#y = ligne
+    	for x in range(len(carte)): 	#x = colonne
     		dico[carte[y][x]](x, y)
 
 
