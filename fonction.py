@@ -1,51 +1,65 @@
+from upemtk import *
 
 
-
-def terre(x, y):
-	"""Dessine la terre aux coordonnées x, y"""
-	pass
-
-
-def pierre(x, y):
-	"""Dessine une pierre aux coordonnées x, y"""
-	pass
+def terre(x, y, taille_case):
+    """Dessine la terre aux coordonnées x, y"""
+    pass
 
 
-def rockford(x, y):
-	"""Dessine rockford aux coordonnées x, y"""
-	pass
+def pierre(x, y, taille_case):
+    """Dessine une pierre aux coordonnées x, y"""
+    pass
 
 
-def mur(x, y):
-	"""Dessine un mur aux coordonnées x, y"""
-	pass
+def rockford(x, y, taille_case):
+    """Dessine rockford aux coordonnées x, y"""
 
 
-def diamand(x, y):
-	"""Dessine un diamand aux coordonnées x, y"""	
-	pass
+def mur(x, y, taille_case):
+    """Dessine un mur aux coordonnées x, y"""
+    rectangle(
+        x * taille_case,
+        y * taille_case,
+        taille_case + x * taille_case,
+        taille_case + y * taille_case,
+        couleur="black",
+        remplissage="black",
+    )
 
 
-def sortie(x, y):
-	"""Dessine la sortie aux coordonnées x, y"""
-	pass
+def diamand(x, y, taille_case):
+    """Dessine un diamand aux coordonnées x, y"""
+    rectangle(
+        x * taille_case,
+        y * taille_case,
+        taille_case + x * taille_case,
+        taille_case + y * taille_case,
+        couleur="blue",
+        remplissage="blue",
+    )
 
-#on associe les lettres aux fonctions les dessinant
-dico = {
-	"G": terre,
-	"P": pierre,
-	"R": rockford,
-	"W": mur,
-	"D": diamand,
-	"E": sortie
-}
+
+def sortie(x, y, taille_case):
+    """Dessine la sortie aux coordonnées x, y"""
+    rectangle(
+        x * taille_case,
+        y * taille_case,
+        taille_case + x * taille_case,
+        taille_case + y * taille_case,
+        couleur="green",
+        remplissage="green",
+    )
+
+
+# on associe les lettres aux fonctions les dessinant
+dico = {"G": terre, "P": pierre, "R": rockford, "W": mur, "D": diamand, "E": sortie}
 
 
 def affichage(carte):
     """Affiche la carte"""
-    for y in range(len(carte)):			#y = ligne
-    	for x in range(len(carte)): 	#x = colonne
-    		dico[carte[y][x]](x, y)
+    for y in range(len(carte)):  # y = ligne
+        for x in range(len(carte)):  # x = colonne
+            dico[carte[y][x]](x, y)
 
 
 def tomber_de_pierre(carte):
@@ -85,6 +99,8 @@ def debug(carte):
     """Perso joue aléatoirement"""
     pass
 
-if __name__ == '__main__':
-	import doctest
-	doctest.testmod()
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()
