@@ -229,6 +229,16 @@ def pousser_pierre(carte, deplacement):
 
 def loose(carte):
 	if carte[var["pos_y"]-1][var["pos_x"]] == 'P':
+		efface_tout()
+		fond()
+		texte(
+			var["dimension_fenetre"] // 2,
+			var["dimension_fenetre"] // 4,
+			"DEFAITE !",
+			couleur="black",
+			ancrage="center",
+			taille=75
+		)
 		return True
 	return False
 
