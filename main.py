@@ -12,7 +12,15 @@ def main():
     cree_fenetre(var["dimension_fenetre"], var["dimension_fenetre"])
 
     carte = fonction.creer_map("map1.txt")
-    fonction.affichage(carte)
+    fonction.initialiser_partie(carte)
+    while True:
+    	efface_tout()
+    	fonction.deplacer_perso(carte)
+    	fonction.affichage(carte)
+    	
+    	mise_a_jour()
+    	if var["pos_x"] >= 7:
+    		break
 
     attente_clic()
     ferme_fenetre()
