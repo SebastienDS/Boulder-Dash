@@ -224,6 +224,10 @@ def pousser_pierre(carte, deplacement):
 	"""Test si une pierre est poussable, si oui, la pousse"""
 	pass
 
+def loose(carte):
+	if carte[var["pos_y"]-1][var["pos_x"]] == 'P':
+		return True
+	return False
 
 def win():
 	"""Regarde si l'utilisateur gagne"""
@@ -241,7 +245,7 @@ def win():
 		personnage()
 		return True
 	return False
-
+	
 
 def initialiser_partie(carte):
 	"""Initialise les parametres par defaut de la partie"""
