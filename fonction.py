@@ -41,8 +41,8 @@ def rockford(x, y):
 		x * var["taille_case"] + var["taille_case"] / 2,
 		y * var["taille_case"] + var["taille_case"] / 2,
 		(var["taille_case"] / 2) - 1,
-		couleur="green",
-		remplissage="green",
+		couleur="lightpink",
+		remplissage="lightpink",
 	)
 	cercle(
 		x * var["taille_case"] + var["taille_case"] / 2,
@@ -59,8 +59,8 @@ def rockford(x, y):
 		- var["taille_case"] / 15,
 		x * var["taille_case"] + (var["taille_case"] / 2) + var["taille_case"] / 4,
 		y * var["taille_case"] + (2 * var["taille_case"] / 3) - var["taille_case"] / 15,
-		couleur="green",
-		remplissage="green",
+		couleur="lightpink",
+		remplissage="lightpink",
 	)
 	cercle(
 		x * var["taille_case"] + var["taille_case"] / 3,
@@ -97,8 +97,8 @@ def diamand(x, y):
 		y * var["taille_case"],
 		var["taille_case"] + x * var["taille_case"] - 1,
 		var["taille_case"] + y * var["taille_case"] - 1,
-		couleur="blue",
-		remplissage="blue",
+		couleur="lightblue",
+		remplissage="lightblue",
 	)
 
 
@@ -149,13 +149,13 @@ def fond():
 	)
 
 
-def personnage():
+def personnage_victorieux():
 	cercle(
 		var["dimension_fenetre"] // 2,
 		2 * var["dimension_fenetre"] // 3,
 		var["dimension_fenetre"] // 4,
-		couleur="green",
-		remplissage="green",
+		couleur="lightpink",
+		remplissage="lightpink",
 	)
 	cercle(
 		var["dimension_fenetre"] // 2,
@@ -169,8 +169,8 @@ def personnage():
 		2 * var["dimension_fenetre"] // 3 - var["dimension_fenetre"] // 12,
 		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 8,
 		2 * var["dimension_fenetre"] // 3 + var["dimension_fenetre"] // 12,
-		couleur="green",
-		remplissage="green",
+		couleur="lightpink",
+		remplissage="lightpink",
 	)
 	cercle(
 		var["dimension_fenetre"] // 3 + var["dimension_fenetre"] // 20,
@@ -187,7 +187,83 @@ def personnage():
 		remplissage="black",
 	)
 
-
+def personnage_defaitiste():
+	cercle(
+		var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 4 ,
+		3 *var["dimension_fenetre"] // 4 - var["dimension_fenetre"] // 8,
+		var["dimension_fenetre"] // 12,
+		couleur="lightpink",
+		remplissage="lightpink"
+	)
+	cercle(
+		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 4 ,
+		3 *var["dimension_fenetre"] // 4 - var["dimension_fenetre"] // 8,
+		var["dimension_fenetre"] // 12,
+		couleur="lightpink",
+		remplissage="lightpink"
+	)
+	cercle(
+		var["dimension_fenetre"] // 3,
+		8 *var["dimension_fenetre"] // 9,
+		var["dimension_fenetre"] // 12,
+		couleur="black",
+		remplissage="red"
+	)
+	cercle(
+		2 *var["dimension_fenetre"] // 3 ,
+		8 *var["dimension_fenetre"] // 9 ,
+		var["dimension_fenetre"] // 12,
+		couleur="black",
+		remplissage="red"
+	)
+	cercle(
+		var["dimension_fenetre"] // 2,
+		2 * var["dimension_fenetre"] // 3,
+		var["dimension_fenetre"] // 4,
+		couleur="black",
+		remplissage="lightpink",
+	)
+	cercle(
+		var["dimension_fenetre"] // 2,
+		2 * var["dimension_fenetre"] // 3 + var["dimension_fenetre"] // 12,
+		var["dimension_fenetre"] // 12,
+		couleur="black",
+		remplissage="black",
+	)
+	
+	ligne(
+		var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 20, 
+		var["dimension_fenetre"] // 2,
+		var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 8,
+		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 10,
+		couleur = "black",
+		epaisseur = 10
+		)
+	ligne(
+		var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 8, 
+		var["dimension_fenetre"] // 2 ,
+		var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 20,
+		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 10,
+		couleur="black",
+		epaisseur = 10
+	)
+	ligne(
+		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 20, 
+		var["dimension_fenetre"] // 2,
+		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 8,
+		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 10,
+		couleur = "black",
+		epaisseur = 10
+		)
+	ligne(
+		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 8, 
+		var["dimension_fenetre"] // 2 ,
+		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 20,
+		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 10,
+		couleur="black",
+		epaisseur = 10
+	)
+	
 def tomber_de_pierre(carte):
     """Fais tomber les pierres"""
     for y in range(len(carte)):
@@ -228,10 +304,11 @@ def loose(carte):
 	if carte[var["pos_y"]-1][var["pos_x"]] == 'P':
 		efface_tout()
 		fond()
+		personnage_defaitiste()
 		texte(
 			var["dimension_fenetre"] // 2,
 			var["dimension_fenetre"] // 4,
-			"DEFAITE !",
+			"DÉFAITE !",
 			couleur="black",
 			ancrage="center",
 			taille=75
@@ -252,7 +329,7 @@ def win():
 			ancrage="center",
 			taille=75
 		)
-		personnage()
+		personnage_victorieux()
 		return True
 	return False
 	
