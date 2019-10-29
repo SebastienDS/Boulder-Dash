@@ -132,6 +132,13 @@ dico = {
 
 def affichage(carte):
 	"""Affiche la carte"""
+	fond()
+	for y in range(len(carte)):  # y = ligne
+		for x in range(len(carte[y])):  # x = colonne
+			dico[carte[y][x]](x, y)
+
+
+def fond():
 	rectangle(
 		0,
 		0,
@@ -140,14 +147,52 @@ def affichage(carte):
 		couleur="purple",
 		remplissage="purple",
 	)
-	for y in range(len(carte)):  # y = ligne
-		for x in range(len(carte[y])):  # x = colonne
-			dico[carte[y][x]](x, y)
+
+
+def personnage():
+	cercle(
+		var["dimension_fenetre"] // 2,
+		var["dimension_fenetre"] // 2,
+		(var["taille_case"] / 2) - 1,
+		couleur="green",
+		remplissage="green",
+	)
+	cercle(
+		x * var["taille_case"] + var["taille_case"] / 2,
+		y * var["taille_case"] + 2 * var["taille_case"] / 3 - var["taille_case"] / 15,
+		var["taille_case"] / 4,
+		couleur="black",
+		remplissage="black",
+	)
+	rectangle(
+		x * var["taille_case"] + (var["taille_case"] / 2) - var["taille_case"] / 4,
+		y * var["taille_case"]
+		+ (2 * var["taille_case"] / 3)
+		- var["taille_case"] / 4
+		- var["taille_case"] / 15,
+		x * var["taille_case"] + (var["taille_case"] / 2) + var["taille_case"] / 4,
+		y * var["taille_case"] + (2 * var["taille_case"] / 3) - var["taille_case"] / 15,
+		couleur="green",
+		remplissage="green",
+	)
+	cercle(
+		x * var["taille_case"] + var["taille_case"] / 3,
+		y * var["taille_case"] + var["taille_case"] / 3,
+		var["taille_case"] / 13,
+		couleur="black",
+		remplissage="black",
+	)
+	cercle(
+		x * var["taille_case"] + 2 * var["taille_case"] / 3,
+		y * var["taille_case"] + var["taille_case"] / 3,
+		var["taille_case"] / 13,
+		couleur="black",
+		remplissage="black",
+	)
 
 
 def tomber_de_pierre(carte):
     """Fais tomber les pierres"""
-    print(carte)
     for y in range(len(carte)):
     	for x in range(len(carte[0])):
     		if carte[y][x] == 'P' and carte[y+1][x]=='.':
@@ -183,16 +228,20 @@ def pousser_pierre(carte, deplacement):
 	pass
 
 
-def win(carte):
-	"""Regarde si l'utilisateur gagne
-	>>> win([['l', 'k', 'E']])
-	False
-	>>> win([['l', 'k', 'o']])
-	True
-	"""
-	for element in carte:
-		if "E" not in element:
-			return True
+def win():
+	"""Regarde si l'utilisateur gagne"""
+	if var["pos_x"] == var["pos_sortie_x"] and var["pos_y"] == var["pos_sortie_y"]:
+		efface_tout()
+		fond()
+		texte(
+			var["dimension_fenetre"] // 2,
+			var["dimension_fenetre"] // 4,
+			"Victoire !",
+			couleur="black",
+			ancrage="center",
+			taille=75
+		)
+		return True
 	return False
 
 
