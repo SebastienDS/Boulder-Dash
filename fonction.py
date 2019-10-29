@@ -4,11 +4,12 @@ from variable import var
 
 def creer_map(nomdufichier):
     with open("map/" + nomdufichier, "r") as fichier:
-    	contenu = fichier.read()
-    	contenu.pop(0)
-    	for i in range(len(contenu)):
-       		contenu[i] = list(contenu[i])
-   	return contenu
+        contenu = fichier.read()
+        contenu = contenu.split("\n")
+        contenu.pop(0)
+        for i in range(len(contenu)):
+            contenu[i] = list(contenu[i])
+    return contenu
 
 
 def terre(x, y):
@@ -16,10 +17,10 @@ def terre(x, y):
     rectangle(
         x * var["taille_case"],
         y * var["taille_case"],
-        x * var["taille_case"] + var["taille_case"],
-        y * var["taille_case"] + var["taille_case"],
-        couleur="brown",
-        remplissage="brown",
+        x * var["taille_case"] + var["taille_case"] - 1,
+        y * var["taille_case"] + var["taille_case"] - 1,
+        couleur="pink",
+        remplissage="pink",
     )
 
 
@@ -28,7 +29,7 @@ def pierre(x, y):
     cercle(
         x * var["taille_case"] + var["taille_case"] / 2,
         y * var["taille_case"] + var["taille_case"] / 2,
-        var["taille_case"] / 2,
+        (var["taille_case"] / 2) - 1,
         couleur="grey",
         remplissage="grey",
     )
@@ -39,40 +40,41 @@ def rockford(x, y):
     cercle(
         x * var["taille_case"] + var["taille_case"] / 2,
         y * var["taille_case"] + var["taille_case"] / 2,
-        var["taille_case"] / 2,
-        couleur="white",
-        remplissage="white",
+        (var["taille_case"] / 2) - 1,
+        couleur="green",
+        remplissage="green",
+    )
+    cercle(
+        x * var["taille_case"] + var["taille_case"] / 2,
+        y * var["taille_case"] + 2 * var["taille_case"] / 3 - var["taille_case"] / 15,
+        var["taille_case"] / 4,
+        couleur="black",
+        remplissage="black",
+    )
+    rectangle(
+        x * var["taille_case"] + (var["taille_case"] / 2) - var["taille_case"] / 4,
+        y * var["taille_case"]
+        + (2 * var["taille_case"] / 3)
+        - var["taille_case"] / 4
+        - var["taille_case"] / 15,
+        x * var["taille_case"] + (var["taille_case"] / 2) + var["taille_case"] / 4,
+        y * var["taille_case"] + (2 * var["taille_case"] / 3) - var["taille_case"] / 15,
+        couleur="green",
+        remplissage="green",
     )
     cercle(
         x * var["taille_case"] + var["taille_case"] / 3,
         y * var["taille_case"] + var["taille_case"] / 3,
-        2,
+        var["taille_case"] / 13,
         couleur="black",
         remplissage="black",
     )
     cercle(
         x * var["taille_case"] + 2 * var["taille_case"] / 3,
         y * var["taille_case"] + var["taille_case"] / 3,
-        2,
+        var["taille_case"] / 13,
         couleur="black",
         remplissage="black",
-    )
-
-    cercle(
-        x * var["taille_case"] + var["taille_case"] / 2,
-        y * var["taille_case"] + 2 * var["taille_case"] / 3,
-        12,
-        couleur="black",
-        remplissage="black",
-    )
-
-    rectangle(
-        x * var["taille_case"] + (var["taille_case"] / 2) - 12,
-        y * var["taille_case"] + (2 * var["taille_case"] / 3) - 12,
-        x * var["taille_case"] + (var["taille_case"] / 2) + 12,
-        y * var["taille_case"] + (2 * var["taille_case"] / 3),
-        couleur="white",
-        remplissage="white",
     )
 
 
@@ -81,8 +83,8 @@ def mur(x, y):
     rectangle(
         x * var["taille_case"],
         y * var["taille_case"],
-        var["taille_case"] + x * var["taille_case"],
-        var["taille_case"] + y * var["taille_case"],
+        var["taille_case"] + x * var["taille_case"] - 1,
+        var["taille_case"] + y * var["taille_case"] - 1,
         couleur="black",
         remplissage="black",
     )
@@ -93,8 +95,8 @@ def diamand(x, y):
     rectangle(
         x * var["taille_case"],
         y * var["taille_case"],
-        var["taille_case"] + x * var["taille_case"],
-        var["taille_case"] + y * var["taille_case"],
+        var["taille_case"] + x * var["taille_case"] - 1,
+        var["taille_case"] + y * var["taille_case"] - 1,
         couleur="blue",
         remplissage="blue",
     )
@@ -105,11 +107,15 @@ def sortie(x, y):
     rectangle(
         x * var["taille_case"],
         y * var["taille_case"],
-        var["taille_case"] + x * var["taille_case"],
-        var["taille_case"] + y * var["taille_case"],
+        var["taille_case"] + x * var["taille_case"] - 1,
+        var["taille_case"] + y * var["taille_case"] - 1,
         couleur="green",
         remplissage="green",
     )
+
+
+def rien(x, y):
+    pass
 
 
 # on associe les lettres aux fonctions les dessinant
@@ -120,13 +126,22 @@ dico = {
     "W": mur,  # carre noir
     "D": diamand,  # carre bleu
     "E": sortie,  # carre vert
+    ".": rien,
 }
 
 
 def affichage(carte):
     """Affiche la carte"""
+    rectangle(
+        0,
+        0,
+        var["dimension_fenetre"],
+        var["dimension_fenetre"],
+        couleur="purple",
+        remplissage="purple",
+    )
     for y in range(len(carte)):  # y = ligne
-        for x in range(len(carte)):  # x = colonne
+        for x in range(len(carte[y])):  # x = colonne
             dico[carte[y][x]](x, y)
 
 

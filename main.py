@@ -11,11 +11,8 @@ def main():
 
     cree_fenetre(var["dimension_fenetre"], var["dimension_fenetre"])
 
-    fonction.terre(0, 0)
-    fonction.pierre(1, 1)
-    fonction.rockford(2, 2)
-    fonction.sortie(3, 3)
-    fonction.mur(9, 9)
+    carte = fonction.creer_map("map1.txt")
+    fonction.affichage(carte)
 
     attente_clic()
     ferme_fenetre()
