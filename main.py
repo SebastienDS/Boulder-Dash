@@ -18,9 +18,10 @@ def main():
     	fonction.deplacer_perso(carte)
     	fonction.tomber_de_pierre(carte)
     	fonction.affichage(carte)
-    	
     	mise_a_jour()
     	if var["pos_x"] == var["pos_sortie_x"] and var["pos_y"] == var["pos_sortie_y"]:
+    		break
+    	if loose:
     		break
 
     attente_clic()

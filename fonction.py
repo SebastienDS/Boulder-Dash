@@ -147,7 +147,6 @@ def affichage(carte):
 
 def tomber_de_pierre(carte):
     """Fais tomber les pierres"""
-    print(carte)
     for y in range(len(carte)):
     	for x in range(len(carte[0])):
     		if carte[y][x] == 'P' and carte[y+1][x]=='.':
@@ -182,19 +181,11 @@ def pousser_pierre(carte, deplacement):
 	"""Test si une pierre est poussable, si oui, la pousse"""
 	pass
 
+def loose(carte):
+
 
 def win(carte):
-	"""Regarde si l'utilisateur gagne
-	>>> win([['l', 'k', 'E']])
-	False
-	>>> win([['l', 'k', 'o']])
-	True
-	"""
-	for element in carte:
-		if "E" not in element:
-			return True
-	return False
-
+	
 
 def initialiser_partie(carte):
 	"""Initialise les parametres par defaut de la partie"""
