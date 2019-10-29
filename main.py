@@ -6,6 +6,7 @@ def main():
 	debug = -1
 	mode = 0
 	nbdiamand = 0
+	temps = 0
 	carte = fonction.creer_map("map1.txt")
 	fonction.initialiser_partie(carte)
 	while True:
@@ -23,7 +24,9 @@ def main():
 		if type_ev == "Touche" and touche(ev) == 'd':
 			debug *= -1
 		if debug == 1:
-			nbdiamand = fonction.debug(carte, nbdiamand)
+			if not temps % 15:
+				nbdiamand = fonction.debug(carte, nbdiamand)
+			temps += 1
 		else:
 			nbdiamand = fonction.deplacer_perso(carte, nbdiamand)
 		mise_a_jour()
