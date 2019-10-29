@@ -1,3 +1,6 @@
+
+
+
 def terre(x, y):
 	"""Dessine la terre aux coordonnées x, y"""
 	pass
@@ -63,12 +66,12 @@ def pousser_pierre(carte, deplacement):
 def win(carte):
     """Regarde si l'utilisateur gagne
 	>>> win([['l', 'k', 'E']])
-	True
-	>>> win([['l', 'k', 'o']])
 	False
+	>>> win([['l', 'k', 'o']])
+	True
 	"""
     for element in carte:
-        if "E" in element:
+        if "E" not in element:
             return True
     return False
 
