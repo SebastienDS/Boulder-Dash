@@ -16,10 +16,11 @@ def main():
     while True:
     	efface_tout()
     	fonction.deplacer_perso(carte)
+    	fonction.tomber_de_pierre(carte)
     	fonction.affichage(carte)
     	
     	mise_a_jour()
-    	if var["pos_x"] >= 7:
+    	if var["pos_x"] >= 14:
     		break
 
     attente_clic()
