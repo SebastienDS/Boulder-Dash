@@ -1,5 +1,12 @@
 from upemtk import *
 
+def creer_map(nomdufichier):
+	fichier = open('map/nomdufichier', 'r' )
+	contenu = fichier.read()
+	contenu.pop(0)
+	for i in range(len(contenu)):
+		contenu[i] = list(contenu[i])
+	return contenu
 
 def terre(x, y, taille_case):
     """Dessine la terre aux coordonnées x, y"""
@@ -13,7 +20,7 @@ def pierre(x, y, taille_case):
 
 def rockford(x, y, taille_case):
     """Dessine rockford aux coordonnées x, y"""
-
+    pass
 
 def mur(x, y, taille_case):
     """Dessine un mur aux coordonnées x, y"""
