@@ -557,7 +557,7 @@ def attente_clic_ou_touche():
     touche, type) si l'événement est un appui sur la touche ``val``.
 
     :return: ``(x, y, 'ClicDroit')``, ``(x, y, 'ClicGauche')`` ou
-    ``(-1, val,\ 'Touche')``
+    ``(-1, val, 'Touche')``
 
     """
     while True:
