@@ -153,28 +153,29 @@ def tomber_de_pierre(carte):
     			carte[y][x], carte[y+1][x] = '.' , 'P'
     return carte
 
+
 def deplacer_perso(carte):
 	"""Test si le perso peut se deplacer, si oui, deplace le perso sur la carte en fonction de la touche utilisé"""
 	ev = donne_evenement()
 	type_ev = type_evenement(ev)
 	if type_ev == "Touche":
 		t = touche(ev)
-		if t == "Right" and carte[var["pos_y"]][var["pos_x"] +1] in ["G", "."]:
+		if t == "Right" and carte[var["pos_y"]][var["pos_x"] +1] in ["G", ".", "E"]:
 			carte[var["pos_y"]][var["pos_x"] +1] = "R"
 			carte[var["pos_y"]][var["pos_x"]] = "."
 			var["pos_x"] += 1
 
-		elif t == "Left" and carte[var["pos_y"]][var["pos_x"] -1] in ["G", "."]:
+		elif t == "Left" and carte[var["pos_y"]][var["pos_x"] -1] in ["G", ".", "E"]:
 			carte[var["pos_y"]][var["pos_x"] -1] = "R"
 			carte[var["pos_y"]][var["pos_x"]] = "."
 			var["pos_x"] -= 1
 
-		elif t == "Up" and carte[var["pos_y"] -1][var["pos_x"]] in ["G", "."]:
+		elif t == "Up" and carte[var["pos_y"] -1][var["pos_x"]] in ["G", ".", "E"]:
 			carte[var["pos_y"] -1][var["pos_x"]] = "R"
 			carte[var["pos_y"]][var["pos_x"]] = "."
 			var["pos_y"] -= 1
 
-		elif t == "Down" and carte[var["pos_y"] +1][var["pos_x"]] in ["G", "."]:
+		elif t == "Down" and carte[var["pos_y"] +1][var["pos_x"]] in ["G", ".", "E"]:
 			carte[var["pos_y"] +1][var["pos_x"]] = "R"
 			carte[var["pos_y"]][var["pos_x"]] = "."
 			var["pos_y"] += 1
@@ -205,7 +206,9 @@ def initialiser_partie(carte):
 			if carte[y][x] == "R":
 				var["pos_x"] = x
 				var["pos_y"] = y
-				return
+			elif carte[y][x] == "E":
+				var["pos_sortie_x"] = x
+				var["pos_sortie_y"] = y
 
 
 def debug(carte):

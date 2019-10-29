@@ -19,7 +19,7 @@ def main():
     	fonction.affichage(carte)
     	
     	mise_a_jour()
-    	if var["pos_x"] >= 7:
+    	if var["pos_x"] == var["pos_sortie_x"] and var["pos_y"] == var["pos_sortie_y"]:
     		break
 
     attente_clic()
