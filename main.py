@@ -10,7 +10,6 @@ def main():
 	fonction.initialiser_partie(carte)
 	while True:
 		efface_tout()
-		
 		fonction.tomber_de_pierre(carte)
 		fonction.affichage(carte)
 		coordretry = fonction.encadrement('Retry', var["dimension_fenetre"] // 7,  var["dimension_fenetre"] - 40, 'white', 'white', 12, 5, 5)
