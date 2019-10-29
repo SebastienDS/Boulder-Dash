@@ -152,40 +152,37 @@ def fond():
 def personnage():
 	cercle(
 		var["dimension_fenetre"] // 2,
-		var["dimension_fenetre"] // 2,
-		(var["taille_case"] / 2) - 1,
+		2 * var["dimension_fenetre"] // 3,
+		var["dimension_fenetre"] // 4,
 		couleur="green",
 		remplissage="green",
 	)
 	cercle(
-		x * var["taille_case"] + var["taille_case"] / 2,
-		y * var["taille_case"] + 2 * var["taille_case"] / 3 - var["taille_case"] / 15,
-		var["taille_case"] / 4,
+		var["dimension_fenetre"] // 2,
+		2 * var["dimension_fenetre"] // 3 + var["dimension_fenetre"] // 12,
+		var["dimension_fenetre"] // 8,
 		couleur="black",
 		remplissage="black",
 	)
 	rectangle(
-		x * var["taille_case"] + (var["taille_case"] / 2) - var["taille_case"] / 4,
-		y * var["taille_case"]
-		+ (2 * var["taille_case"] / 3)
-		- var["taille_case"] / 4
-		- var["taille_case"] / 15,
-		x * var["taille_case"] + (var["taille_case"] / 2) + var["taille_case"] / 4,
-		y * var["taille_case"] + (2 * var["taille_case"] / 3) - var["taille_case"] / 15,
+		var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 8,
+		2 * var["dimension_fenetre"] // 3 - var["dimension_fenetre"] // 12,
+		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 8,
+		2 * var["dimension_fenetre"] // 3 + var["dimension_fenetre"] // 12,
 		couleur="green",
 		remplissage="green",
 	)
 	cercle(
-		x * var["taille_case"] + var["taille_case"] / 3,
-		y * var["taille_case"] + var["taille_case"] / 3,
-		var["taille_case"] / 13,
+		var["dimension_fenetre"] // 3 + var["dimension_fenetre"] // 20,
+		2 * var["dimension_fenetre"] // 3 - var["dimension_fenetre"] // 20,
+		var["dimension_fenetre"] // 20,
 		couleur="black",
 		remplissage="black",
 	)
 	cercle(
-		x * var["taille_case"] + 2 * var["taille_case"] / 3,
-		y * var["taille_case"] + var["taille_case"] / 3,
-		var["taille_case"] / 13,
+		2 * var["dimension_fenetre"] // 3 - var["dimension_fenetre"] // 20,
+		2 * var["dimension_fenetre"] // 3 - var["dimension_fenetre"] // 20,
+		var["dimension_fenetre"] // 20,
 		couleur="black",
 		remplissage="black",
 	)
@@ -241,6 +238,7 @@ def win():
 			ancrage="center",
 			taille=75
 		)
+		personnage()
 		return True
 	return False
 
