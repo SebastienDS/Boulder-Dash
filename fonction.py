@@ -1,4 +1,5 @@
 from upemtk import *
+
 from variable import var
 
 
@@ -60,17 +61,38 @@ def rockford(x, y):
 
 def mur(x, y):
     """Dessine un mur aux coordonnées x, y"""
-    pass
+    rectangle(
+        x * var["taille_case"],
+        y * var["taille_case"],
+        var["taille_case"] + x * var["taille_case"],
+        var["taille_case"] + y * var["taille_case"],
+        couleur="black",
+        remplissage="black",
+    )
 
 
 def diamand(x, y):
     """Dessine un diamand aux coordonnées x, y"""
-    pass
+    rectangle(
+        x * var["taille_case"],
+        y * var["taille_case"],
+        var["taille_case"] + x * var["taille_case"],
+        var["taille_case"] + y * var["taille_case"],
+        couleur="blue",
+        remplissage="blue",
+    )
 
 
 def sortie(x, y):
     """Dessine la sortie aux coordonnées x, y"""
-    pass
+    rectangle(
+        x * var["taille_case"],
+        y * var["taille_case"],
+        var["taille_case"] + x * var["taille_case"],
+        var["taille_case"] + y * var["taille_case"],
+        couleur="green",
+        remplissage="green",
+    )
 
 
 # on associe les lettres aux fonctions les dessinant
