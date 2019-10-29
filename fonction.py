@@ -19,8 +19,8 @@ def terre(x, y):
 		y * var["taille_case"],
 		x * var["taille_case"] + var["taille_case"] - 1,
 		y * var["taille_case"] + var["taille_case"] - 1,
-		couleur="pink",
-		remplissage="pink",
+		couleur="sienna4",
+		remplissage="sienna4",
 	)
 
 
@@ -30,66 +30,119 @@ def pierre(x, y):
 		x * var["taille_case"] + var["taille_case"] / 2,
 		y * var["taille_case"] + var["taille_case"] / 2,
 		(var["taille_case"] / 2) - 1,
-		couleur="grey",
-		remplissage="grey",
+		couleur="gray39",
+		remplissage="gray39",
 	)
 
 
 def rockford(x, y):
 	"""Dessine rockford aux coordonnées x, y"""
 	cercle(
-		x * var["taille_case"] + var["taille_case"] / 2,
-		y * var["taille_case"] + var["taille_case"] / 2,
-		(var["taille_case"] / 2) - 1,
+		x * var["taille_case"] + var["taille_case"] // 2 - var["taille_case"] // 4 ,
+		y * var["taille_case"] + 3 * var["taille_case"] // 4 - var["taille_case"] // 8,
+		var["taille_case"] // 12,
 		couleur="lightpink",
+		remplissage="lightpink"
+	)
+	cercle(
+		x * var["taille_case"] + var["taille_case"] // 2 + var["taille_case"] // 4 ,
+		y * var["taille_case"] + 3 *var["taille_case"] // 4 - var["taille_case"] // 8,
+		var["taille_case"] // 12,
+		couleur="lightpink",
+		remplissage="lightpink"
+	)
+	cercle(
+		x * var["taille_case"] + var["taille_case"] // 3,
+		y * var["taille_case"] + 8 *var["taille_case"] // 9,
+		var["taille_case"] // 12,
+		couleur="black",
+		remplissage="red"
+	)
+	cercle(
+		x * var["taille_case"] + 2 *var["taille_case"] // 3 ,
+		y * var["taille_case"] + 8 *var["taille_case"] // 9 ,
+		var["taille_case"] // 12,
+		couleur="black",
+		remplissage="red"
+	)
+	cercle(
+		x * var["taille_case"] + var["taille_case"] // 2,
+		y * var["taille_case"] + 2 * var["taille_case"] // 3,
+		var["taille_case"] // 4,
+		couleur="black",
 		remplissage="lightpink",
 	)
-	cercle(
-		x * var["taille_case"] + var["taille_case"] / 2,
-		y * var["taille_case"] + 2 * var["taille_case"] / 3 - var["taille_case"] / 15,
-		var["taille_case"] / 4,
-		couleur="black",
-		remplissage="black",
-	)
-	rectangle(
-		x * var["taille_case"] + (var["taille_case"] / 2) - var["taille_case"] / 4,
-		y * var["taille_case"]
-		+ (2 * var["taille_case"] / 3)
-		- var["taille_case"] / 4
-		- var["taille_case"] / 15,
-		x * var["taille_case"] + (var["taille_case"] / 2) + var["taille_case"] / 4,
-		y * var["taille_case"] + (2 * var["taille_case"] / 3) - var["taille_case"] / 15,
-		couleur="lightpink",
-		remplissage="lightpink",
-	)
-	cercle(
-		x * var["taille_case"] + var["taille_case"] / 3,
-		y * var["taille_case"] + var["taille_case"] / 3,
-		var["taille_case"] / 13,
-		couleur="black",
-		remplissage="black",
-	)
-	cercle(
-		x * var["taille_case"] + 2 * var["taille_case"] / 3,
-		y * var["taille_case"] + var["taille_case"] / 3,
-		var["taille_case"] / 13,
-		couleur="black",
-		remplissage="black",
-	)
+	
+
 
 
 def mur(x, y):
 	"""Dessine un mur aux coordonnées x, y"""
-	rectangle(
+	rectangle(						 #fond
 		x * var["taille_case"],
 		y * var["taille_case"],
-		var["taille_case"] + x * var["taille_case"] - 1,
+		var["taille_case"] + x * var["taille_case"] ,
 		var["taille_case"] + y * var["taille_case"] - 1,
-		couleur="black",
-		remplissage="black",
+		couleur="gray15",
+		remplissage="gray15",
 	)
-
-
+	ligne(							#deuxième ligne horizontale
+		x * var["taille_case"],
+		y * var["taille_case"] + var["taille_case"] // 3 ,
+		var["taille_case"] + x * var["taille_case"] ,
+		(var["taille_case"] + y * var["taille_case"] - 1) - 2 * var["taille_case"] // 3,
+	couleur = 'white',
+	epaisseur = var["taille_case"] // 20
+	)
+	ligne(							#troisième ligne horizontale
+		x * var["taille_case"],
+		y * var["taille_case"] + 2 * var["taille_case"] // 3 ,
+		var["taille_case"] + x * var["taille_case"] ,
+		(var["taille_case"] + y * var["taille_case"] - 1) - var["taille_case"] // 3,
+	couleur = 'white',
+	epaisseur = var["taille_case"] // 20
+	)
+	ligne(							#première ligne horitontale
+		x * var["taille_case"] ,
+		y * var["taille_case"] ,
+		var["taille_case"] + x * var["taille_case"] ,
+		(var["taille_case"] + y * var["taille_case"] - 1) - 3 * var["taille_case"] // 3,
+	couleur = 'white',
+	epaisseur = var["taille_case"] // 20
+	)
+	ligne(							#quatrième ligne horizontale
+		x * var["taille_case"],
+		y * var["taille_case"] + 3 * var["taille_case"] // 3 ,
+		var["taille_case"] + x * var["taille_case"],
+		var["taille_case"] + y * var["taille_case"] - 1,
+	couleur = 'white',
+	epaisseur = var["taille_case"] // 20
+	)
+	ligne(							#Première ligne verticale
+		x * var["taille_case"] + 1 * var["taille_case"] // 4 ,
+		y * var["taille_case"] ,
+		x * var["taille_case"] + 1 * var["taille_case"] // 4,
+		y * var["taille_case"] + var["taille_case"] // 3,
+	couleur = 'white',
+	epaisseur = var["taille_case"] // 20
+	)	
+	ligne(							#Deuxième ligne verticale
+		x * var["taille_case"] + 1 * var["taille_case"] // 2,
+		y * var["taille_case"] + var["taille_case"] // 3,
+		x * var["taille_case"] + 1 * var["taille_case"] // 2,
+		y * var["taille_case"] + 2 * var["taille_case"] // 3,
+	couleur = 'white',
+	epaisseur = var["taille_case"] // 20
+	)
+	ligne(							#Troisième ligne verticale
+		x * var["taille_case"] + 3 * var["taille_case"] // 4,
+		y * var["taille_case"] + 2 * var["taille_case"] // 3,
+		x * var["taille_case"] + 3 * var["taille_case"] // 4,
+		y * var["taille_case"] + var["taille_case"],
+		couleur = 'white',
+		epaisseur = var["taille_case"] // 20
+	)
+	
 def diamand(x, y):
 	"""Dessine un diamand aux coordonnées x, y"""
 	rectangle(
@@ -144,8 +197,8 @@ def fond():
 		0,
 		var["dimension_fenetre"],
 		var["dimension_fenetre"],
-		couleur="purple",
-		remplissage="purple",
+		couleur="black",
+		remplissage="black",
 	)
 
 
@@ -263,13 +316,61 @@ def personnage_defaitiste():
 		couleur="black",
 		epaisseur = 10
 	)
+
+	ligne(
+		var["dimension_fenetre"] // 2 - 2 * var["dimension_fenetre"] // 7,
+		3 * var["dimension_fenetre"] // 4 - var["dimension_fenetre"] // 8,
+		var["dimension_fenetre"] // 2 - 2 * var["dimension_fenetre"] // 7,
+		3 * var["dimension_fenetre"] // 4 + var["dimension_fenetre"] // 15 - 10,
+		couleur='saddle brown',
+		epaisseur = 10
+	)
+	ligne(
+		var["dimension_fenetre"] // 2 - 2 * var["dimension_fenetre"] // 7-5,
+		3 * var["dimension_fenetre"] // 4 - var["dimension_fenetre"] // 8,
+		var["dimension_fenetre"] // 2 - 2 * var["dimension_fenetre"] // 7-5,
+		3 * var["dimension_fenetre"] // 4 + var["dimension_fenetre"] // 16 + 30,
+		couleur='saddle brown',
+		epaisseur = 5
+	)
 	
+	cercle(
+		var["dimension_fenetre"] // 8,
+		14 * var["dimension_fenetre"] // 15,
+		var["dimension_fenetre"] // 14,
+		couleur = 'LightSteelBlue2',
+		remplissage = 'LightSteelBlue2'
+	)
+	cercle(
+		var["dimension_fenetre"] // 7,
+		14 * var["dimension_fenetre"] // 15,
+		var["dimension_fenetre"] // 14,
+		couleur = 'black',
+		remplissage = 'black'
+	)
+	ligne(
+		var["dimension_fenetre"] // 14,
+		14 * var["dimension_fenetre"] // 15,
+		var["dimension_fenetre"] // 5,
+		14 * var["dimension_fenetre"] // 15,
+		couleur='saddle brown',
+		epaisseur = 5
+	)
+	ligne(
+		var["dimension_fenetre"] // 14,
+		14 * var["dimension_fenetre"] // 15 - 5,
+		var["dimension_fenetre"] // 5 - 30,
+		14 * var["dimension_fenetre"] // 15 - 5,
+		couleur='saddle brown',
+		epaisseur = 5
+	)
+
 def tomber_de_pierre(carte):
-    """Fais tomber les pierres"""
-    for y in range(len(carte)):
-    	for x in range(len(carte[0])):
-    		if carte[y][x] == 'P' and carte[y+1][x]=='.':
-    			carte[y][x], carte[y+1][x] = '.' , 'P'
+	"""Fais tomber les pierres"""
+	for y in range(len(carte)):
+		for x in range(len(carte[0])):
+			if carte[y][x] == 'P' and carte[y+1][x]=='.':
+				carte[y][x], carte[y+1][x] = '.' , 'P'
 
 
 def deplacer_perso(carte):
@@ -309,7 +410,7 @@ def loose(carte):
 			var["dimension_fenetre"] // 2,
 			var["dimension_fenetre"] // 4,
 			"DÉFAITE !",
-			couleur="black",
+			couleur="red",
 			ancrage="center",
 			taille=75
 		)
