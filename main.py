@@ -1,10 +1,7 @@
 import fonction
 from upemtk import *
 
-dimension_fenetre = 800
-nb_cases = 10
-assert dimension_fenetre % nb_cases == 0
-taille_case = dimension_fenetre // nb_cases
+from variable import var
 
 
 def main():
@@ -12,10 +9,18 @@ def main():
         "Made by Uniiiiiifffffay corporation with the collaboration of Natsouuuuuu corporation!!! All right reserved!"
     )
 
+    cree_fenetre(var["dimension_fenetre"], var["dimension_fenetre"])
+
+    fonction.terre(0, 0)
+    fonction.pierre(1, 1)
+    fonction.rockford(2, 2)
+    fonction.sortie(3, 3)
+    fonction.mur(9, 9)
+
+    attente_clic()
+    ferme_fenetre()
+
 
 if __name__ == "__main__":
     main()
-    cree_fenetre(dimension_fenetre, dimension_fenetre)
-    fonction.sortie(0, 0, taille_case)
-    fonction.mur(9, 9, taille_case)
-    attente_clic()
+

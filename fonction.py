@@ -1,4 +1,6 @@
 from upemtk import *
+from variable import var
+
 
 def creer_map(nomdufichier):
 	fichier = open('map/nomdufichier', 'r' )
@@ -8,58 +10,107 @@ def creer_map(nomdufichier):
 		contenu[i] = list(contenu[i])
 	return contenu
 
-def terre(x, y, taille_case):
+
+def terre(x, y):
     """Dessine la terre aux coordonnées x, y"""
-    pass
+    rectangle(
+        x * var["taille_case"],
+        y * var["taille_case"],
+        x * var["taille_case"] + var["taille_case"],
+        y * var["taille_case"] + var["taille_case"],
+        "brown",
+        "brown",
+    )
 
 
-def pierre(x, y, taille_case):
+def pierre(x, y):
     """Dessine une pierre aux coordonnées x, y"""
-    pass
+    cercle(
+        x * var["taille_case"] + var["taille_case"] / 2,
+        y * var["taille_case"] + var["taille_case"] / 2,
+        var["taille_case"] / 2,
+        "grey",
+        "grey",
+    )
 
 
-def rockford(x, y, taille_case):
+def rockford(x, y):
     """Dessine rockford aux coordonnées x, y"""
-    pass
+    cercle(
+        x * var["taille_case"] + var["taille_case"] / 2,
+        y * var["taille_case"] + var["taille_case"] / 2,
+        var["taille_case"] / 2,
+        "white",
+        "white",
+    )
+    cercle(
+        x * var["taille_case"] + var["taille_case"] / 3,
+        y * var["taille_case"] + var["taille_case"] / 3,
+        2,
+        "black",
+        "black",
+    )
+    cercle(
+        x * var["taille_case"] + 2 * var["taille_case"] / 3,
+        y * var["taille_case"] + var["taille_case"] / 3,
+        2,
+        "black",
+        "black",
+    )
+    rectangle(
+        x * var["taille_case"] + var["taille_case"] / 3,
+        y * var["taille_case"] + 2 * var["taille_case"] / 3,
+        x * var["taille_case"] + 2 * var["taille_case"] / 3,
+        y * var["taille_case"] + 2 * var["taille_case"] / 3 + 2,
+        "black",
+        "black",
+    )
 
-def mur(x, y, taille_case):
+def mur(x, y):
     """Dessine un mur aux coordonnées x, y"""
     rectangle(
-        x * taille_case,
-        y * taille_case,
-        taille_case + x * taille_case,
-        taille_case + y * taille_case,
+        x * var["taille_case"],
+        y * var["taille_case"],
+        var["taille_case"] + x * var["taille_case"],
+        var["taille_case"] + y * var["taille_case"],
         couleur="black",
         remplissage="black",
     )
 
 
-def diamand(x, y, taille_case):
+def diamand(x, y):
     """Dessine un diamand aux coordonnées x, y"""
     rectangle(
-        x * taille_case,
-        y * taille_case,
-        taille_case + x * taille_case,
-        taille_case + y * taille_case,
+        x * var["taille_case"],
+        y * var["taille_case"],
+        var["taille_case"] + x * var["taille_case"],
+        var["taille_case"] + y * var["taille_case"],
         couleur="blue",
         remplissage="blue",
     )
 
 
-def sortie(x, y, taille_case):
+def sortie(x, y):
     """Dessine la sortie aux coordonnées x, y"""
     rectangle(
-        x * taille_case,
-        y * taille_case,
-        taille_case + x * taille_case,
-        taille_case + y * taille_case,
+        x * var["taille_case"],
+        y * var["taille_case"],
+        var["taille_case"] + x * var["taille_case"],
+        var["taille_case"] + y * var["taille_case"],
         couleur="green",
         remplissage="green",
     )
 
 
 # on associe les lettres aux fonctions les dessinant
-dico = {"G": terre, "P": pierre, "R": rockford, "W": mur, "D": diamand, "E": sortie}
+dico = {
+    "G": terre,  # carre marron
+    "P": pierre,  # rond gris
+    "R": rockford,  # rond blanc
+    "W": mur,  # carre noir
+    "D": diamand,  # carre bleu
+    "E": sortie,  # carre vert
+}
 
 
 def affichage(carte):
