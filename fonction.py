@@ -3,12 +3,12 @@ from variable import var
 
 
 def creer_map(nomdufichier):
-    fichier = open("map/nomdufichier", "r")
-    contenu = fichier.read()
-    contenu.pop(0)
-    for i in range(len(contenu)):
-        contenu[i] = list(contenu[i])
-    return contenu
+    with open("map/" + nomdufichier, "r") as fichier:
+    	contenu = fichier.read()
+    	contenu.pop(0)
+    	for i in range(len(contenu)):
+       		contenu[i] = list(contenu[i])
+   	return contenu
 
 
 def terre(x, y):
@@ -18,8 +18,8 @@ def terre(x, y):
         y * var["taille_case"],
         x * var["taille_case"] + var["taille_case"],
         y * var["taille_case"] + var["taille_case"],
-        "brown",
-        "brown",
+        couleur="brown",
+        remplissage="brown",
     )
 
 
@@ -29,8 +29,8 @@ def pierre(x, y):
         x * var["taille_case"] + var["taille_case"] / 2,
         y * var["taille_case"] + var["taille_case"] / 2,
         var["taille_case"] / 2,
-        "grey",
-        "grey",
+        couleur="grey",
+        remplissage="grey",
     )
 
 
@@ -40,22 +40,22 @@ def rockford(x, y):
         x * var["taille_case"] + var["taille_case"] / 2,
         y * var["taille_case"] + var["taille_case"] / 2,
         var["taille_case"] / 2,
-        "white",
-        "white",
+        couleur="white",
+        remplissage="white",
     )
     cercle(
         x * var["taille_case"] + var["taille_case"] / 3,
         y * var["taille_case"] + var["taille_case"] / 3,
         2,
-        "black",
-        "black",
+        couleur="black",
+        remplissage="black",
     )
     cercle(
         x * var["taille_case"] + 2 * var["taille_case"] / 3,
         y * var["taille_case"] + var["taille_case"] / 3,
         2,
-        "black",
-        "black",
+        couleur="black",
+        remplissage="black",
     )
 
     cercle(
@@ -70,9 +70,9 @@ def rockford(x, y):
         x * var["taille_case"] + (var["taille_case"] / 2) - 12,
         y * var["taille_case"] + (2 * var["taille_case"] / 3) - 12,
         x * var["taille_case"] + (var["taille_case"] / 2) + 12,
-        y * var["taille_case"] + (2 * var["taille_case"] / 3) ,
-        "white",
-        "white",
+        y * var["taille_case"] + (2 * var["taille_case"] / 3),
+        couleur="white",
+        remplissage="white",
     )
 
 
