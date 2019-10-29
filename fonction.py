@@ -147,7 +147,11 @@ def affichage(carte):
 
 def tomber_de_pierre(carte):
     """Fais tomber les pierres"""
-    pass
+    for y in range(len(carte)-1):
+    	for x in range(len(carte)):
+    		if carte[y][x] == 'P' and carte[y+1][x]=='.':
+    			carte[y][x], carte[y+1][x] = '.' , 'P'
+    return carte
 
 
 def deplacer_perso(carte, deplacement):
