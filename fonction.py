@@ -65,6 +65,8 @@ def rockford(x, y):
 		couleur="black",
 		remplissage="red"
 	)
+	
+	
 	cercle(
 		x * var["taille_case"] + var["taille_case"] // 2,
 		y * var["taille_case"] + 2 * var["taille_case"] // 3,
@@ -72,7 +74,35 @@ def rockford(x, y):
 		couleur="black",
 		remplissage="lightpink",
 	)
-	
+	cercle(
+		x * var["taille_case"] + var["taille_case"] // 2,
+		y * var["taille_case"] + 2 * var["taille_case"] // 3 + var["taille_case"] // 12,
+		var["taille_case"] // 8,
+		couleur="black",
+		remplissage="black",
+	)
+	rectangle(
+		x * var["taille_case"] + var["taille_case"] // 2 - var["taille_case"] // 8,
+		y * var["taille_case"] + 2 * var["taille_case"] // 3 - var["taille_case"] // 12,
+		x * var["taille_case"] + var["taille_case"] // 2 + var["taille_case"] // 8,
+		y * var["taille_case"] + 2 * var["taille_case"] // 3 + var["taille_case"] // 12,
+		couleur="lightpink",
+		remplissage="lightpink",
+	)
+	cercle(
+		x * var["taille_case"] + var["taille_case"] // 3 + var["taille_case"] // 20,
+		y * var["taille_case"] + 2 * var["taille_case"] // 3 - var["taille_case"] // 20,
+		var["taille_case"] // 20,
+		couleur="black",
+		remplissage="black",
+	)
+	cercle(
+		x * var["taille_case"] + 2 * var["taille_case"] // 3 - var["taille_case"] // 20,
+		y * var["taille_case"] + 2 * var["taille_case"] // 3 - var["taille_case"] // 20,
+		var["taille_case"] // 20,
+		couleur="black",
+		remplissage="black",
+	)
 
 
 
