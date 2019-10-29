@@ -1,5 +1,6 @@
 var = {
-	"dimension_fenetre": 600, 
-	"nb_cases": 10, 
-	"taille_case": 600 // 10
+	"dimension_fenetre": 600,
+	"nb_cases": 10
 }
+
+var["taille_case"] = var["dimension_fenetre"] // var["nb_cases"]

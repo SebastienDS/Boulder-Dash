@@ -3,12 +3,12 @@ from variable import var
 
 
 def creer_map(nomdufichier):
-	fichier = open('map/nomdufichier', 'r' )
-	contenu = fichier.read()
-	contenu.pop(0)
-	for i in range(len(contenu)):
-		contenu[i] = list(contenu[i])
-	return contenu
+    fichier = open("map/nomdufichier", "r")
+    contenu = fichier.read()
+    contenu.pop(0)
+    for i in range(len(contenu)):
+        contenu[i] = list(contenu[i])
+    return contenu
 
 
 def terre(x, y):
@@ -57,14 +57,24 @@ def rockford(x, y):
         "black",
         "black",
     )
-    rectangle(
-        x * var["taille_case"] + var["taille_case"] / 3,
+
+    cercle(
+        x * var["taille_case"] + var["taille_case"] / 2,
         y * var["taille_case"] + 2 * var["taille_case"] / 3,
-        x * var["taille_case"] + 2 * var["taille_case"] / 3,
-        y * var["taille_case"] + 2 * var["taille_case"] / 3 + 2,
-        "black",
-        "black",
+        12,
+        couleur="black",
+        remplissage="black",
     )
+
+    rectangle(
+        x * var["taille_case"] + (var["taille_case"] / 2) - 12,
+        y * var["taille_case"] + (2 * var["taille_case"] / 3) - 12,
+        x * var["taille_case"] + (var["taille_case"] / 2) + 12,
+        y * var["taille_case"] + (2 * var["taille_case"] / 3) ,
+        "white",
+        "white",
+    )
+
 
 def mur(x, y):
     """Dessine un mur aux coordonnées x, y"""
