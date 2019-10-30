@@ -565,7 +565,7 @@ def coffre():
 
 def tomber_de_pierre(carte):
     """Fais tomber les pierres"""
-    for y in range(len(carte)):
+    for y in range(len(carte) -1):
         for x in range(len(carte[0])):
             if carte[y][x] == "P" and carte[y + 1][x] == ".":
                 carte[y][x], carte[y + 1][x] = ".", "P"
