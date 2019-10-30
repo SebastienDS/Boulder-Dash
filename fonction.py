@@ -218,7 +218,7 @@ def affichage(carte):
     fond()
     for y in range(len(carte)):  # y = ligne
         for x in range(len(carte[y])):  # x = colonne
-            dico[carte[y][x]](x, y)
+            dico[carte[y][x]](x + (5 - var["pos_x"]), y + (5 - var["pos_y"]))
 
 
 def fond():
