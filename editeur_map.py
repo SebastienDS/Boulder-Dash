@@ -56,12 +56,9 @@ def main():
 		elif type_ev == "ClicDroit":
 			carte[upemtk.clic_y(ev) // t][upemtk.clic_x(ev) // t] = "."
 
-
 		affiche_map(carte)
 		upemtk.mise_a_jour()
 
-	affiche_map(carte)
-	upemtk.mise_a_jour()
 	upemtk.attente_clic()
 	upemtk.ferme_fenetre()
 
