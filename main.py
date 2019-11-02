@@ -4,6 +4,7 @@ from variable import var
 
 
 def main():
+    score = '00000000'
     debug = -1
     mode = 0
     nbdiamand = 0
@@ -14,10 +15,11 @@ def main():
         efface_tout()
         fonction.tomber_de_pierre(carte)
         fonction.affichage(carte)
+        fonction.fond_score(score)
         coordretry = fonction.encadrement(
             "Retry",
-            var["dimension_fenetre"] // 7,
-            var["dimension_fenetre"] - 40,
+            var["dimension_fenetre"] // 15,
+            var["dimension_fenetre"] + 60,
             "white",
             "white",
             12,
@@ -27,7 +29,7 @@ def main():
         coordquitte = fonction.encadrement(
             "Exit_Game",
             4 * var["dimension_fenetre"] // 5,
-            var["dimension_fenetre"] - 40,
+            var["dimension_fenetre"] + 60,
             "white",
             "white",
             12,
@@ -73,7 +75,7 @@ if __name__ == "__main__":
     print(
         "Made by Uniiiiiifffffay corporation with the collaboration of Natsouuuuuu corporation!!! All right reserved!"
     )
-    cree_fenetre(var["dimension_fenetre"], var["dimension_fenetre"])
+    cree_fenetre(var["dimension_fenetre"], var["dimension_fenetre"] + 100)
     while True:
         if main() == 1:
             break

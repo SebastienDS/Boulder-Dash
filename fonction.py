@@ -121,7 +121,7 @@ def mur(x, y):
         var["taille_case"] + x * var["taille_case"],
         (var["taille_case"] + y * var["taille_case"] - 1) - 2 * var["taille_case"] // 3,
         couleur="white",
-        epaisseur=var["taille_case"] // 20,
+        epaisseur=var["taille_case"] // 25,
     )
     ligne(  # troisième ligne horizontale
         x * var["taille_case"],
@@ -129,7 +129,7 @@ def mur(x, y):
         var["taille_case"] + x * var["taille_case"],
         (var["taille_case"] + y * var["taille_case"] - 1) - var["taille_case"] // 3,
         couleur="white",
-        epaisseur=var["taille_case"] // 20,
+        epaisseur=var["taille_case"] // 25,
     )
     ligne(  # première ligne horitontale
         x * var["taille_case"],
@@ -137,7 +137,7 @@ def mur(x, y):
         var["taille_case"] + x * var["taille_case"],
         (var["taille_case"] + y * var["taille_case"] - 1) - 3 * var["taille_case"] // 3,
         couleur="white",
-        epaisseur=var["taille_case"] // 20,
+        epaisseur=var["taille_case"] // 25,
     )
     ligne(  # quatrième ligne horizontale
         x * var["taille_case"],
@@ -145,7 +145,7 @@ def mur(x, y):
         var["taille_case"] + x * var["taille_case"],
         var["taille_case"] + y * var["taille_case"] - 1,
         couleur="white",
-        epaisseur=var["taille_case"] // 20,
+        epaisseur=var["taille_case"] // 25,
     )
     ligne(  # Première ligne verticale
         x * var["taille_case"] + 1 * var["taille_case"] // 4,
@@ -153,7 +153,7 @@ def mur(x, y):
         x * var["taille_case"] + 1 * var["taille_case"] // 4,
         y * var["taille_case"] + var["taille_case"] // 3,
         couleur="white",
-        epaisseur=var["taille_case"] // 20,
+        epaisseur=var["taille_case"] // 25,
     )
     ligne(  # Deuxième ligne verticale
         x * var["taille_case"] + 1 * var["taille_case"] // 2,
@@ -161,7 +161,7 @@ def mur(x, y):
         x * var["taille_case"] + 1 * var["taille_case"] // 2,
         y * var["taille_case"] + 2 * var["taille_case"] // 3,
         couleur="white",
-        epaisseur=var["taille_case"] // 20,
+        epaisseur=var["taille_case"] // 25,
     )
     ligne(  # Troisième ligne verticale
         x * var["taille_case"] + 3 * var["taille_case"] // 4,
@@ -169,7 +169,7 @@ def mur(x, y):
         x * var["taille_case"] + 3 * var["taille_case"] // 4,
         y * var["taille_case"] + var["taille_case"],
         couleur="white",
-        epaisseur=var["taille_case"] // 20,
+        epaisseur=var["taille_case"] // 25,
     )
 
 
@@ -226,7 +226,7 @@ def fond():
         0,
         0,
         var["dimension_fenetre"],
-        var["dimension_fenetre"],
+        var["dimension_fenetre"] + 100,
         couleur="black",
         remplissage="black",
     )
@@ -237,11 +237,22 @@ def fond_victorieux():
         0,
         0,
         var["dimension_fenetre"],
-        var["dimension_fenetre"],
+        var["dimension_fenetre"] + 100,
         couleur="cyan",
         remplissage="cyan",
     )
 
+def fond_score(score):
+	rectangle(0, var["dimension_fenetre"], var["dimension_fenetre"], var["dimension_fenetre"] + 100, remplissage="black")
+	texte(
+		var["dimension_fenetre"] // 2,
+       	var["dimension_fenetre"] + 70,
+       	"Score:{}".format(score),
+       	couleur="white",
+        ancrage="center",
+        taille = 24,
+        police = 'Impact'
+    )
 
 def personnage_victorieux():
     cercle(
