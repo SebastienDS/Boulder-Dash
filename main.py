@@ -38,6 +38,7 @@ def main():
         )
         ev = donne_evenement()
         type_ev = type_evenement(ev)
+        fonction.pousser_pierre(carte, ev)
         if type_ev == "ClicGauche":
             coords = [clic_x(ev), clic_y(ev)]
             mode = fonction.quitte_or_retry(coords, coordretry, coordquitte)
