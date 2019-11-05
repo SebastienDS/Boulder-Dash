@@ -1,6 +1,7 @@
 from upemtk import *
 from variable import var
 from random import choice
+from time import sleep
 
 
 def creer_map(nomdufichier):
@@ -590,6 +591,7 @@ def coffre():
 	)
 
 
+
 def tomber_de_pierre(carte):
 	"""Fais tomber les pierres"""
 	for y in range(len(carte) -1):
@@ -597,48 +599,64 @@ def tomber_de_pierre(carte):
 			if carte[y][x] == "P" and carte[y + 1][x] == ".":
 				carte[y][x], carte[y + 1][x] = ".", "P"
 
+def deplacement_possible(carte, t):
+	"""Test si le deplacement est possible"""	
+	if t == "Right" and carte[var["pos_y"]][var["pos_x"] + 1] in ["G", ".", "E", "D"]:
+		return t
+	elif t == "Left" and carte[var["pos_y"]][var["pos_x"] - 1] in ["G", ".", "E", "D"]:
+		return t
+	elif t == "Up" and carte[var["pos_y"] - 1][var["pos_x"]] in ["G", ".", "E", "D"]:
+		return t
+	elif t == "Down" and carte[var["pos_y"] + 1][var["pos_x"]] in ["G", ".", "E", "D"]:
+		return t
+	return False
 
-def deplacer_perso(carte, nbdiamand, ev):
+def deplacer_perso(carte, nbdiamand, direction, pf=False):
 	"""Test si le perso peut se deplacer, si oui, deplace le perso sur la carte en fonction de la touche utilisé"""
-	type_ev = type_evenement(ev)
-	if type_ev == "Touche":
-		t = touche(ev)
-		if t == "Right" and carte[var["pos_y"]][var["pos_x"] + 1] in ["G", ".", "E"]:
-			carte[var["pos_y"]][var["pos_x"] + 1] = "R"
-			carte[var["pos_y"]][var["pos_x"]] = "."
-			var["pos_x"] += 1
-		elif t == "Left" and carte[var["pos_y"]][var["pos_x"] - 1] in ["G", ".", "E"]:
-			carte[var["pos_y"]][var["pos_x"] - 1] = "R"
-			carte[var["pos_y"]][var["pos_x"]] = "."
-			var["pos_x"] -= 1
-		elif t == "Up" and carte[var["pos_y"] - 1][var["pos_x"]] in ["G", ".", "E"]:
-			carte[var["pos_y"] - 1][var["pos_x"]] = "R"
-			carte[var["pos_y"]][var["pos_x"]] = "."
-			var["pos_y"] -= 1
-		elif t == "Down" and carte[var["pos_y"] + 1][var["pos_x"]] in ["G", ".", "E"]:
-			carte[var["pos_y"] + 1][var["pos_x"]] = "R"
-			carte[var["pos_y"]][var["pos_x"]] = "."
-			var["pos_y"] += 1
-		elif t == "Right" and carte[var["pos_y"]][var["pos_x"] + 1] in ["D"]:
-			carte[var["pos_y"]][var["pos_x"] + 1] = "R"
-			carte[var["pos_y"]][var["pos_x"]] = "."
-			var["pos_x"] += 1
-			nbdiamand += 1
-		elif t == "Left" and carte[var["pos_y"]][var["pos_x"] - 1] in ["D"]:
-			carte[var["pos_y"]][var["pos_x"] - 1] = "R"
-			carte[var["pos_y"]][var["pos_x"]] = "."
-			var["pos_x"] -= 1
-			nbdiamand += 1
-		elif t == "Up" and carte[var["pos_y"] - 1][var["pos_x"]] in ["D"]:
-			carte[var["pos_y"] - 1][var["pos_x"]] = "R"
-			carte[var["pos_y"]][var["pos_x"]] = "."
-			var["pos_y"] -= 1
-			nbdiamand += 1
-		elif t == "Down" and carte[var["pos_y"] + 1][var["pos_x"]] in ["D"]:
-			carte[var["pos_y"] + 1][var["pos_x"]] = "R"
-			carte[var["pos_y"]][var["pos_x"]] = "."
-			var["pos_y"] += 1
-			nbdiamand += 1
+	if not pf:
+		type_ev = type_evenement(direction)
+		if type_ev == "Touche":
+			direction = touche(direction)
+		direction = deplacement_possible(carte, direction)
+
+	test_diam = carte[var["pos_y"]][var["pos_x"] + 1] in ["D"]
+	if direction == "Right" and test_diam:
+		carte[var["pos_y"]][var["pos_x"] + 1] = "R"
+		carte[var["pos_y"]][var["pos_x"]] = "."
+		var["pos_x"] += 1
+		nbdiamand += 1
+	elif direction == "Left" and test_diam:
+		carte[var["pos_y"]][var["pos_x"] - 1] = "R"
+		carte[var["pos_y"]][var["pos_x"]] = "."
+		var["pos_x"] -= 1
+		nbdiamand += 1
+	elif direction == "Up" and test_diam:
+		carte[var["pos_y"] - 1][var["pos_x"]] = "R"
+		carte[var["pos_y"]][var["pos_x"]] = "."
+		var["pos_y"] -= 1
+		nbdiamand += 1
+	elif direction == "Down" and test_diam:
+		carte[var["pos_y"] + 1][var["pos_x"]] = "R"
+		carte[var["pos_y"]][var["pos_x"]] = "."
+		var["pos_y"] += 1
+		nbdiamand += 1
+
+	elif direction == "Right":
+		carte[var["pos_y"]][var["pos_x"] + 1] = "R"
+		carte[var["pos_y"]][var["pos_x"]] = "."
+		var["pos_x"] += 1
+	elif direction == "Left":
+		carte[var["pos_y"]][var["pos_x"] - 1] = "R"
+		carte[var["pos_y"]][var["pos_x"]] = "."
+		var["pos_x"] -= 1
+	elif direction == "Up":
+		carte[var["pos_y"] - 1][var["pos_x"]] = "R"
+		carte[var["pos_y"]][var["pos_x"]] = "."
+		var["pos_y"] -= 1
+	elif direction == "Down":
+		carte[var["pos_y"] + 1][var["pos_x"]] = "R"
+		carte[var["pos_y"]][var["pos_x"]] = "."
+		var["pos_y"] += 1
 	return nbdiamand
 
 
@@ -655,6 +673,7 @@ def pousser_pierre(carte, ev):
 
 def loose(carte):
 	if carte[var["pos_y"] - 1][var["pos_x"]] == "P":
+		sleep(0.3)
 		efface_tout()
 		fond()
 		personnage_defaitiste()
@@ -673,6 +692,7 @@ def loose(carte):
 def win():
 	"""Regarde si l'utilisateur gagne"""
 	if var["pos_x"] == var["pos_sortie_x"] and var["pos_y"] == var["pos_sortie_y"]:
+		sleep(0.3)
 		efface_tout()
 		fond_victorieux()
 		texte(
