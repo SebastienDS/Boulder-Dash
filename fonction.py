@@ -254,7 +254,7 @@ def fond_victorieux():
 	)
 
 def fond_score(score):
-	'''Affiche une banderolle avec le score'''
+	'''Affiche une banderolle avec le score et le bouton exitgame et retry'''
 	rectangle(0, var["dimension_fenetre"], var["dimension_fenetre"], var["dimension_fenetre"] + 100, remplissage="black")
 	texte(
 		var["dimension_fenetre"] // 2,
@@ -508,6 +508,7 @@ def personnage_defaitiste():
 
 
 def coffre():
+	# or milieu, droite puis gauche
 	rectangle(
 		var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 8,
 		var["dimension_fenetre"] // 12,
@@ -532,6 +533,7 @@ def coffre():
 		couleur="gold",
 		remplissage="gold",
 	)
+	#COffre
 	rectangle(
 		var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 6,
 		var["dimension_fenetre"] // 10,
@@ -540,6 +542,7 @@ def coffre():
 		couleur="saddle brown",
 		remplissage="saddle brown",
 	)
+	#ligne noir droite puis gauche
 	ligne(
 		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 12,
 		var["dimension_fenetre"] // 10,
@@ -556,6 +559,7 @@ def coffre():
 		couleur="black",
 		epaisseur=10,
 	)
+	#ligne rayonnement droite à gauche(inversement deux dernier)
 	ligne(
 		2.75 * var["dimension_fenetre"] // 4,
 		15,
@@ -654,6 +658,9 @@ def pousser_pierre(carte, ev):
 
 
 def loose(carte):
+	'''test si joueur s'est pris une pierre
+	si oui met l'image de défaite et retourne True
+	'''
 	if carte[var["pos_y"] - 1][var["pos_x"]] == "P":
 		efface_tout()
 		fond()
@@ -671,7 +678,8 @@ def loose(carte):
 
 
 def win():
-	"""Regarde si l'utilisateur gagne"""
+	"""Regarde si l'utilisateur gagne
+	si oui, met l'image de victoire et retourne True"""
 	if var["pos_x"] == var["pos_sortie_x"] and var["pos_y"] == var["pos_sortie_y"]:
 		efface_tout()
 		fond_victorieux()
@@ -704,7 +712,7 @@ def initialiser_partie(carte):
 def debug(carte, nbdiamand):
 	"""Perso joue aléatoirement"""
 	while True:
-		x = choice(["Up", "Down", "Left", "Right"])
+		x = choice(["Up", "Down", "Left", "Right"]) 
 		if x == "Right" and carte[var["pos_y"]][var["pos_x"] + 1] in ["D"]:
 			carte[var["pos_y"]][var["pos_x"] + 1] = "R"
 			carte[var["pos_y"]][var["pos_x"]] = "."
@@ -770,6 +778,8 @@ def encadrement(
 
 
 def quitte_or_retry(a, coordretry, coordquitte):
+	'''Regarde si l'utilisateur à décidé de quitté ou de recommencer
+	et retourne donc sa réponse'''
 	if (
 		a[0] < coordretry[2]
 		and a[0] > coordretry[0]
