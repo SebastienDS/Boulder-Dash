@@ -608,6 +608,7 @@ def coffre():
 
 
 def test_deplacement(carte, direction, liste):
+	"""test si le deplacement est possible"""
     return (
         carte[var["pos_y"] + _touche[direction][1]][
             var["pos_x"] + _touche[direction][0]
@@ -617,6 +618,7 @@ def test_deplacement(carte, direction, liste):
 
 
 def deplace(carte, t):
+	"""se deplace dans la direction voulu et met a jour les positions du joueur"""
     carte[var["pos_y"] + _touche[t][1]][var["pos_x"] + _touche[t][0]] = "R"
     carte[var["pos_y"]][var["pos_x"]] = "."
     var["pos_x"] += _touche[t][0]
