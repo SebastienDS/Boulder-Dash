@@ -4,7 +4,7 @@ from variable import var
 
 
 def main():
-    score = '00000000'
+    score = '00000000' 
     debug = -1
     mode = 0
     nbdiamand = 0
