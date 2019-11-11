@@ -264,17 +264,24 @@ def fond_victorieux():
 
 
 def fond_score(score):
-	'''Affiche une banderolle avec le score et le bouton exitgame et retry'''
-	rectangle(0, var["dimension_fenetre"], var["dimension_fenetre"], var["dimension_fenetre"] + 100, remplissage="black")
-	texte(
-		var["dimension_fenetre"] // 2,
-		var["dimension_fenetre"] + 70,
-		"Score:{}".format(score),
-		couleur="white",
-		ancrage="center",
-		taille = 24,
-		police = 'Impact'
-	)
+    """Affiche une banderolle avec le score et le bouton exitgame et retry"""
+    rectangle(
+        0,
+        var["dimension_fenetre"],
+        var["dimension_fenetre"],
+        var["dimension_fenetre"] + 100,
+        remplissage="black",
+    )
+    texte(
+        var["dimension_fenetre"] // 2,
+        var["dimension_fenetre"] + 70,
+        "Score:{}".format(score),
+        couleur="white",
+        ancrage="center",
+        taille=24,
+        police="Impact",
+    )
+
 
 def personnage_victorieux():
     """Affiche ce personnage en cas de victoire"""
@@ -518,102 +525,102 @@ def personnage_defaitiste():
 
 
 def coffre():
-	# or milieu, droite puis gauche
-	rectangle(
-		var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 8,
-		var["dimension_fenetre"] // 12,
-		var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 12,
-		var["dimension_fenetre"] // 10,
-		couleur="gold",
-		remplissage="gold",
-	)
-	rectangle(
-		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 8,
-		var["dimension_fenetre"] // 12,
-		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 12,
-		var["dimension_fenetre"] // 10,
-		couleur="gold",
-		remplissage="gold",
-	)
-	rectangle(
-		var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 24,
-		var["dimension_fenetre"] // 12,
-		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 24,
-		var["dimension_fenetre"] // 10,
-		couleur="gold",
-		remplissage="gold",
-	)
-	#COffre
-	rectangle(
-		var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 6,
-		var["dimension_fenetre"] // 10,
-		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 6,
-		var["dimension_fenetre"] // 5,
-		couleur="saddle brown",
-		remplissage="saddle brown",
-	)
-	#ligne noir droite puis gauche
-	ligne(
-		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 12,
-		var["dimension_fenetre"] // 10,
-		var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 12,
-		var["dimension_fenetre"] // 5,
-		couleur="black",
-		epaisseur=10,
-	)
-	ligne(
-		var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 12,
-		var["dimension_fenetre"] // 10,
-		var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 12,
-		var["dimension_fenetre"] // 5,
-		couleur="black",
-		epaisseur=10,
-	)
-	#ligne rayonnement droite à gauche(inversement deux dernier)
-	ligne(
-		2.75 * var["dimension_fenetre"] // 4,
-		15,
-		3 * var["dimension_fenetre"] // 5,
-		var["dimension_fenetre"] // 14,
-		couleur="gold",
-		epaisseur=3,
-	)
-	ligne(
-		3 * var["dimension_fenetre"] // 5,
-		15,
-		8 * var["dimension_fenetre"] // 15,
-		var["dimension_fenetre"] // 14,
-		couleur="gold",
-		epaisseur=3,
-	)
-	ligne(
-		1.5 * var["dimension_fenetre"] // 5,
-		15,
-		6 * var["dimension_fenetre"] // 15,
-		var["dimension_fenetre"] // 14,
-		couleur="gold",
-		epaisseur=3,
-	)
-	ligne(
-		2 * var["dimension_fenetre"] // 5,
-		15,
-		var["dimension_fenetre"] // 2,
-		var["dimension_fenetre"] // 14,
-		couleur="gold",
-		epaisseur=3,
-	)
+    # or milieu, droite puis gauche
+    rectangle(
+        var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 8,
+        var["dimension_fenetre"] // 12,
+        var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 12,
+        var["dimension_fenetre"] // 10,
+        couleur="gold",
+        remplissage="gold",
+    )
+    rectangle(
+        var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 8,
+        var["dimension_fenetre"] // 12,
+        var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 12,
+        var["dimension_fenetre"] // 10,
+        couleur="gold",
+        remplissage="gold",
+    )
+    rectangle(
+        var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 24,
+        var["dimension_fenetre"] // 12,
+        var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 24,
+        var["dimension_fenetre"] // 10,
+        couleur="gold",
+        remplissage="gold",
+    )
+    # COffre
+    rectangle(
+        var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 6,
+        var["dimension_fenetre"] // 10,
+        var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 6,
+        var["dimension_fenetre"] // 5,
+        couleur="saddle brown",
+        remplissage="saddle brown",
+    )
+    # ligne noir droite puis gauche
+    ligne(
+        var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 12,
+        var["dimension_fenetre"] // 10,
+        var["dimension_fenetre"] // 2 + var["dimension_fenetre"] // 12,
+        var["dimension_fenetre"] // 5,
+        couleur="black",
+        epaisseur=10,
+    )
+    ligne(
+        var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 12,
+        var["dimension_fenetre"] // 10,
+        var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 12,
+        var["dimension_fenetre"] // 5,
+        couleur="black",
+        epaisseur=10,
+    )
+    # ligne rayonnement droite à gauche(inversement deux dernier)
+    ligne(
+        2.75 * var["dimension_fenetre"] // 4,
+        15,
+        3 * var["dimension_fenetre"] // 5,
+        var["dimension_fenetre"] // 14,
+        couleur="gold",
+        epaisseur=3,
+    )
+    ligne(
+        3 * var["dimension_fenetre"] // 5,
+        15,
+        8 * var["dimension_fenetre"] // 15,
+        var["dimension_fenetre"] // 14,
+        couleur="gold",
+        epaisseur=3,
+    )
+    ligne(
+        1.5 * var["dimension_fenetre"] // 5,
+        15,
+        6 * var["dimension_fenetre"] // 15,
+        var["dimension_fenetre"] // 14,
+        couleur="gold",
+        epaisseur=3,
+    )
+    ligne(
+        2 * var["dimension_fenetre"] // 5,
+        15,
+        var["dimension_fenetre"] // 2,
+        var["dimension_fenetre"] // 14,
+        couleur="gold",
+        epaisseur=3,
+    )
 
 
 def tomber_de_pierre(carte):
-	"""Fais tomber les pierres"""
-	for y in range(len(carte) -1):
-		for x in range(len(carte[0])):
-			if carte[y][x] == "P" and carte[y + 1][x] == ".":
-				carte[y][x], carte[y + 1][x] = ".", "P"
+    """Fais tomber les pierres"""
+    for y in range(len(carte) - 1):
+        for x in range(len(carte[0])):
+            if carte[y][x] == "P" and carte[y + 1][x] == ".":
+                carte[y][x], carte[y + 1][x] = ".", "P"
 
 
 def test_deplacement(carte, direction, liste):
-	"""test si le deplacement est possible"""
+    """test si le deplacement est possible"""
     return (
         carte[var["pos_y"] + _touche[direction][1]][
             var["pos_x"] + _touche[direction][0]
@@ -623,7 +630,7 @@ def test_deplacement(carte, direction, liste):
 
 
 def deplace(carte, t):
-	"""se deplace dans la direction voulu et met a jour les positions du joueur"""
+    """se deplace dans la direction voulu et met a jour les positions du joueur"""
     carte[var["pos_y"] + _touche[t][1]][var["pos_x"] + _touche[t][0]] = "R"
     carte[var["pos_y"]][var["pos_x"]] = "."
     var["pos_x"] += _touche[t][0]
@@ -679,43 +686,44 @@ def tomber_de_pierre(carte):
 
 
 def loose(carte):
-	'''test si joueur s'est pris une pierre
+    """test si joueur s'est pris une pierre
 	si oui met l'image de défaite et retourne True
-	'''
-	if carte[var["pos_y"] - 1][var["pos_x"]] == "P":
-		efface_tout()
-		fond()
-		personnage_defaitiste()
-		texte(
-			var["dimension_fenetre"] // 2,
-			var["dimension_fenetre"] // 4,
-			"DÉFAITE !",
-			couleur="red",
-			ancrage="center",
-			taille=75,
-		)
-		return True
-	return False
+	"""
+    if carte[var["pos_y"] - 1][var["pos_x"]] == "P":
+        efface_tout()
+        fond()
+        personnage_defaitiste()
+        texte(
+            var["dimension_fenetre"] // 2,
+            var["dimension_fenetre"] // 4,
+            "DÉFAITE !",
+            couleur="red",
+            ancrage="center",
+            taille=75,
+        )
+        return True
+    return False
 
 
 def win():
-	"""Regarde si l'utilisateur gagne
+    """Regarde si l'utilisateur gagne
 	si oui, met l'image de victoire et retourne True"""
-	if var["pos_x"] == var["pos_sortie_x"] and var["pos_y"] == var["pos_sortie_y"]:
-		efface_tout()
-		fond_victorieux()
-		texte(
-			var["dimension_fenetre"] // 2,
-			var["dimension_fenetre"] // 3,
-			"Victoire !",
-			couleur="black",
-			ancrage="center",
-			taille=75,
-		)
-		personnage_victorieux()
-		coffre()
-		return True
-	return False
+    if var["pos_x"] == var["pos_sortie_x"] and var["pos_y"] == var["pos_sortie_y"]:
+        efface_tout()
+        fond_victorieux()
+        texte(
+            var["dimension_fenetre"] // 2,
+            var["dimension_fenetre"] // 3,
+            "Victoire !",
+            couleur="black",
+            ancrage="center",
+            taille=75,
+        )
+        personnage_victorieux()
+        coffre()
+        return True
+    return False
+
 
 def initialiser_partie(carte):
     """Initialise les parametres par defaut de la partie"""
@@ -742,6 +750,7 @@ def debug(carte, nbdiamand):
             return nbdiamand
     return nbdiamand
 
+
 def encadrement(
     msg, x, y, couleurTXT, couleurCadre, Taille, Epaisseur, Espacement
 ):  # Ecrit et encadre un texte puis donne les coordonnées du cadre (pour clic)
@@ -761,23 +770,24 @@ def encadrement(
 
 
 def quitte_or_retry(a, coordretry, coordquitte):
-	'''Regarde si l'utilisateur à décidé de quitté ou de recommencer
-	et retourne donc sa réponse'''
-	if (
-		a[0] < coordretry[2]
-		and a[0] > coordretry[0]
-		and a[1] < coordretry[3]
-		and a[1] > coordretry[1]
-	):
-		return 2
-	if (
-		a[0] < coordquitte[2]
-		and a[0] > coordquitte[0]
-		and a[1] < coordquitte[3]
-		and a[1] > coordquitte[1]
-	):
-		return 1
-	return 0
+    """Regarde si l'utilisateur à décidé de quitté ou de recommencer
+	et retourne donc sa réponse"""
+    if (
+        a[0] < coordretry[2]
+        and a[0] > coordretry[0]
+        and a[1] < coordretry[3]
+        and a[1] > coordretry[1]
+    ):
+        return 2
+    if (
+        a[0] < coordquitte[2]
+        and a[0] > coordquitte[0]
+        and a[1] < coordquitte[3]
+        and a[1] > coordquitte[1]
+    ):
+        return 1
+    return 0
+
 
 if __name__ == "__main__":
     import doctest
