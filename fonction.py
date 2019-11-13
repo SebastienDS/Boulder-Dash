@@ -1,6 +1,7 @@
 from upemtk import *
 from variable import var, _touche
 from random import choice
+from time import time
 import esthetique
 
 
@@ -79,8 +80,8 @@ def affichage(carte):
     """Affiche la carte"""
     fond()
     carte[2][0] = "F"
-    for y in range(len(carte)):  # y = ligne
-        for x in range(len(carte[y])):  # x = colonne
+    for y in range(len(carte) -1, -1, -1):  # y = ligne
+        for x in range(len(carte[y]) -1, -1, -1):  # x = colonne
             dico[carte[y][x]](
                 x + (var["nb_cases"] // 2 - var["pos_x"]),
                 y + (var["nb_cases"] // 2 - var["pos_y"]),
@@ -95,9 +96,14 @@ def fond_victorieux():
     """Affiche le fond en cas de victoire"""
     esthetique.fond_victorieux()
 
-def fond_score(score):
+def fond_score_temps_diams(score, tempstotal, nbdiamand, diamand, temps):
     """Affiche une banderolle avec le score et le bouton exitgame et retry"""
-    esthetique.fond_score(score)
+    tempsrestant = int(tempstotal) - int(temps)
+    print(temps)
+    nbdiamandrestant = diamand - nbdiamand
+    if nbdiamandrestant < 0:
+        nbdiamandrestant = 0
+    esthetique.fond_score_temps_diams(score, tempsrestant, nbdiamandrestant)
 
 def personnage_victorieux():
     """Affiche ce personnage en cas de victoire"""
