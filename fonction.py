@@ -11,13 +11,16 @@ def creer_map(nomdufichier):
         contenu = fichier.read()  # lis le fichier
         contenu = contenu.split(
             "\n"
-        )  # Construit une matriche de la carte /chaque ligne = chaine de caractère
-        contenu.pop(0)  # Enlève le temps et nombre de diamands
+        )                                # Construit une matriche de la carte /chaque ligne = chaine de caractère
+        ted = contenu.pop(0)             # Enlève le temps et nombre de diamands
+        ted = ted.split()
+        t = ted[0][:-1]
+        d = ted[1][:-1]
         for i in range(len(contenu)):
             contenu[i] = list(
                 contenu[i]
             )  # transforme la chaine de caractère en une list('abc'=['a','b','c'])
-    return contenu
+    return contenu, t, d
 
 
 def terre(x, y):
@@ -215,7 +218,27 @@ def rien(x, y):
     """Ne fait rien(cas = ".")"""
     pass
 
-
+def pierre_eboulement(x, y):
+    """Affiche pierre qui tombe"""
+    rectangle(
+        x * var["taille_case"],
+        y * var["taille_case"],
+        var["taille_case"] + x * var["taille_case"] - 1,
+        var["taille_case"] + y * var["taille_case"] - 1,
+        couleur="green",
+        remplissage="brown",
+    )
+    
+def diamand_eboulement(x, y):
+    rectangle(
+        x * var["taille_case"],
+        y * var["taille_case"],
+        var["taille_case"] + x * var["taille_case"] - 1,
+        var["taille_case"] + y * var["taille_case"] - 1,
+        couleur="green",
+        remplissage="yellow",
+    )
+    
 # on associe les lettres aux fonctions les dessinant
 dico = {
     "G": terre,  # carre marron
@@ -225,12 +248,16 @@ dico = {
     "D": diamand,  # carre bleu
     "E": sortie,  # carre vert
     ".": rien,
+    "P1": pierre_eboulement,
+    "D1": diamand_eboulement,
+    "F": mur
 }
 
 
 def affichage(carte):
     """Affiche la carte"""
     fond()
+    carte[2][0] = "F"
     for y in range(len(carte)):  # y = ligne
         for x in range(len(carte[y])):  # x = colonne
             dico[carte[y][x]](
@@ -611,13 +638,23 @@ def coffre():
     )
 
 
-def tomber_de_pierre(carte):
+def tomber_de_pierre_ou_diamand(carte):
     """Fais tomber les pierres"""
+    for y in range(len(carte) - 2, -1, -1 ):
+        for x in range(len(carte[0]) - 1, -1, -1):
+            if carte[y][x] in ["P", "P1"] and carte[y + 1][x] == ".":
+                carte[y][x], carte[y + 1][x] = ".", "P1"
+            if carte[y][x] in ["D", "D1"] and carte[y + 1][x] == ".":
+                carte[y][x], carte[y + 1][x] = ".", "D1"
+
+def test_pierre_ou_diamand_eboulement(carte):
     for y in range(len(carte) - 1):
         for x in range(len(carte[0])):
-            if carte[y][x] == "P" and carte[y + 1][x] == ".":
-                carte[y][x], carte[y + 1][x] = ".", "P"
-
+            if carte[y][x] == "P1" and carte[y + 1][x] not in [".", "R"]:
+                carte[y][x] = "P"
+            if carte[y][x] == "D1" and carte[y + 1][x] not in [".", "R"]:
+                carte[y][x] = "D"
+                
 
 def test_deplacement(carte, direction, liste):
     """test si le deplacement est possible"""
@@ -628,7 +665,6 @@ def test_deplacement(carte, direction, liste):
         in liste
     )
 
-
 def deplace(carte, t):
     """se deplace dans la direction voulu et met a jour les positions du joueur"""
     carte[var["pos_y"] + _touche[t][1]][var["pos_x"] + _touche[t][0]] = "R"
@@ -637,7 +673,7 @@ def deplace(carte, t):
     var["pos_y"] += _touche[t][1]
 
 
-def deplacer_perso(carte, nbdiamand, ev):
+def deplacer_perso(carte, nbdiamand, ev, diamand):
     """Test si le perso peut se deplacer, si oui, deplace le perso sur la carte en fonction de la touche utilisé"""
     type_ev = type_evenement(ev)
     if type_ev == "Touche":
@@ -646,9 +682,13 @@ def deplacer_perso(carte, nbdiamand, ev):
             if test_deplacement(carte, t, "D"):
                 deplace(carte, t)
                 return nbdiamand + 1
-            elif test_deplacement(carte, t, {"G", ".", "E"}):
+            elif test_deplacement(carte, t, {"G", ".","F"}):
                 deplace(carte, t)
                 return nbdiamand
+            if nbdiamand >= diamand and test_deplacement(carte,t, "E"):
+                deplace(carte, t)
+                return nbdiamand
+                
     return nbdiamand
 
 
@@ -677,19 +717,11 @@ def pousser_pierre(carte, ev):
             ) = (".", "P")
 
 
-def tomber_de_pierre(carte):
-    """Fais tomber les pierres"""
-    for y in range(len(carte) - 1):
-        for x in range(len(carte[0])):
-            if carte[y][x] == "P" and carte[y + 1][x] == ".":
-                carte[y][x], carte[y + 1][x] = ".", "P"
-
-
 def loose(carte):
     """test si joueur s'est pris une pierre
 	si oui met l'image de défaite et retourne True
 	"""
-    if carte[var["pos_y"] - 1][var["pos_x"]] == "P":
+    if carte[var["pos_y"] - 1][var["pos_x"]] in ["P1", "D1"]:
         efface_tout()
         fond()
         personnage_defaitiste()
@@ -701,14 +733,15 @@ def loose(carte):
             ancrage="center",
             taille=75,
         )
+     #if time
         return True
     return False
 
 
-def win():
+def win(nbdiamand, diamand):
     """Regarde si l'utilisateur gagne
 	si oui, met l'image de victoire et retourne True"""
-    if var["pos_x"] == var["pos_sortie_x"] and var["pos_y"] == var["pos_sortie_y"]:
+    if var["pos_x"] == var["pos_sortie_x"] and var["pos_y"] == var["pos_sortie_y"] and nbdiamand >= diamand:
         efface_tout()
         fond_victorieux()
         texte(
