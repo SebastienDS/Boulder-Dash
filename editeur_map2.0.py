@@ -1,4 +1,5 @@
 import pygame
+import sys
 
 
 
@@ -63,7 +64,7 @@ class editeur_map:
 
 
 def main():
-	editeur = editeur_map((800, 700), 22, 18)
+	editeur = editeur_map((800, 700), int(sys.argv[1]), int(sys.argv[2]))
 	run = True
 	while run:
 		for event in pygame.event.get():

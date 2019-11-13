@@ -1,7 +1,8 @@
 import upemtk
+import sys
 
-w_map = 10
-h_map = 10
+w_map = int(sys.argv[1])
+h_map = int(sys.argv[2])
 taille_fen = (800, 700)
 t = int(min(taille_fen) / max([w_map, h_map]))
 
@@ -39,6 +40,7 @@ def main():
 
 
 	while True:
+		upemtk.efface_tout()
 		ev = upemtk.donne_evenement()
 		type_ev = upemtk.type_evenement(ev)
 		if type_ev == "ClicGauche":
