@@ -75,6 +75,8 @@ dico = {
     "F": mur
 }
 
+def timer(tempstotal, tempscommencement):
+    return int(tempstotal) - (int(time() - tempscommencement))
 
 def affichage(carte):
     """Affiche la carte"""
@@ -96,10 +98,8 @@ def fond_victorieux():
     """Affiche le fond en cas de victoire"""
     esthetique.fond_victorieux()
 
-def fond_score_temps_diams(score, tempstotal, nbdiamand, diamand, temps):
+def fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand):
     """Affiche une banderolle avec le score et le bouton exitgame et retry"""
-    tempsrestant = int(tempstotal) - int(temps)
-    print(temps)
     nbdiamandrestant = diamand - nbdiamand
     if nbdiamandrestant < 0:
         nbdiamandrestant = 0
@@ -197,11 +197,11 @@ def pousser_pierre(carte, ev):
             ) = (".", "P")
 
 
-def loose(carte):
+def loose(carte, tempsrestant):
     """test si joueur s'est pris une pierre
     si oui met l'image de défaite et retourne True
     """
-    if carte[var["pos_y"] - 1][var["pos_x"]] in ["P1", "D1"]:
+    if carte[var["pos_y"] - 1][var["pos_x"]] in ["P1", "D1"] or tempsrestant <= 0:
         efface_tout()
         fond()
         personnage_defaitiste()
@@ -213,7 +213,6 @@ def loose(carte):
             ancrage="center",
             taille=75,
         )
-     #if time
         return True
     return False
 

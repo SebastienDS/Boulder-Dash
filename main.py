@@ -5,7 +5,7 @@ from time import time
 
 
 def main():
-    temps = time()
+    tempscommencement = time()
     ev1 = donne_evenement()
     score = '00000000' 
     debug = -1
@@ -20,8 +20,8 @@ def main():
             fonction.test_pierre_ou_diamand_eboulement(carte)
             fonction.tomber_de_pierre_ou_diamand(carte)
         fonction.affichage(carte)
-        temps = time() - temps
-        fonction.fond_score_temps_diams(score, tempstotal, nbdiamand, diamand, temps)
+        tempsrestant = fonction.timer(tempstotal, tempscommencement)
+        fonction.fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand)
         coordretry = fonction.encadrement(
             "Retry",
             var["dimension_fenetre"] // 15,
@@ -57,7 +57,7 @@ def main():
         mise_a_jour()
         if mode != 0:
             return mode
-        if fonction.win(nbdiamand, diamand) or fonction.loose(carte):
+        if fonction.win(nbdiamand, diamand) or fonction.loose(carte, tempsrestant):
             while mode == 0:
                 coordretry = fonction.encadrement(
                     "Retry", var["dimension_fenetre"] // 7, 40, "red", "red", 12, 5, 5
