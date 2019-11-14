@@ -24,60 +24,28 @@ def creer_map(nomdufichier):
     return contenu, t, d
 
 
-def terre(x, y):
-    """Dessine la terre aux coordonnées x, y"""
-    esthetique.terre(x, y)
-
-def pierre(x, y):
-    """Dessine une pierre aux coordonnées x, y"""
-    esthetique.pierre(x, y)
-
-def rockford(x, y):
-    """Dessine rockford aux coordonnées x, y"""
-    # main à gauche
-    esthetique.rockford(x, y)
-
-def mur(x, y):
-    """Dessine un mur aux coordonnées x, y"""
-    esthetique.mur(x, y)
-
-def diamand(x, y):
-    """Dessine un diamand aux coordonnées x, y"""
-    esthetique.diamand(x, y)
-
-def sortie(x, y):
-    """Dessine la sortie aux coordonnées x, y"""
-    esthetique.sortie(x, y)
-
 def rien(x, y):
     """Ne fait rien(cas = ".")"""
     pass
-
-def pierre_eboulement(x, y):
-    """Affiche pierre qui tombe"""
-    esthetique.pierre_eboulement(x, y)
-    
-def diamand_eboulement(x, y):
-    esthetique.diamand_eboulement(x, y)
     
 # on associe les lettres aux fonctions les dessinant
 dico = {
-    "G": terre,  # carre marron
-    "P": pierre,  # rond gris
-    "R": rockford,  # rond blanc
-    "W": mur,  # carre noir
-    "D": diamand,  # carre bleu
-    "E": sortie,  # carre vert
+    "G": esthetique.terre,  # carre marron
+    "P": esthetique.pierre,  # rond gris
+    "R": esthetique.rockford,  # rond blanc
+    "W": esthetique.mur,  # carre noir
+    "D": esthetique.diamand,  # carre bleu
+    "E": esthetique.sortie,  # carre vert
     ".": rien,
-    "P1": pierre_eboulement,
-    "D1": diamand_eboulement,
-    "F": mur
+    "P1": esthetique.pierre_eboulement,
+    "D1": esthetique.diamand_eboulement,
+    "F": esthetique.mur
 }
 
 
 def affichage(carte):
     """Affiche la carte"""
-    fond()
+    esthetique.fond("black")
     carte[2][0] = "F"
     for y in range(len(carte)):  # y = ligne
         for x in range(len(carte[y])):  # x = colonne
@@ -85,31 +53,6 @@ def affichage(carte):
                 x + (var["nb_cases"] // 2 - var["pos_x"]),
                 y + (var["nb_cases"] // 2 - var["pos_y"]),
             )  # centre le perso
-
-
-def fond():
-    """Affiche le fond"""
-    esthetique.fond()
-
-def fond_victorieux():
-    """Affiche le fond en cas de victoire"""
-    esthetique.fond_victorieux()
-
-def fond_score(score):
-    """Affiche une banderolle avec le score et le bouton exitgame et retry"""
-    esthetique.fond_score(score)
-
-def personnage_victorieux():
-    """Affiche ce personnage en cas de victoire"""
-    esthetique.personnage_victorieux()
-
-def personnage_defaitiste():
-    """Affiche ce personnage en cas de défaite"""
-    esthetique.personnage_defaitiste()
-
-def coffre():
-    """Affiche un coffre"""
-    esthetique.coffre()
 
 
 def tomber_de_pierre_ou_diamand(carte):
@@ -197,8 +140,8 @@ def loose(carte):
     """
     if carte[var["pos_y"] - 1][var["pos_x"]] in ["P1", "D1"]:
         efface_tout()
-        fond()
-        personnage_defaitiste()
+        esthetique.fond("black")
+        esthetique.personnage_defaitiste()
         texte(
             var["dimension_fenetre"] // 2,
             var["dimension_fenetre"] // 4,
@@ -217,7 +160,7 @@ def win(nbdiamand, diamand):
     si oui, met l'image de victoire et retourne True"""
     if var["pos_x"] == var["pos_sortie_x"] and var["pos_y"] == var["pos_sortie_y"] and nbdiamand >= diamand:
         efface_tout()
-        fond_victorieux()
+        esthetique.fond_victorieux("cyan")
         texte(
             var["dimension_fenetre"] // 2,
             var["dimension_fenetre"] // 3,
@@ -226,8 +169,8 @@ def win(nbdiamand, diamand):
             ancrage="center",
             taille=75,
         )
-        personnage_victorieux()
-        coffre()
+        esthetique.personnage_victorieux()
+        esthetique.coffre()
         return True
     return False
 

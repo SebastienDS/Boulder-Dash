@@ -2,6 +2,7 @@ from upemtk import *
 from variable import *
 
 def terre(x, y):
+    """Dessine la terre aux coordonnées x, y"""
     rectangle(
         x * var["taille_case"],
         y * var["taille_case"],
@@ -12,6 +13,7 @@ def terre(x, y):
     )
 
 def pierre(x, y):
+    """Dessine une pierre aux coordonnées x, y"""
     cercle(
         x * var["taille_case"] + var["taille_case"] / 2,
         y * var["taille_case"] + var["taille_case"] / 2,
@@ -21,6 +23,8 @@ def pierre(x, y):
     )
 
 def rockford(x, y):
+    """Dessine rockford aux coordonnées x, y"""
+    # main à gauche
     cercle(
         x * var["taille_case"] + var["taille_case"] // 2 - var["taille_case"] // 4,
         y * var["taille_case"] + 3 * var["taille_case"] // 4 - var["taille_case"] // 8,
@@ -94,6 +98,7 @@ def rockford(x, y):
     )
 
 def mur(x, y):
+    """Dessine un mur aux coordonnées x, y"""
     rectangle(  # fond
         x * var["taille_case"],
         y * var["taille_case"],
@@ -160,6 +165,7 @@ def mur(x, y):
     )
 
 def diamand(x, y):
+    """Dessine un diamand aux coordonnées x, y"""
     rectangle(
         x * var["taille_case"],
         y * var["taille_case"],
@@ -170,6 +176,7 @@ def diamand(x, y):
     )
 
 def sortie(x, y):
+    """Dessine la sortie aux coordonnées x, y"""
     rectangle(
         x * var["taille_case"],
         y * var["taille_case"],
@@ -180,6 +187,7 @@ def sortie(x, y):
     )
 
 def pierre_eboulement(x, y):
+    """Affiche pierre qui tombe"""
     rectangle(
         x * var["taille_case"],
         y * var["taille_case"],
@@ -199,27 +207,19 @@ def diamand_eboulement(x, y):
         remplissage="yellow",
     )
 
-def fond():
+def fond(couleur):
+    """Affiche le fond"""
     rectangle(
         0,
         0,
         var["dimension_fenetre"],
         var["dimension_fenetre"] + 100,
-        couleur="black",
-        remplissage="black",
-    )
-
-def fond_victorieux():
-    rectangle(
-        0,
-        0,
-        var["dimension_fenetre"],
-        var["dimension_fenetre"] + 100,
-        couleur="cyan",
-        remplissage="cyan",
-    )
+        couleur=couleur,
+        remplissage=couleur,
+    )    
 
 def fond_score(score):
+    """Affiche une banderolle avec le score et le bouton exitgame et retry"""
     rectangle(
         0,
         var["dimension_fenetre"],
@@ -238,6 +238,7 @@ def fond_score(score):
     )
 
 def personnage_victorieux():
+    """Affiche ce personnage en cas de victoire"""
     cercle(
         var["dimension_fenetre"] // 2,
         2 * var["dimension_fenetre"] // 3 + var["dimension_fenetre"] // 12,
@@ -346,6 +347,7 @@ def personnage_victorieux():
     )
 
 def personnage_defaitiste():
+    """Affiche ce personnage en cas de défaite"""
     cercle(
         var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 4,
         3 * var["dimension_fenetre"] // 4 - var["dimension_fenetre"] // 8,
@@ -474,6 +476,7 @@ def personnage_defaitiste():
     )
 
 def coffre():
+    """Affiche un coffre"""
     # or milieu, droite puis gauche
     rectangle(
         var["dimension_fenetre"] // 2 - var["dimension_fenetre"] // 8,

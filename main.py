@@ -1,4 +1,5 @@
 import fonction
+import esthetique
 from upemtk import *
 from variable import var
 from time import time
@@ -19,7 +20,7 @@ def main():
             fonction.test_pierre_ou_diamand_eboulement(carte)
             fonction.tomber_de_pierre_ou_diamand(carte)
         fonction.affichage(carte)
-        fonction.fond_score(score)
+        esthetique.fond_score(score)
         coordretry = fonction.encadrement(
             "Retry",
             var["dimension_fenetre"] // 15,
