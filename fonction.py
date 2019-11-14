@@ -1,6 +1,7 @@
 from upemtk import *
 from variable import var, _touche
 from random import choice
+from time import time
 import esthetique
 
 
@@ -42,17 +43,27 @@ dico = {
     "F": esthetique.mur
 }
 
+def timer(tempstotal, tempscommencement):
+    return int(tempstotal) - (int(time() - tempscommencement))
 
 def affichage(carte):
     """Affiche la carte"""
     esthetique.fond("black")
     carte[2][0] = "F"
-    for y in range(len(carte)):  # y = ligne
-        for x in range(len(carte[y])):  # x = colonne
+    for y in range(len(carte) -1, -1, -1):  # y = ligne
+        for x in range(len(carte[y]) -1, -1, -1):  # x = colonne
             dico[carte[y][x]](
                 x + (var["nb_cases"] // 2 - var["pos_x"]),
                 y + (var["nb_cases"] // 2 - var["pos_y"]),
             )  # centre le perso
+
+
+def fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand):
+    """Affiche une banderolle avec le score et le bouton exitgame et retry"""
+    nbdiamandrestant = diamand - nbdiamand
+    if nbdiamandrestant < 0:
+        nbdiamandrestant = 0
+    esthetique.fond_score_temps_diams(score, tempsrestant, nbdiamandrestant)
 
 
 def tomber_de_pierre_ou_diamand(carte):
@@ -134,11 +145,11 @@ def pousser_pierre(carte, ev):
             ) = (".", "P")
 
 
-def loose(carte):
+def loose(carte, tempsrestant):
     """test si joueur s'est pris une pierre
     si oui met l'image de défaite et retourne True
     """
-    if carte[var["pos_y"] - 1][var["pos_x"]] in ["P1", "D1"]:
+    if carte[var["pos_y"] - 1][var["pos_x"]] in ["P1", "D1"] or tempsrestant <= 0:
         efface_tout()
         esthetique.fond("black")
         esthetique.personnage_defaitiste()
@@ -150,7 +161,6 @@ def loose(carte):
             ancrage="center",
             taille=75,
         )
-     #if time
         return True
     return False
 

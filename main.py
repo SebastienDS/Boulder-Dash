@@ -6,21 +6,25 @@ from time import time
 
 
 def main():
+    tempscommencement = time()
     ev1 = donne_evenement()
     score = '00000000' 
     debug = -1
     mode = 0
     nbdiamand = 0
-    carte, temps, diamand = fonction.creer_map("map2.txt")
+    carte, tempstotal, diamand = fonction.creer_map("map2.txt")
     diamand = int(diamand)
     fonction.initialiser_partie(carte)
     while True:
         efface_tout()
-        if not int(time()) % 2:
+        if not int(time()) % 1:
             fonction.test_pierre_ou_diamand_eboulement(carte)
             fonction.tomber_de_pierre_ou_diamand(carte)
         fonction.affichage(carte)
-        esthetique.fond_score(score)
+
+        tempsrestant = fonction.timer(tempstotal, tempscommencement)
+        fonction.fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand)
+
         coordretry = fonction.encadrement(
             "Retry",
             var["dimension_fenetre"] // 15,
@@ -56,7 +60,7 @@ def main():
         mise_a_jour()
         if mode != 0:
             return mode
-        if fonction.win(nbdiamand, diamand) or fonction.loose(carte):
+        if fonction.win(nbdiamand, diamand) or fonction.loose(carte, tempsrestant):
             while mode == 0:
                 coordretry = fonction.encadrement(
                     "Retry", var["dimension_fenetre"] // 7, 40, "red", "red", 12, 5, 5

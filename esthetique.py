@@ -110,7 +110,7 @@ def mur(x, y):
     ligne(  # deuxième ligne horizontale
         x * var["taille_case"],
         y * var["taille_case"] + var["taille_case"] // 3,
-        var["taille_case"] + x * var["taille_case"],
+        var["taille_case"] + x * var["taille_case"] + 1,
         (var["taille_case"] + y * var["taille_case"] - 1) - 2 * var["taille_case"] // 3,
         couleur="white",
         epaisseur=var["taille_case"] // 25,
@@ -118,7 +118,7 @@ def mur(x, y):
     ligne(  # troisième ligne horizontale
         x * var["taille_case"],
         y * var["taille_case"] + 2 * var["taille_case"] // 3,
-        var["taille_case"] + x * var["taille_case"],
+        var["taille_case"] + x * var["taille_case"] + 1,
         (var["taille_case"] + y * var["taille_case"] - 1) - var["taille_case"] // 3,
         couleur="white",
         epaisseur=var["taille_case"] // 25,
@@ -126,7 +126,7 @@ def mur(x, y):
     ligne(  # première ligne horitontale
         x * var["taille_case"],
         y * var["taille_case"],
-        var["taille_case"] + x * var["taille_case"],
+        var["taille_case"] + x * var["taille_case"] + 1,
         (var["taille_case"] + y * var["taille_case"] - 1) - 3 * var["taille_case"] // 3,
         couleur="white",
         epaisseur=var["taille_case"] // 25,
@@ -134,7 +134,7 @@ def mur(x, y):
     ligne(  # quatrième ligne horizontale
         x * var["taille_case"],
         y * var["taille_case"] + 3 * var["taille_case"] // 3,
-        var["taille_case"] + x * var["taille_case"],
+        var["taille_case"] + x * var["taille_case"] + 1,
         var["taille_case"] + y * var["taille_case"] - 1,
         couleur="white",
         epaisseur=var["taille_case"] // 25,
@@ -166,14 +166,52 @@ def mur(x, y):
 
 def diamand(x, y):
     """Dessine un diamand aux coordonnées x, y"""
-    rectangle(
-        x * var["taille_case"],
-        y * var["taille_case"],
-        var["taille_case"] + x * var["taille_case"] - 1,
-        var["taille_case"] + y * var["taille_case"] - 1,
-        couleur="lightblue",
-        remplissage="lightblue",
+    polygone(
+        [(x * var["taille_case"] + var["taille_case"] // 2,
+        y * var["taille_case"] + var["taille_case"]),
+        (x * var["taille_case"],
+        y * var["taille_case"] + var["taille_case"] // 6),
+        (x * var["taille_case"] + var["taille_case"] // 6,
+        y * var["taille_case"] + 1),
+        (x * var["taille_case"] + 5 * var["taille_case"] // 6,
+        y * var["taille_case"] + 1),
+        (x * var["taille_case"] + var["taille_case"],
+        y * var["taille_case"] + var["taille_case"] // 6),
+        ],
+        couleur = "lightblue",
+        remplissage = "lightblue"
     )
+    for i in range(4):
+        ligne(
+            x * var["taille_case"] + i * var["taille_case"] // 3,
+            y * var["taille_case"] + var["taille_case"] // 6,
+            x * var["taille_case"] + var["taille_case"] // 2,
+            y * var["taille_case"] + var["taille_case"],
+            epaisseur=var["taille_case"] // 25
+        )
+    for i in range(3):
+        ligne(
+            x * var["taille_case"] + var["taille_case"] // 6 + i * var["taille_case"] // 3,
+            y * var["taille_case"],
+            x * var["taille_case"] + var["taille_case"] // 3 + i * var["taille_case"] // 3,
+            y * var["taille_case"] + var["taille_case"] // 6,
+            epaisseur=var["taille_case"] // 25
+        )
+        ligne(
+            x * var["taille_case"] + var["taille_case"] // 6 + i * var["taille_case"] // 3,
+            y * var["taille_case"],
+            x * var["taille_case"] + i * var["taille_case"] // 3,
+            y * var["taille_case"] + var["taille_case"] // 6,
+            epaisseur=var["taille_case"] // 25
+        )
+    ligne(
+        x * var["taille_case"],
+        y * var["taille_case"] + var["taille_case"] // 6 ,
+        x * var["taille_case"] + var["taille_case"],
+        y * var["taille_case"] + var["taille_case"] // 6,
+        epaisseur=var["taille_case"] // 25
+    )
+
 
 def sortie(x, y):
     """Dessine la sortie aux coordonnées x, y"""
@@ -188,23 +226,173 @@ def sortie(x, y):
 
 def pierre_eboulement(x, y):
     """Affiche pierre qui tombe"""
-    rectangle(
-        x * var["taille_case"],
-        y * var["taille_case"],
-        var["taille_case"] + x * var["taille_case"] - 1,
-        var["taille_case"] + y * var["taille_case"] - 1,
-        couleur="green",
-        remplissage="brown",
+    polygone(
+        [(x * var["taille_case"],
+        y * var["taille_case"] + var["taille_case"] // 2),
+        (x * var["taille_case"],
+        y * var["taille_case"] - var["taille_case"] // 2),
+        (x * var["taille_case"] + var["taille_case"] // 4,
+        y * var["taille_case"] - var["taille_case"] // 4),
+        (x * var["taille_case"] + var["taille_case"] // 2,
+        y * var["taille_case"] - var["taille_case"] // 2),
+        (x * var["taille_case"] + 3 * var["taille_case"] // 4,
+        y * var["taille_case"] - var["taille_case"] // 4),    
+        (x * var["taille_case"] + var["taille_case"],
+        y * var["taille_case"] - var["taille_case"] // 2),
+        (x * var["taille_case"] + var["taille_case"],
+        y * var["taille_case"] + var["taille_case"] // 2)
+        ],
+        couleur="red",
+        remplissage="red",
+    )
+    polygone(
+        [(x * var["taille_case"] + var["taille_case"] //14,
+        y * var["taille_case"] + var["taille_case"] // 2 ),
+        (x * var["taille_case"] + var["taille_case"] //14,
+        y * var["taille_case"] - var["taille_case"] // 2 + var["taille_case"] // 8),
+        (x * var["taille_case"] + var["taille_case"] // 4,
+        y * var["taille_case"] - var["taille_case"] // 4 + var["taille_case"] // 8),
+        (x * var["taille_case"] + var["taille_case"] // 2,
+        y * var["taille_case"] - var["taille_case"] // 2 + var["taille_case"] // 8),
+        (x * var["taille_case"] + 3 * var["taille_case"] // 4,
+        y * var["taille_case"] - var["taille_case"] // 4 + var["taille_case"] // 8),    
+        (x * var["taille_case"] + var["taille_case"] - var["taille_case"] // 14,
+        y * var["taille_case"] - var["taille_case"] // 2 + var["taille_case"] // 8),
+        (x * var["taille_case"] + var["taille_case"] - var["taille_case"] // 14,
+        y * var["taille_case"] + var["taille_case"] // 2)
+        ],
+        couleur="orange",
+        remplissage="orange",
+    )
+    polygone(
+        [(x * var["taille_case"] + var["taille_case"] // 8,
+        y * var["taille_case"] + var["taille_case"] // 2),
+        (x * var["taille_case"] + var["taille_case"] // 8,
+        y * var["taille_case"] - var["taille_case"] // 2 + var["taille_case"] // 4),
+        (x * var["taille_case"] + var["taille_case"] // 4,
+        y * var["taille_case"] - var["taille_case"] // 4 + var["taille_case"] // 4),
+        (x * var["taille_case"] + var["taille_case"] // 2,
+        y * var["taille_case"] - var["taille_case"] // 2 + var["taille_case"] // 4),
+        (x * var["taille_case"] + 3 * var["taille_case"] // 4,
+        y * var["taille_case"] - var["taille_case"] // 4 + var["taille_case"] // 4),    
+        (x * var["taille_case"] + var["taille_case"] - var["taille_case"] // 8,
+        y * var["taille_case"] - var["taille_case"] // 2 + var["taille_case"] // 4),
+        (x * var["taille_case"] + var["taille_case"] - var["taille_case"] // 8,
+        y * var["taille_case"] + var["taille_case"] // 2)
+        ],
+        couleur="yellow",
+        remplissage="yellow",
+    )
+    cercle(
+        x * var["taille_case"] + var["taille_case"] / 2,
+        y * var["taille_case"] + var["taille_case"] / 2,
+        (var["taille_case"] / 2) - 1,
+        couleur="gray39",
+        remplissage="gray39",
     )
 
 def diamand_eboulement(x, y):
-    rectangle(
-        x * var["taille_case"],
-        y * var["taille_case"],
-        var["taille_case"] + x * var["taille_case"] - 1,
-        var["taille_case"] + y * var["taille_case"] - 1,
-        couleur="green",
+    polygone(
+        [(x * var["taille_case"],
+        y * var["taille_case"] + var["taille_case"] // 6),
+        (x * var["taille_case"],
+        y * var["taille_case"] - var["taille_case"] // 2),
+        (x * var["taille_case"] + var["taille_case"] // 4,
+        y * var["taille_case"] - var["taille_case"] // 4),
+        (x * var["taille_case"] + var["taille_case"] // 2,
+        y * var["taille_case"] - var["taille_case"] // 2),
+        (x * var["taille_case"] + 3 * var["taille_case"] // 4,
+        y * var["taille_case"] - var["taille_case"] // 4),    
+        (x * var["taille_case"] + var["taille_case"],
+        y * var["taille_case"] - var["taille_case"] // 2),
+        (x * var["taille_case"] + var["taille_case"],
+        y * var["taille_case"] + var["taille_case"] // 6)
+        ],
+        couleur="red",
+        remplissage="red",
+    )
+    polygone(
+        [(x * var["taille_case"] + var["taille_case"] //14,
+        y * var["taille_case"] + var["taille_case"] // 6 ),
+        (x * var["taille_case"] + var["taille_case"] //14,
+        y * var["taille_case"] - var["taille_case"] // 2 + var["taille_case"] // 8),
+        (x * var["taille_case"] + var["taille_case"] // 4,
+        y * var["taille_case"] - var["taille_case"] // 4 + var["taille_case"] // 8),
+        (x * var["taille_case"] + var["taille_case"] // 2,
+        y * var["taille_case"] - var["taille_case"] // 2 + var["taille_case"] // 8),
+        (x * var["taille_case"] + 3 * var["taille_case"] // 4,
+        y * var["taille_case"] - var["taille_case"] // 4 + var["taille_case"] // 8),    
+        (x * var["taille_case"] + var["taille_case"] - var["taille_case"] // 14,
+        y * var["taille_case"] - var["taille_case"] // 2 + var["taille_case"] // 8),
+        (x * var["taille_case"] + var["taille_case"] - var["taille_case"] // 14,
+        y * var["taille_case"] + var["taille_case"] // 6)
+        ],
+        couleur="orange",
+        remplissage="orange",
+    )
+    polygone(
+        [(x * var["taille_case"] + var["taille_case"] // 8,
+        y * var["taille_case"] + var["taille_case"] // 6),
+        (x * var["taille_case"] + var["taille_case"] // 8,
+        y * var["taille_case"] - var["taille_case"] // 2 + var["taille_case"] // 4),
+        (x * var["taille_case"] + var["taille_case"] // 4,
+        y * var["taille_case"] - var["taille_case"] // 4 + var["taille_case"] // 4),
+        (x * var["taille_case"] + var["taille_case"] // 2,
+        y * var["taille_case"] - var["taille_case"] // 2 + var["taille_case"] // 4),
+        (x * var["taille_case"] + 3 * var["taille_case"] // 4,
+        y * var["taille_case"] - var["taille_case"] // 4 + var["taille_case"] // 4),    
+        (x * var["taille_case"] + var["taille_case"] - var["taille_case"] // 8,
+        y * var["taille_case"] - var["taille_case"] // 2 + var["taille_case"] // 4),
+        (x * var["taille_case"] + var["taille_case"] - var["taille_case"] // 8,
+        y * var["taille_case"] + var["taille_case"] // 6)
+        ],
+        couleur="yellow",
         remplissage="yellow",
+    )
+    polygone(
+        [(x * var["taille_case"] + var["taille_case"] // 2,
+        y * var["taille_case"] + var["taille_case"]),
+        (x * var["taille_case"],
+        y * var["taille_case"] + var["taille_case"] // 6),
+        (x * var["taille_case"] + var["taille_case"] // 6,
+        y * var["taille_case"] + 1),
+        (x * var["taille_case"] + 5 * var["taille_case"] // 6,
+        y * var["taille_case"] + 1),
+        (x * var["taille_case"] + var["taille_case"],
+        y * var["taille_case"] + var["taille_case"] // 6),
+        ],
+        couleur = "lightblue",
+        remplissage = "lightblue"
+    )
+    for i in range(4):
+        ligne(
+            x * var["taille_case"] + i * var["taille_case"] // 3,
+            y * var["taille_case"] + var["taille_case"] // 6,
+            x * var["taille_case"] + var["taille_case"] // 2,
+            y * var["taille_case"] + var["taille_case"],
+            epaisseur=var["taille_case"] // 25
+        )
+    for i in range(3):
+        ligne(
+            x * var["taille_case"] + var["taille_case"] // 6 + i * var["taille_case"] // 3,
+            y * var["taille_case"],
+            x * var["taille_case"] + var["taille_case"] // 3 + i * var["taille_case"] // 3,
+            y * var["taille_case"] + var["taille_case"] // 6,
+            epaisseur=var["taille_case"] // 25
+        )
+        ligne(
+            x * var["taille_case"] + var["taille_case"] // 6 + i * var["taille_case"] // 3,
+            y * var["taille_case"],
+            x * var["taille_case"] + i * var["taille_case"] // 3,
+            y * var["taille_case"] + var["taille_case"] // 6,
+            epaisseur=var["taille_case"] // 25
+        )
+    ligne(
+        x * var["taille_case"],
+        y * var["taille_case"] + var["taille_case"] // 6 ,
+        x * var["taille_case"] + var["taille_case"],
+        y * var["taille_case"] + var["taille_case"] // 6,
+        epaisseur=var["taille_case"] // 25
     )
 
 def fond(couleur):
@@ -218,8 +406,8 @@ def fond(couleur):
         remplissage=couleur,
     )    
 
-def fond_score(score):
-    """Affiche une banderolle avec le score et le bouton exitgame et retry"""
+
+def fond_score_temps_diams(score, tempsrestant, nbdiamandrestant):
     rectangle(
         0,
         var["dimension_fenetre"],
@@ -233,7 +421,25 @@ def fond_score(score):
         "Score:{}".format(score),
         couleur="white",
         ancrage="center",
-        taille=24,
+        taille=15,
+        police="Impact",
+    )
+    texte(
+        var["dimension_fenetre"] // 4,
+        var["dimension_fenetre"] + 30,
+        "Temps Restant:{}".format(tempsrestant),
+        couleur="white",
+        ancrage="center",
+        taille=15,
+        police="Impact",
+    )
+    texte(
+        3 * var["dimension_fenetre"] // 4,
+        var["dimension_fenetre"] + 30,
+        "Nombre de diamand manquant:{}".format(nbdiamandrestant),
+        couleur="white",
+        ancrage="center",
+        taille=15,
         police="Impact",
     )
 
