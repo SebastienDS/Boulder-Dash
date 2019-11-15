@@ -170,7 +170,7 @@ def win(nbdiamand, diamand):
     si oui, met l'image de victoire et retourne True"""
     if var["pos_x"] == var["pos_sortie_x"] and var["pos_y"] == var["pos_sortie_y"] and nbdiamand >= diamand:
         efface_tout()
-        esthetique.fond_victorieux("cyan")
+        esthetique.fond("cyan")
         texte(
             var["dimension_fenetre"] // 2,
             var["dimension_fenetre"] // 3,
@@ -195,6 +195,8 @@ def initialiser_partie(carte):
             elif carte[y][x] == "E":  # on recupere la position de l'arrivée
                 var["pos_sortie_x"] = x
                 var["pos_sortie_y"] = y
+
+    var["taille_case"] = var["dimension_fenetre"] // var["nb_cases"]
 
 
 def debug(carte, nbdiamand):
