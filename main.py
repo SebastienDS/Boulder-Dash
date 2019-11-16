@@ -20,11 +20,9 @@ def main():
         if not int(time()) % 1:
             fonction.test_pierre_ou_diamand_eboulement(carte)
             fonction.tomber_de_pierre_ou_diamand(carte)
-        fonction.affichage(carte)
-
+        fonction.affichage(carte, nbdiamand, diamand)
         tempsrestant = fonction.timer(tempstotal, tempscommencement)
         fonction.fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand)
-
         coordretry = fonction.encadrement(
             "Retry",
             var["dimension_fenetre"] // 15,
@@ -47,16 +45,19 @@ def main():
         )
         ev = donne_evenement()
         type_ev = type_evenement(ev)
-        fonction.pousser_pierre(carte, ev)
+        if fonction.test_pousser_pierre(carte, ev):
+            fonction.pousser_pierre(carte, touche(ev))
         if type_ev == "ClicGauche":
             coords = [clic_x(ev), clic_y(ev)]
             mode = fonction.quitte_or_retry(coords, coordretry, coordquitte)
         if type_ev == "Touche" and touche(ev) == "d":
             debug *= -1
         if debug == 1:
-            nbdiamand = fonction.debug(carte, nbdiamand)
+            nbdiamand, debug = fonction.debug(carte, nbdiamand, debug)
         else:
             nbdiamand = fonction.deplacer_perso(carte, nbdiamand, ev, diamand)
+        if var["porte"] == 1:
+            fonction.enleve_porte(carte, ev, nbdiamand, diamand)
         mise_a_jour()
         if mode != 0:
             return mode
