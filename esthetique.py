@@ -543,7 +543,7 @@ def fond_score_temps_diams(score, tempsrestant, nbdiamandrestant):
     texte(
         3 * var["dimension_fenetre"] // 4,
         var["dimension_fenetre"] + 30,
-        "Nombre de diamant(s) manquant(s):{}".format(nbdiamandrestant),
+        "Nombre de diamant{0} manquant{0}:{1}".format(["", "s"][nbdiamandrestant > 1], nbdiamandrestant),
         couleur="white",
         ancrage="center",
         taille=15,
