@@ -7,8 +7,9 @@ from time import time
 
 def main():
     tempscommencement = time()
+    temps_pierre = time()
     ev1 = donne_evenement()
-    score = '00000000' 
+    score = "00000000"
     debug = -1
     mode = 0
     nbdiamand = 0
@@ -17,12 +18,17 @@ def main():
     fonction.initialiser_partie(carte)
     while True:
         efface_tout()
-        if not int(time()) % 1:
+
+        #mettre chaque P1 avec son temps de changement d'etat afin de tomber apres un certain temps sans avoir de temps commun entre tous les P1
+        if time() - temps_pierre > 0.3:            
             fonction.test_pierre_ou_diamand_eboulement(carte)
             fonction.tomber_de_pierre_ou_diamand(carte)
+            temps_pierre = time()
+
         fonction.affichage(carte, nbdiamand, diamand)
         tempsrestant = fonction.timer(tempstotal, tempscommencement)
         fonction.fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand)
+
         coordretry = fonction.encadrement(
             "Retry",
             var["dimension_fenetre"] // 15,
@@ -43,6 +49,7 @@ def main():
             5,
             5,
         )
+
         ev = donne_evenement()
         type_ev = type_evenement(ev)
         if fonction.test_pousser_pierre(carte, ev):
@@ -79,7 +86,8 @@ def main():
                 a = attente_clic()
                 mode = fonction.quitte_or_retry(a, coordretry, coordquitte)
             return mode
-        
+
+
 if __name__ == "__main__":
     print(
         "Made by Uniiiiiifffffay corporation with the collaboration of Natsouuuuuu corporation!!! All right reserved!"
