@@ -49,7 +49,7 @@ def save(carte):
 	else:
 		test_input("Nom déjà utilisé", "str")
 		reponse = test_input("Ecraser ?", "str")
-		if reponse == "oui":
+		if reponse.lower() in {"oui", "y", "o", "yes"}:
 			save_map(carte, file_name, temps, diamand)
 		else:
 			test_input("Map non enregistrée", "str")
