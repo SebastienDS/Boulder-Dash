@@ -95,7 +95,7 @@ def rockford(x, y, taille_case, nbdiamand, diamand):
     cercle(
         x * taille_case + 2 * taille_case // 3 - taille_case // 20,
         y * taille_case + 2 * taille_case // 3 - taille_case // 20,
-        var["taille_case"] // 20,
+        taille_case // 20,
         couleur="black",
         remplissage="black",
     )
@@ -188,7 +188,7 @@ def mur(x, y, taille_case, *args):
         x * taille_case + 1 * taille_case // 2,
         y * taille_case + 2 * taille_case // 3,
         couleur="white",
-        epaisseur=var["taille_case"] // 25,
+        epaisseur=taille_case // 25,
     )
     ligne(  # Troisième ligne verticale
         x * taille_case + 3 * taille_case // 4,
@@ -234,7 +234,7 @@ def diamand(x, y, taille_case, *args):
             y * taille_case,
             x * taille_case + i * taille_case // 3,
             y * taille_case + taille_case // 6,
-            epaisseur=var["taille_case"] // 25,
+            epaisseur=taille_case // 25,
         )
     ligne(
         x * taille_case,
@@ -533,7 +533,7 @@ def diamand_eboulement(x, y, taille_case, *args):
             y * taille_case,
             x * taille_case + i * taille_case // 3,
             y * taille_case + taille_case // 6,
-            epaisseur=var["taille_case"] // 25,
+            epaisseur=taille_case // 25,
         )
     ligne(
         x * taille_case,
