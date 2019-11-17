@@ -51,7 +51,7 @@ def affichage(carte, nbdiamand, diamand):
     """Affiche la carte"""
     esthetique.fond("black")
     if var["porte"] == 0:
-        esthetique.lumiere_esca()
+        esthetique.lumiere_escalier()
     esthetique.lumiere()
     carte[2][0] = "F"
     for y in range(len(carte) -1, -1, -1):  # y = ligne

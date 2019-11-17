@@ -1,7 +1,7 @@
 from upemtk import *
 from variable import *
 
-def terre(x, y, nbdiamand, diamand):
+def terre(x, y, *args):
     """Dessine la terre aux coordonnées x, y"""
     rectangle(
         x * var["taille_case"],
@@ -12,7 +12,7 @@ def terre(x, y, nbdiamand, diamand):
         remplissage="sienna4",
     )
 
-def pierre(x, y, nbdiamand, diamand):
+def pierre(x, y, *args):
     """Dessine une pierre aux coordonnées x, y"""
     cercle(
         x * var["taille_case"] + var["taille_case"] / 2,
@@ -128,7 +128,7 @@ def rockford(x, y, nbdiamand, diamand):
             remplissage = "yellow"
             )            
             
-def mur(x, y, nbdiamand, diamand):
+def mur(x, y, *args):
     """Dessine un mur aux coordonnées x, y"""
     rectangle(  # fond
         x * var["taille_case"],
@@ -195,7 +195,7 @@ def mur(x, y, nbdiamand, diamand):
         epaisseur=var["taille_case"] // 25,
     )
 
-def diamand(x, y, nbdiamand, diamand):
+def diamand(x, y, *args):
     """Dessine un diamand aux coordonnées x, y"""
     polygone(
         [(x * var["taille_case"] + var["taille_case"] // 2,
@@ -244,7 +244,7 @@ def diamand(x, y, nbdiamand, diamand):
     )
 
 
-def sortie(x, y, nbdiamand, diamand):
+def sortie(x, y, *args):
     """Dessine la sortie aux coordonnées x, y"""
     if var["porte"] == 0:
         rectangle(
@@ -331,7 +331,7 @@ def sortie(x, y, nbdiamand, diamand):
         remplissage ="black"
         )
 
-def pierre_eboulement(x, y, nbdiamand, diamand):
+def pierre_eboulement(x, y, *args):
     """Affiche pierre qui tombe"""
     polygone(
         [(x * var["taille_case"],
@@ -398,7 +398,7 @@ def pierre_eboulement(x, y, nbdiamand, diamand):
         remplissage="gray39",
     )
 
-def diamand_eboulement(x, y, nbdiamand, diamand):
+def diamand_eboulement(x, y, *args):
     polygone(
         [(x * var["taille_case"],
         y * var["taille_case"] + var["taille_case"] // 6),
@@ -891,7 +891,7 @@ def lumiere():
         couleur = 'goldenrod3',
         remplissage = 'goldenrod3'
     )
-def lumiere_esca():
+def lumiere_escalier():
     cercle(
         (var['pos_sortie_x'] + (var["nb_cases"] // 2 - var["pos_x"])) * var["taille_case"] + var["taille_case"] // 2,
         var['pos_sortie_y'] + (var["nb_cases"] // 2 - var["pos_y"]) * var["taille_case"] + var["taille_case"] // 2,
