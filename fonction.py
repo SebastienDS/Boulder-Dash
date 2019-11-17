@@ -31,12 +31,12 @@ def rien(x, y, nbdiamand, diamand):
     
 # on associe les lettres aux fonctions les dessinant
 dico = {
-    "G": esthetique.terre,  # carre marron
-    "P": esthetique.pierre,  # rond gris
-    "R": esthetique.rockford,  # rond blanc
-    "W": esthetique.mur,  # carre noir
-    "D": esthetique.diamand,  # carre bleu
-    "E": esthetique.sortie,  # carre vert
+    "G": esthetique.terre,  
+    "P": esthetique.pierre,  
+    "R": esthetique.rockford,  
+    "W": esthetique.mur,
+    "D": esthetique.diamand,  
+    "E": esthetique.sortie, 
     ".": rien,
     "P1": esthetique.pierre_eboulement,
     "D1": esthetique.diamand_eboulement,

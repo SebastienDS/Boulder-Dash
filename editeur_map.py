@@ -1,19 +1,20 @@
 import upemtk
 from variable import var
 import esthetique
+import os
 
 
-def rien(*_):
+def rien(*args):
 	pass
 
 
 dico = {
-    "G": esthetique.terre,  # carre marron
-    "P": esthetique.pierre,  # rond gris
-    "R": esthetique.rockford,  # rond blanc
-    "W": esthetique.mur,  # carre noir
-    "D": esthetique.diamand,  # carre bleu
-    "E": esthetique.sortie,  # carre vert
+    "G": esthetique.terre,  
+    "P": esthetique.pierre,  
+    "R": esthetique.rockford,  
+    "W": esthetique.mur,  
+    "D": esthetique.diamand,  
+    "E": esthetique.sortie,  
     ".": rien,
     "P1": esthetique.pierre_eboulement,
     "D1": esthetique.diamand_eboulement,
@@ -21,25 +22,37 @@ dico = {
 }
 
 
-def affiche_map(carte, w_map, h_map):
+def affiche_map(carte):
 	esthetique.fond("black")
-	for j in range(h_map):
-		for i in range(w_map):
+	for j in range(var["h_map"]):
+		for i in range(var["w_map"]):
 			dico[carte[j][i]](i, j, 0, 0)
 
 
-def save(carte, w_map, h_map):
-	file_name = test_input("Nom de la map:", "str")
-	temps = test_input("temps limite:", "int")
-	diamand = test_input("diamand requis:", "int")
-	print(file_name)
+def save_map(carte, file_name, temps, diamand):
 	with open("map/{}.txt".format(file_name), "w") as f:
 		f.write("{}s {}d\n".format(temps, diamand))
-		for j in range(h_map):
-			for i in range(w_map):
+		for j in range(var["h_map"]):
+			for i in range(var["w_map"]):
 				f.write(carte[j][i])
 			f.write("\n")
 	test_input("Map sauvegardée", "str")
+
+
+def save(carte):
+	file_name = test_input("Nom de la map:", "str")
+	temps = test_input("temps limite:", "int")
+	diamand = test_input("diamand requis:", "int")
+
+	if not os.path.isfile("map/{}.txt".format(file_name)):
+		save_map(carte, file_name, temps, diamand)
+	else:
+		test_input("Nom déjà utilisé", "str")
+		reponse = test_input("Ecraser ?", "str")
+		if reponse == "oui":
+			save_map(carte, file_name, temps, diamand)
+		else:
+			test_input("Map non enregistrée", "str")
 
 
 def my_input(msg):
@@ -51,7 +64,7 @@ def my_input(msg):
 			x = upemtk.touche(ev)  
 			if x == "Return":
 				return texte
-
+ 
 			elif x == "BackSpace":
 				texte = texte[:-1]
 
@@ -61,7 +74,7 @@ def my_input(msg):
 			return texte
 	
 		upemtk.efface("texte_input")
-		upemtk.texte(var["dimension_fenetre"] // 2, var["dimension_fenetre"] // 2, texte, couleur="blue", ancrage="center", tag="texte_input")
+		upemtk.texte(var["dimension_fenetre"] // 2, var["dimension_fenetre"] // 2, texte, couleur="white", ancrage="center", tag="texte_input")
 		upemtk.mise_a_jour()
 
 
@@ -71,9 +84,9 @@ def test_input(msg, type_retour):
 		var["dimension_fenetre"] // 2 - 100,
 		var["dimension_fenetre"] // 2 + 180,
 		var["dimension_fenetre"] // 2 + 100,
-		couleur="red",
+		couleur="gray28",
 		remplissage="gray",
-		epaisseur=3,
+		epaisseur=5,
 		tag="cadre"
 	)
 
@@ -90,13 +103,13 @@ def test_input(msg, type_retour):
 					return int(_var)
 				elif int(_var) == 0:
 					upemtk.efface("msg_erreur")
-					upemtk.texte(var["dimension_fenetre"] // 2, var["dimension_fenetre"] // 2 + 75, "Valeur trop petite", couleur="red", ancrage="center", tag="msg_erreur")
+					upemtk.texte(var["dimension_fenetre"] // 2, var["dimension_fenetre"] // 2 + 75, "Valeur trop petite", couleur="red", ancrage="center", police="impact", tag="msg_erreur")
 				else:
 					upemtk.efface("msg_erreur")
-					upemtk.texte(var["dimension_fenetre"] // 2, var["dimension_fenetre"] // 2 + 75, "Valeur trop grande", couleur="red", ancrage="center", tag="msg_erreur")
+					upemtk.texte(var["dimension_fenetre"] // 2, var["dimension_fenetre"] // 2 + 75, "Valeur trop grande", couleur="red", ancrage="center", police="impact", tag="msg_erreur")
 			else:
 				upemtk.efface("msg_erreur")
-				upemtk.texte(var["dimension_fenetre"] // 2, var["dimension_fenetre"] // 2 + 75, "Valeur entiere requis", couleur="red", ancrage="center", tag="msg_erreur")
+				upemtk.texte(var["dimension_fenetre"] // 2, var["dimension_fenetre"] // 2 + 75, "Valeur entiere requis", couleur="red", ancrage="center", police="impact", tag="msg_erreur")
 		else:
 			upemtk.efface("msg")
 			upemtk.efface("msg_erreur")
@@ -110,17 +123,17 @@ def main():
 	upemtk.cree_fenetre(taille_fen[0], taille_fen[1])
 
 	esthetique.fond("black")
-	w_map = test_input("Nombre de colonnes:", "int")
-	h_map = test_input("Nombre de lignes:", "int")
+	var["w_map"] = test_input("Nombre de colonnes:", "int")
+	var["h_map"] = test_input("Nombre de lignes:", "int")
 	
-	var["taille_case"] = int(min(taille_fen) / max([w_map, h_map]))
-	carte = [['.' for i in range(w_map)] for i in range(h_map)]
+	var["taille_case"] = int(min(taille_fen) / max([var["w_map"], var["h_map"]]))
+	carte = [['.' for i in range(var["w_map"])] for i in range(var["h_map"])]
 	element = "."
 
 	
 	while True:
 		upemtk.efface_tout()
-		affiche_map(carte, w_map, h_map)
+		affiche_map(carte)
 		upemtk.mise_a_jour()
 		ev = upemtk.attente_clic_ou_touche()
 
@@ -131,8 +144,7 @@ def main():
 			if ev[1].upper() in dico:
 				element = ev[1].upper()
 			elif ev[1] == "Escape":
-				save(carte, w_map, h_map)
-				break
+				save(carte)
 			elif ev[1] == "space":
 				break
 				upemtk.ferme_fenetre()
