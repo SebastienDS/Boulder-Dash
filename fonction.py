@@ -198,6 +198,7 @@ def initialiser_partie(carte):
                 var["pos_sortie_x"] = x
                 var["pos_sortie_y"] = y
     var["porte"] = 1
+    var["taille_case"] = var["dimension_fenetre"] // var["nb_cases"]
 
 def debug(carte, nbdiamand, debug):
     """Perso joue aléatoirement"""

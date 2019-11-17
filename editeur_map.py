@@ -25,30 +25,31 @@ def affiche_map(carte, w_map, h_map):
 	esthetique.fond("black")
 	for j in range(h_map):
 		for i in range(w_map):
-			dico[carte[j][i]](i, j)
+			dico[carte[j][i]](i, j, 0, 0)
 
 
 def save(carte, w_map, h_map):
-	file_name = input("Name map: ")
-	temps = input("temps limite: ")
-	diamand = input("diamand requis pour gagner: ")
-	with open("map/" + file_name + ".txt", "w") as f:
-		f.write(temps + "s " + diamand + "d\n")
-		for j in range(h_map - 1):
-			for i in range(w_map - 1):
+	file_name = test_input("Nom de la map:", "str")
+	temps = test_input("temps limite:", "int")
+	diamand = test_input("diamand requis:", "int")
+	print(file_name)
+	with open("map/{}.txt".format(file_name), "w") as f:
+		f.write("{}s {}d\n".format(temps, diamand))
+		for j in range(h_map):
+			for i in range(w_map):
 				f.write(carte[j][i])
 			f.write("\n")
-	print("Map saved")
+	test_input("Map sauvegardée", "str")
 
 
 def my_input(msg):
 	texte = ""
 	while True:
 		ev = upemtk.donne_evenement()
-		if upemtk.type_evenement(ev) == "Touche":
+		type_ev = upemtk.type_evenement(ev)
+		if type_ev == "Touche":
 			x = upemtk.touche(ev)  
 			if x == "Return":
-				print(texte)
 				return texte
 
 			elif x == "BackSpace":
@@ -56,6 +57,8 @@ def my_input(msg):
 
 			elif len(x) == 1 and len(texte) <= 18:
 				texte += x
+		elif type_ev == "ClicGauche":
+			return texte
 	
 		upemtk.efface("texte_input")
 		upemtk.texte(var["dimension_fenetre"] // 2, var["dimension_fenetre"] // 2, texte, couleur="blue", ancrage="center", tag="texte_input")
@@ -63,15 +66,18 @@ def my_input(msg):
 
 
 def test_input(msg, type_retour):
+	upemtk.rectangle(
+		var["dimension_fenetre"] // 2 - 180,
+		var["dimension_fenetre"] // 2 - 100,
+		var["dimension_fenetre"] // 2 + 180,
+		var["dimension_fenetre"] // 2 + 100,
+		couleur="red",
+		remplissage="gray",
+		epaisseur=3,
+		tag="cadre"
+	)
+
 	while True:
-		upemtk.rectangle(
-			var["dimension_fenetre"] // 2 - 180,
-			var["dimension_fenetre"] // 2 - 100,
-			var["dimension_fenetre"] // 2 + 180,
-			var["dimension_fenetre"] // 2 + 100,
-			couleur="white",
-			epaisseur=3
-		)
 		upemtk.texte(var["dimension_fenetre"] // 2, var["dimension_fenetre"] // 2 - 75, msg, couleur="white", ancrage="center", tag="msg")
 		_var = my_input(msg)
 		if type_retour == "int":
@@ -80,6 +86,7 @@ def test_input(msg, type_retour):
 					upemtk.efface("msg")
 					upemtk.efface("msg_erreur")
 					upemtk.efface("texte_input")
+					upemtk.efface("cadre")
 					return int(_var)
 				elif int(_var) == 0:
 					upemtk.efface("msg_erreur")
@@ -91,11 +98,15 @@ def test_input(msg, type_retour):
 				upemtk.efface("msg_erreur")
 				upemtk.texte(var["dimension_fenetre"] // 2, var["dimension_fenetre"] // 2 + 75, "Valeur entiere requis", couleur="red", ancrage="center", tag="msg_erreur")
 		else:
-			return var 
+			upemtk.efface("msg")
+			upemtk.efface("msg_erreur")
+			upemtk.efface("texte_input")
+			upemtk.efface("cadre")
+			return _var 
 
 
 def main():
-	taille_fen = (var["dimension_fenetre"], var["dimension_fenetre"])
+	taille_fen = (var["dimension_fenetre"], var["dimension_fenetre"] + 100)
 	upemtk.cree_fenetre(taille_fen[0], taille_fen[1])
 
 	esthetique.fond("black")
@@ -108,21 +119,17 @@ def main():
 
 	
 	while True:
+		upemtk.efface_tout()
 		affiche_map(carte, w_map, h_map)
 		upemtk.mise_a_jour()
 		ev = upemtk.attente_clic_ou_touche()
-		upemtk.efface_tout()
-
-		print(ev)
 
 		if ev[2] == "ClicGauche":
-			print(carte)
 			carte[ev[1] // var["taille_case"]][ev[0] // var["taille_case"]] = element
 			
 		elif ev[2] == "Touche":  
 			if ev[1].upper() in dico:
 				element = ev[1].upper()
-				print(element)
 			elif ev[1] == "Escape":
 				save(carte, w_map, h_map)
 				break
