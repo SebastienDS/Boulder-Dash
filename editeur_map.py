@@ -48,7 +48,7 @@ def save(carte):
         save_map(carte, file_name, temps, diamand)
     else:
         reponse = test_input("Nom déjà utilisé\n      Ecraser ?", "str")
-        if reponse.lower() in {"oui", "y", "o", "yes"}:
+        if reponse.lower() in {"oui", "y", "o", "yes", "ye", "ui", "certainement", "absolument"}:
             save_map(carte, file_name, temps, diamand)
         else:
             test_input("Map non enregistrée", "str")
@@ -170,6 +170,7 @@ def main():
     while True:
         upemtk.efface_tout()
         affiche_map(carte)
+        dico["R"](0, 0, 100, 0, 0)
         upemtk.mise_a_jour()
         ev = upemtk.attente_clic_ou_touche()
 

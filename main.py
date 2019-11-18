@@ -7,7 +7,6 @@ from time import time
 
 def main():
     tempscommencement = time()
-    temps_pierre = time()
     ev1 = donne_evenement()
     score = "00000000"
     debug = -1
@@ -16,15 +15,19 @@ def main():
     carte, tempstotal, diamand = fonction.creer_map("map2.txt")
     diamand = int(diamand)
     fonction.initialiser_partie(carte)
+    temps_pierre = time()
     while True:
         efface_tout()
 
         #mettre chaque P1 avec son temps de changement d'etat afin de tomber apres un certain temps sans avoir de temps commun entre tous les P1
-        if time() - temps_pierre > 0.3:            
+        if time() - temps_pierre > 0.3:
             fonction.test_pierre_ou_diamand_eboulement(carte)
             fonction.tomber_de_pierre_ou_diamand(carte)
             temps_pierre = time()
 
+        if time() - temps_pierre > 0.15:
+            fonction.test_si_pierre_va_tomber(carte)  
+           
         fonction.affichage(carte, nbdiamand, diamand)
         tempsrestant = fonction.timer(tempstotal, tempscommencement)
         fonction.fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand)

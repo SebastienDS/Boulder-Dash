@@ -79,10 +79,17 @@ def tomber_de_pierre_ou_diamand(carte):
     """Fais tomber les pierres"""
     for y in range(len(carte) - 2, -1, -1):
         for x in range(len(carte[0]) - 1, -1, -1):
-            if carte[y][x] in ["P", "P1"] and carte[y + 1][x] == ".":
+            if carte[y][x] == "P1" and carte[y + 1][x] == ".":
                 carte[y][x], carte[y + 1][x] = ".", "P1"
-            if carte[y][x] in ["D", "D1"] and carte[y + 1][x] == ".":
+            if carte[y][x] == "D1" and carte[y + 1][x] == ".":
                 carte[y][x], carte[y + 1][x] = ".", "D1"
+
+
+def test_si_pierre_va_tomber(carte):
+    for y in range(len(carte) - 2, -1, -1):
+        for x in range(len(carte[0]) -1, -1, -1):
+            if carte[y][x] in {"P", "D"} and carte[y + 1][x] == ".":
+                carte[y][x] = carte[y][x] + "1"
 
 
 def test_pierre_ou_diamand_eboulement(carte):
@@ -146,6 +153,12 @@ def deplacer_perso(carte, nbdiamand, ev, diamand):
                 return nbdiamand
     return nbdiamand
 
+# def tomber_pierre_laterale(carte):
+#     for y in range (len(carte) - 1, -1, -1):
+#         for x in range(len(carte[0]) - 1, -1, -1):
+#             if ...:
+#                 ...
+#     return carte
 
 def test_pousser_pierre(carte, ev):
     type_ev = type_evenement(ev)

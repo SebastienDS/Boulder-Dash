@@ -55,7 +55,7 @@ def rockford(x, y, taille_case, nbdiamand, diamand):
     cercle(
         x * taille_case + 2 * taille_case // 3,
         y * taille_case + 8 * taille_case // 9,
-        var["taille_case"] // 12,
+        taille_case // 12,
         couleur="black",
         remplissage="red",
     )
