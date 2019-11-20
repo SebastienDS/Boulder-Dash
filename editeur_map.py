@@ -1,32 +1,29 @@
 import upemtk
 from variable import var
+from fonction import dico
 import esthetique
 import os
 
 
-def rien(*args):
-    pass
-
-
-dico = {
-    "G": esthetique.terre,
-    "P": esthetique.pierre,
-    "R": esthetique.rockford,
-    "W": esthetique.mur,
-    "D": esthetique.diamand,
-    "E": esthetique.sortie,
-    ".": rien,
-    "P1": esthetique.pierre_eboulement,
-    "D1": esthetique.diamand_eboulement,
-    "F": esthetique.mur,
-}
-
 
 def affiche_map(carte):
-    esthetique.fond("black")
+    esthetique.fond("white")
+    upemtk.rectangle(
+        0,
+        0,
+        var["w_map"] * var["taille_case"],
+        var["h_map"] * var["taille_case"],
+        remplissage="black",
+    )
     for j in range(var["h_map"]):
         for i in range(var["w_map"]):
             dico[carte[j][i]](i, j, var["taille_case"], 0, 0)
+
+
+def affiche_tools(tools):
+    for i, elem in enumerate(tools):
+        dico[elem](i, 6, var["bandeau"], 0, 0)
+
 
 
 def save_map(carte, file_name, temps, diamand):
@@ -108,7 +105,7 @@ def test_input(msg, type_retour):
         _var = my_input(msg)
         if type_retour == "int":
             if _var.isdigit():
-                if int(_var) <= 100 and int(_var) > 0:
+                if int(_var) < 500 and int(_var) > 0:
                     upemtk.efface("msg")
                     upemtk.efface("msg_erreur")
                     upemtk.efface("texte_input")
@@ -156,7 +153,8 @@ def test_input(msg, type_retour):
 
 
 def main():
-    taille_fen = (var["dimension_fenetre"], var["dimension_fenetre"] + 100)
+    taille_fen = (var["dimension_fenetre"], var["dimension_fenetre"] + var["bandeau"])
+    tools = ["G", "P", "W", "D", "R", "E"]
     upemtk.cree_fenetre(taille_fen[0], taille_fen[1])
 
     esthetique.fond("black")
@@ -170,12 +168,19 @@ def main():
     while True:
         upemtk.efface_tout()
         affiche_map(carte)
-        dico["R"](0, 0, 100, 0, 0)
+        affiche_tools(tools)
+
         upemtk.mise_a_jour()
         ev = upemtk.attente_clic_ou_touche()
 
         if ev[2] == "ClicGauche":
-            carte[ev[1] // var["taille_case"]][ev[0] // var["taille_case"]] = element
+            x = ev[0] // var["taille_case"]
+            y = ev[1] // var["taille_case"]
+            
+            if x < var["w_map"] and y < var["h_map"]:
+                carte[y][x] = element
+            elif ev[1] // var["bandeau"] == 6:
+                element = tools[ev[0] // var["bandeau"]]
 
         elif ev[2] == "Touche":
             if ev[1].upper() in dico:

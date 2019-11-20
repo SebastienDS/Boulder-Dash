@@ -550,7 +550,7 @@ def fond(couleur):
         0,
         0,
         var["dimension_fenetre"],
-        var["dimension_fenetre"] + 100,
+        var["dimension_fenetre"] + var["bandeau"],
         couleur=couleur,
         remplissage=couleur,
     )
@@ -561,7 +561,7 @@ def fond_score_temps_diams(score, tempsrestant, nbdiamandrestant):
         0,
         var["dimension_fenetre"],
         var["dimension_fenetre"],
-        var["dimension_fenetre"] + 100,
+        var["dimension_fenetre"] + var["bandeau"],
         remplissage="black",
     )
     texte(

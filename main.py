@@ -12,7 +12,7 @@ def main():
     debug = -1
     mode = 0
     nbdiamand = 0
-    carte, tempstotal, diamand = fonction.creer_map("map2.txt")
+    carte, tempstotal, diamand = fonction.creer_map("Vincemaptropdur.txt")
     diamand = int(diamand)
     fonction.initialiser_partie(carte)
     temps_pierre = time()
@@ -95,7 +95,7 @@ if __name__ == "__main__":
     print(
         "Made by Uniiiiiifffffay corporation with the collaboration of Natsouuuuuu corporation!!! All right reserved!"
     )
-    cree_fenetre(var["dimension_fenetre"], var["dimension_fenetre"] + 100)
+    cree_fenetre(var["dimension_fenetre"], var["dimension_fenetre"] + var["bandeau"])
     while True:
         if main() == 1:
             break
