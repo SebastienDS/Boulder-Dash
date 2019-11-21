@@ -1,6 +1,7 @@
 var = {
 	"dimension_fenetre": 600,
 	"nb_cases": 10,
+	"bandeau": 100,
 	"debug": "d",
     "porte": 1
 }

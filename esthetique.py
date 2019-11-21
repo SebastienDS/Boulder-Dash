@@ -563,7 +563,7 @@ def fond(couleur):
         0,
         0,
         var["dimension_fenetre"],
-        var["dimension_fenetre"] + 100,
+        var["dimension_fenetre"] + var["bandeau"],
         couleur=couleur,
         remplissage=couleur,
     )
@@ -574,7 +574,7 @@ def fond_score_temps_diams(score, tempsrestant, nbdiamandrestant):
         0,
         var["dimension_fenetre"],
         var["dimension_fenetre"],
-        var["dimension_fenetre"] + 100,
+        var["dimension_fenetre"] + var["bandeau"],
         remplissage="black",
     )
     texte(
@@ -941,14 +941,7 @@ def lumiere():
     cercle(
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
-        var["taille_case"] * 5,
-        couleur="gray22",
-        remplissage="gray22",
-    )
-    cercle(
-        var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
-        var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
-        var["taille_case"] * 3,
+        var["taille_case"] // 2 + var["taille_case"] - 1,
         couleur="goldenrod4",
         remplissage="goldenrod4",
     )
@@ -956,7 +949,7 @@ def lumiere():
     cercle(
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
-        var["taille_case"] * 1.5,
+        var["taille_case"] // 2,
         couleur="goldenrod3",
         remplissage="goldenrod3",
     )
@@ -973,6 +966,7 @@ def lumiere_escalier():
         var["taille_case"] // 2,
         couleur="white",
         remplissage="white",
+
     )
 
 def noir_lumiere():
@@ -980,6 +974,6 @@ def noir_lumiere():
     cercle(
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
-        var["taille_case"] * 5,
+        var["taille_case"] * 6,
         epaisseur = 250
     )
