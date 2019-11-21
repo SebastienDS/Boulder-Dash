@@ -281,8 +281,8 @@ def encadrement(
     msg, x, y, couleurTXT, couleurCadre, Taille, Epaisseur, Espacement
 ):  # Ecrit et encadre un texte puis donne les coordonnées du cadre (pour clic)
     upemtk.texte(10000000, y, msg, couleur=couleurTXT, police="Impact", taille=Taille)
-    x2 = x + longueur_texte(msg) + Espacement
-    y2 = y + hauteur_texte() + Espacement
+    x2 = x + upemtk.longueur_texte(msg) + Espacement
+    y2 = y + upemtk.hauteur_texte() + Espacement
     upemtk.texte(x, y, msg, couleur=couleurTXT, police="Impact", taille=Taille)
     upemtk.rectangle(
         x - Espacement,
@@ -322,7 +322,7 @@ def _input(msg):
         type_ev = upemtk.type_evenement(ev)
         if type_ev == "Touche":
             x = upemtk.touche(ev)
-            print(x)
+
             if x == "Return":
                 return texte
             elif x == "BackSpace":

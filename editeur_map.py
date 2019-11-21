@@ -2,7 +2,6 @@ import upemtk
 from variable import var
 from fonction import dico, my_input
 import esthetique
-import os
 
 
 
@@ -32,22 +31,22 @@ def save_map(carte, file_name, temps, diamand):
             for i in range(var["w_map"]):
                 f.write(carte[j][i])
             f.write("\n")
-    test_input("Map sauvegardée", "str")
+    my_input("Map sauvegardée", "str")
 
 
 def save(carte):
-    file_name = test_input("Nom de la map:", "str")
-    temps = test_input("temps limite:", "int")
-    diamand = test_input("diamand requis:", "int")
+    file_name = my_input("Nom de la map:", "str")
+    temps = my_input("temps limite:", "int")
+    diamand = my_input("diamand requis:", "int")
 
     if not os.path.isfile("map/{}.txt".format(file_name)):
         save_map(carte, file_name, temps, diamand)
     else:
-        reponse = test_input("Nom déjà utilisé\n      Ecraser ?", "str")
+        reponse = my_input("Nom déjà utilisé\n      Ecraser ?", "str")
         if reponse.lower() in {"oui", "y", "o", "yes", "ye", "ui", "certainement", "absolument"}:
             save_map(carte, file_name, temps, diamand)
         else:
-            test_input("Map non enregistrée", "str")
+            my_input("Map non enregistrée", "str")
 
 
 def main():
