@@ -1,4 +1,4 @@
-from upemtk import *
+import upemtk
 from variable import var, _touche
 from random import choice
 from time import time
@@ -25,11 +25,6 @@ def creer_map(nomdufichier):
     return contenu, t, d
 
 
-def rien(x, y, *args):
-    """Ne fait rien(cas = ".")"""
-    pass
-
-
 # on associe les lettres aux fonctions les dessinant
 dico = {
     "G": esthetique.terre,
@@ -38,7 +33,7 @@ dico = {
     "W": esthetique.mur,
     "D": esthetique.diamand,
     "E": esthetique.sortie,
-    ".": rien,
+    ".": lambda *argd: None,
     "P1": esthetique.pierre_eboulement,
     "D1": esthetique.diamand_eboulement,
     "F": esthetique.mur,
@@ -112,9 +107,9 @@ def test_deplacement(carte, direction, liste):
 
 
 def enleve_porte(carte, ev, nbdiamand, diamand):
-    type_ev = type_evenement(ev)
+    type_ev = upemtk.type_evenement(ev)
     if type_ev == "Touche":
-        t = touche(ev)
+        t = upemtk.touche(ev)
         if t in _touche:
             if (
                 carte[var["pos_y"] + _touche[t][1]][var["pos_x"] + _touche[t][0]]
@@ -134,9 +129,9 @@ def deplace(carte, t):
 
 def deplacer_perso(carte, nbdiamand, ev, diamand):
     """Test si le perso peut se deplacer, si oui, deplace le perso sur la carte en fonction de la touche utilisé"""
-    type_ev = type_evenement(ev)
+    type_ev = upemtk.type_evenement(ev)
     if type_ev == "Touche":
-        t = touche(ev)
+        t = upemtk.touche(ev)
         if t in _touche:
             if test_deplacement(carte, t, "D"):
                 deplace(carte, t)
@@ -161,9 +156,9 @@ def deplacer_perso(carte, nbdiamand, ev, diamand):
 #     return carte
 
 def test_pousser_pierre(carte, ev):
-    type_ev = type_evenement(ev)
+    type_ev = upemtk.type_evenement(ev)
     if type_ev == "Touche":
-        t = touche(ev)
+        t = upemtk.touche(ev)
         if (
             t == "Right"
             and carte[var["pos_y"]][var["pos_x"] + 1] == "P"
@@ -192,10 +187,10 @@ def loose(carte, tempsrestant):
     si oui met l'image de défaite et retourne True
     """
     if carte[var["pos_y"] - 1][var["pos_x"]] in ["P1", "D1"] or tempsrestant <= 0:
-        efface_tout()
+        upemtk.efface_tout()
         esthetique.fond("black")
         esthetique.personnage_defaitiste()
-        texte(
+        upemtk.texte(
             var["dimension_fenetre"] // 2,
             var["dimension_fenetre"] // 4,
             "DÉFAITE !",
@@ -215,9 +210,9 @@ def win(nbdiamand, diamand):
         and var["pos_y"] == var["pos_sortie_y"]
         and nbdiamand >= diamand
     ):
-        efface_tout()
+        upemtk.efface_tout()
         esthetique.fond("cyan")
-        texte(
+        upemtk.texte(
             var["dimension_fenetre"] // 2,
             var["dimension_fenetre"] // 3,
             "Victoire !",
@@ -285,11 +280,11 @@ def debug(carte, nbdiamand, debug):
 def encadrement(
     msg, x, y, couleurTXT, couleurCadre, Taille, Epaisseur, Espacement
 ):  # Ecrit et encadre un texte puis donne les coordonnées du cadre (pour clic)
-    texte(10000000, y, msg, couleur=couleurTXT, police="Impact", taille=Taille)
+    upemtk.texte(10000000, y, msg, couleur=couleurTXT, police="Impact", taille=Taille)
     x2 = x + longueur_texte(msg) + Espacement
     y2 = y + hauteur_texte() + Espacement
-    texte(x, y, msg, couleur=couleurTXT, police="Impact", taille=Taille)
-    rectangle(
+    upemtk.texte(x, y, msg, couleur=couleurTXT, police="Impact", taille=Taille)
+    upemtk.rectangle(
         x - Espacement,
         y - Espacement,
         x2,
@@ -318,6 +313,116 @@ def quitte_or_retry(a, coordretry, coordquitte):
     ):
         return 1
     return 0
+
+
+def _input(msg):
+    texte = ""
+    while True:
+        ev = upemtk.donne_evenement()
+        type_ev = upemtk.type_evenement(ev)
+        if type_ev == "Touche":
+            x = upemtk.touche(ev)
+            print(x)
+            if x == "Return":
+                return texte
+            elif x == "BackSpace":
+                texte = texte[:-1]
+
+            elif len(x) == 1 and len(texte) <= 18:
+                texte += x
+            elif x == "space":
+                texte += " "
+            elif x == "minus":
+                texte += "-"
+            elif x == "underscore":
+                texte += "_"
+            elif x == "period":
+                texte += "."
+                
+        elif type_ev == "ClicGauche":
+            return texte
+
+        upemtk.efface("texte_input")
+        upemtk.texte(
+            var["dimension_fenetre"] // 2,
+            var["dimension_fenetre"] // 2,
+            texte,
+            couleur="white",
+            ancrage="center",
+            tag="texte_input",
+        )
+        upemtk.mise_a_jour()
+
+
+def my_input(msg, type_retour):
+    upemtk.rectangle(
+        var["dimension_fenetre"] // 2 - 180,
+        var["dimension_fenetre"] // 2 - 100,
+        var["dimension_fenetre"] // 2 + 180,
+        var["dimension_fenetre"] // 2 + 100,
+        couleur="gray28",
+        remplissage="gray",
+        epaisseur=5,
+        tag="cadre",
+    )
+
+    while True:
+        upemtk.texte(
+            var["dimension_fenetre"] // 2,
+            var["dimension_fenetre"] // 2 - 50,
+            msg,
+            couleur="white",
+            ancrage="center",
+            tag="msg",
+        )
+        _var = _input(msg)
+        if type_retour == "int":
+            if _var.isdigit():
+                if int(_var) < 500 and int(_var) > 0:
+                    upemtk.efface("msg")
+                    upemtk.efface("msg_erreur")
+                    upemtk.efface("texte_input")
+                    upemtk.efface("cadre")
+                    return int(_var)
+                elif int(_var) == 0:
+                    upemtk.efface("msg_erreur")
+                    upemtk.texte(
+                        var["dimension_fenetre"] // 2,
+                        var["dimension_fenetre"] // 2 + 75,
+                        "Valeur trop petite",
+                        couleur="red",
+                        ancrage="center",
+                        police="impact",
+                        tag="msg_erreur",
+                    )
+                else:
+                    upemtk.efface("msg_erreur")
+                    upemtk.texte(
+                        var["dimension_fenetre"] // 2,
+                        var["dimension_fenetre"] // 2 + 75,
+                        "Valeur trop grande",
+                        couleur="red",
+                        ancrage="center",
+                        police="impact",
+                        tag="msg_erreur",
+                    )
+            else:
+                upemtk.efface("msg_erreur")
+                upemtk.texte(
+                    var["dimension_fenetre"] // 2,
+                    var["dimension_fenetre"] // 2 + 75,
+                    "Valeur entiere requis",
+                    couleur="red",
+                    ancrage="center",
+                    police="impact",
+                    tag="msg_erreur",
+                )
+        else:
+            upemtk.efface("msg")
+            upemtk.efface("msg_erreur")
+            upemtk.efface("texte_input")
+            upemtk.efface("cadre")
+            return _var
 
 
 if __name__ == "__main__":
