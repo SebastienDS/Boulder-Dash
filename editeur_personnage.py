@@ -5,9 +5,6 @@ from variable import var
 
 
 
-###  Mettre donne_evenement afin d'avoir le deplacement de la souris et y placer une croix sur le curseur pour plus de precision
-
-
 def cree_cercle(historique, points):
     pos1, pos2 = points
     r = round(((pos2[0] - pos1[0]) ** 2 + (pos2[1] - pos1[1]) ** 2) ** 0.5, 3)
@@ -31,6 +28,7 @@ def affiche_croix(x, y, taille):
 
 
 def choix_couleur_remplissage_epaisseur(historique):
+    """recupere les valeurs de la derniere forme afin de les mettre par defaut dans l'input"""
     if not len(historique): 
         return "white", "", "1"
     return historique[len(historique)][-3], historique[len(historique)][-2], str(historique[len(historique)][-1])
@@ -87,12 +85,14 @@ def main():
 
         elif type_ev == "ClicGauche":
             if forme_active != "" and (len(liste_clic) < 2 or forme_active == "P"):
-                liste_clic.append((upemtk.clic_x(ev), upemtk.clic_y(ev)))
+                liste_clic.append((upemtk.clic_x(ev), upemtk.clic_y(ev)))     
 
         elif type_ev == "ClicDroit" and forme_active != "":
-            forme_possible[forme_active][0](historique, liste_clic)
-            forme_active = ""
-            del liste_clic[:]
+            forme_possible[forme_active][0](historique, liste_clic)     #cree la forme dans l'historique a partir des clics
+            forme_active = ""   
+            del liste_clic[:]           
+
+
 
         upemtk.efface_tout()
         upemtk.rectangle(
@@ -103,9 +103,11 @@ def main():
             remplissage="black",
         )
         
+        #affiche les formes dans l'historique
         for elem in historique.values():
             forme_possible[elem[0]][1](*elem[1:])
 
+        #affiche une croix sur les clics afin de conserver visuellement leur position
         for elem in liste_clic:
             affiche_croix(*elem, 5)
 
@@ -127,6 +129,7 @@ def main():
             remplissage="white"
         )
 
+        #affiche la croix sur le curseur pour plus de precision du clic
         affiche_croix(coordonnee_souris_x, coordonnee_souris_y, 20)
         upemtk.mise_a_jour()
         
