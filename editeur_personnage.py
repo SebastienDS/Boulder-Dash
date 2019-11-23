@@ -9,17 +9,17 @@ def cree_cercle(historique, points):
     pos1, pos2 = points
     r = round(((pos2[0] - pos1[0]) ** 2 + (pos2[1] - pos1[1]) ** 2) ** 0.5, 3)
 
-    historique[len(historique) + 1] = ["C", *pos1, r, *choix_couleur(historique)]
+    historique[len(historique) + 1] = [choix_nom_forme(historique), "C", *pos1, r, *choix_couleur(historique)]
 
 
 def cree_rect(historique, points):
     pos1, pos2 = points 
 
-    historique[len(historique) + 1] = ["R", *pos1, *pos2, *choix_couleur(historique)]
+    historique[len(historique) + 1] = [choix_nom_forme(historique), "R", *pos1, *pos2, *choix_couleur(historique)]
 
 
 def cree_polygone(historique, points):
-    historique[len(historique) + 1] = ["P", points.copy(), *choix_couleur(historique)]
+    historique[len(historique) + 1] = [choix_nom_forme(historique), "P", points.copy(), *choix_couleur(historique)]
 
 
 def affiche_croix(x, y, taille):
@@ -43,11 +43,16 @@ def choix_couleur(historique):
     return couleur, remplissage, epaisseur
 
 
+def choix_nom_forme(historique):
+    return fonction.my_input("Nom de la forme:", "str", str(len(historique) + 1))
+
+
+
 def main():
-    forme_possible = {    
-        "C": (cree_cercle, upemtk.cercle),
-        "R": (cree_rect, upemtk.rectangle),
-        "P": (cree_polygone, upemtk.polygone),
+    forme_possible = {    #cree_forme / dessine_forme / nombre_points_mini
+        "C": (cree_cercle, upemtk.cercle, 2),
+        "R": (cree_rect, upemtk.rectangle, 2),
+        "P": (cree_polygone, upemtk.polygone, 1),
     }
     historique = {}
 
@@ -68,7 +73,7 @@ def main():
         type_ev = upemtk.type_evenement(ev)
         if type_ev == "Touche":
             t = upemtk.touche(ev)
-            if t.upper() in forme_possible:
+            if t.upper() in forme_possible and not forme_active:
                 forme_active = t.upper()
 
             elif t == "space":
@@ -84,14 +89,16 @@ def main():
             coordonnee_souris_y = upemtk.clic_y(ev)
 
         elif type_ev == "ClicGauche":
-            if forme_active != "" and (len(liste_clic) < 2 or forme_active == "P"):
-                liste_clic.append((upemtk.clic_x(ev), upemtk.clic_y(ev)))     
+            x, y = upemtk.clic_x(ev), upemtk.clic_y(ev)
+            if forme_active != "" and (len(liste_clic) < 2 or forme_active == "P") and (x <= zone_edit[0] and y <= zone_edit[1]):
+                liste_clic.append((x, y))     
 
-        elif type_ev == "ClicDroit" and forme_active != "":
+        elif type_ev == "ClicDroit" and forme_active != "" and len(liste_clic) >= forme_possible[forme_active][2]:
             forme_possible[forme_active][0](historique, liste_clic)     #cree la forme dans l'historique a partir des clics
             forme_active = ""   
-            del liste_clic[:]           
+            del liste_clic[:]  
 
+            print(historique[len(historique)])         
 
 
         upemtk.efface_tout()
@@ -105,7 +112,7 @@ def main():
         
         #affiche les formes dans l'historique
         for elem in historique.values():
-            forme_possible[elem[0]][1](*elem[1:])
+            forme_possible[elem[1]][1](*elem[2:])
 
         #affiche une croix sur les clics afin de conserver visuellement leur position
         for elem in liste_clic:
