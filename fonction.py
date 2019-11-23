@@ -315,8 +315,8 @@ def quitte_or_retry(a, coordretry, coordquitte):
     return 0
 
 
-def _input(msg):
-    texte = ""
+def _input(msg, reponse_defaut):
+    texte = reponse_defaut
     while True:
         ev = upemtk.donne_evenement()
         type_ev = upemtk.type_evenement(ev)
@@ -354,7 +354,7 @@ def _input(msg):
         upemtk.mise_a_jour()
 
 
-def my_input(msg, type_retour):
+def my_input(msg, type_retour, reponse_defaut=""):
     upemtk.rectangle(
         var["dimension_fenetre"] // 2 - 180,
         var["dimension_fenetre"] // 2 - 100,
@@ -375,7 +375,7 @@ def my_input(msg, type_retour):
             ancrage="center",
             tag="msg",
         )
-        _var = _input(msg)
+        _var = _input(msg, reponse_defaut)
         if type_retour == "int":
             if _var.isdigit():
                 if int(_var) < 500 and int(_var) > 0:

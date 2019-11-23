@@ -12,9 +12,9 @@ def cree_cercle(historique, points):
     pos1, pos2 = points
     r = round(((pos2[0] - pos1[0]) ** 2 + (pos2[1] - pos1[1]) ** 2) ** 0.5, 3)
 
-    couleur = "white"
-    remplissage = ""
-    epaisseur = 1
+    couleur = fonction.my_input("Couleur:", "str", "white")
+    remplissage = fonction.my_input("Remplissage:", "str")
+    epaisseur = fonction.my_input("Epaisseur", "int", "1")
 
     historique[len(historique) + 1] = ["C", *pos1, r, couleur, remplissage, epaisseur]
 
@@ -22,17 +22,17 @@ def cree_cercle(historique, points):
 def cree_rect(historique, points):
     pos1, pos2 = points 
 
-    couleur = "white"
-    remplissage = ""
-    epaisseur = 1
+    couleur = fonction.my_input("Couleur:", "str", "white")
+    remplissage = fonction.my_input("Remplissage:", "str")
+    epaisseur = fonction.my_input("Epaisseur", "int", "1")
 
     historique[len(historique) + 1] = ["R", *pos1, *pos2, couleur, remplissage, epaisseur]
 
 
 def cree_polygone(historique, points):
-    couleur = "white"
-    remplissage = ""
-    epaisseur = 1
+    couleur = fonction.my_input("Couleur:", "str", "white")
+    remplissage = fonction.my_input("Remplissage:", "str")
+    epaisseur = fonction.my_input("Epaisseur", "int", "1")
 
     historique[len(historique) + 1] = ["P", points.copy(), couleur, remplissage, epaisseur]
 
@@ -86,7 +86,7 @@ def main():
             if forme_active != "" and (len(liste_clic) < 2 or forme_active == "P"):
                 liste_clic.append((upemtk.clic_x(ev), upemtk.clic_y(ev)))
 
-        elif type_ev == "ClicDroit":
+        elif type_ev == "ClicDroit" and forme_active != "":
             forme_possible[forme_active][0](historique, liste_clic)
             forme_active = ""
             del liste_clic[:]
