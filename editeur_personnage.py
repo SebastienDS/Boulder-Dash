@@ -12,34 +12,37 @@ def cree_cercle(historique, points):
     pos1, pos2 = points
     r = round(((pos2[0] - pos1[0]) ** 2 + (pos2[1] - pos1[1]) ** 2) ** 0.5, 3)
 
-    couleur = fonction.my_input("Couleur:", "str", "white")
-    remplissage = fonction.my_input("Remplissage:", "str")
-    epaisseur = fonction.my_input("Epaisseur", "int", "1")
-
-    historique[len(historique) + 1] = ["C", *pos1, r, couleur, remplissage, epaisseur]
+    historique[len(historique) + 1] = ["C", *pos1, r, *choix_couleur(historique)]
 
 
 def cree_rect(historique, points):
     pos1, pos2 = points 
 
-    couleur = fonction.my_input("Couleur:", "str", "white")
-    remplissage = fonction.my_input("Remplissage:", "str")
-    epaisseur = fonction.my_input("Epaisseur", "int", "1")
-
-    historique[len(historique) + 1] = ["R", *pos1, *pos2, couleur, remplissage, epaisseur]
+    historique[len(historique) + 1] = ["R", *pos1, *pos2, *choix_couleur(historique)]
 
 
 def cree_polygone(historique, points):
-    couleur = fonction.my_input("Couleur:", "str", "white")
-    remplissage = fonction.my_input("Remplissage:", "str")
-    epaisseur = fonction.my_input("Epaisseur", "int", "1")
-
-    historique[len(historique) + 1] = ["P", points.copy(), couleur, remplissage, epaisseur]
+    historique[len(historique) + 1] = ["P", points.copy(), *choix_couleur(historique)]
 
 
 def affiche_croix(x, y, taille):
     upemtk.ligne(x - taille, y, x + taille, y, couleur="red")
     upemtk.ligne(x, y - taille, x, y + taille, couleur="red")
+
+
+def choix_couleur_remplissage_epaisseur(historique):
+    if not len(historique): 
+        return "white", "", "1"
+    return historique[len(historique)][-3], historique[len(historique)][-2], str(historique[len(historique)][-1])
+
+
+def choix_couleur(historique):
+    couleur_, remplissage_, epaisseur_ = choix_couleur_remplissage_epaisseur(historique)
+
+    couleur = fonction.my_input("Couleur:", "str", couleur_)
+    remplissage = fonction.my_input("Remplissage:", "str", remplissage_)
+    epaisseur = fonction.my_input("Epaisseur", "int", epaisseur_)
+    return couleur, remplissage, epaisseur
 
 
 def main():
@@ -90,9 +93,6 @@ def main():
             forme_possible[forme_active][0](historique, liste_clic)
             forme_active = ""
             del liste_clic[:]
-
-
-
 
         upemtk.efface_tout()
         upemtk.rectangle(
