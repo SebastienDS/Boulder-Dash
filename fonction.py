@@ -60,7 +60,7 @@ def affichage(carte, nbdiamand, diamand):
                 nbdiamand,
                 diamand,
             )  # centre le perso
-
+    esthetique.noir_lumiere()
 
 def fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand):
     """Affiche une banderolle avec le score et le bouton exitgame et retry"""

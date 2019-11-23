@@ -99,6 +99,30 @@ def rockford(x, y, taille_case, nbdiamand, diamand):
         couleur="black",
         remplissage="black",
     )
+    #Torche
+    rectangle(
+        x * taille_case + 1 * taille_case // 4 - taille_case // 12,
+        y * taille_case + 1 * taille_case // 3,
+        x * taille_case + 1 * taille_case // 5 + taille_case // 30,
+        y * taille_case + 3 * taille_case // 4 - taille_case // 8,
+        couleur = "black",
+        remplissage = "sienna4")
+    cercle(
+        x * taille_case + 1 * taille_case // 4 - taille_case // 20,
+        y * taille_case + 1 * taille_case // 3,
+        taille_case // 9,
+        couleur="black",
+        remplissage="red",
+    )
+    cercle(
+        x * taille_case + 1 * taille_case // 4 - taille_case // 20,
+        y * taille_case + 1 * taille_case // 3,
+        taille_case // 15,
+        couleur="black",
+        remplissage="orange",
+    )
+    
+  
     if nbdiamand >= diamand and var["porte"] == 1:
         cercle(
             x * taille_case + taille_case // 2 + taille_case // 4 + taille_case // 14,
@@ -924,6 +948,7 @@ def coffre():
 
 
 def lumiere():
+    """Lumière du perso"""
     cercle(
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
@@ -952,4 +977,14 @@ def lumiere_escalier():
         var["taille_case"] // 2,
         couleur="white",
         remplissage="white",
+
+    )
+
+def noir_lumiere():
+    """Affiche un cercle dont l'intérieur est le jeu, l'extérieur est noir"""
+    cercle(
+        var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
+        var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
+        var["taille_case"] * 6,
+        epaisseur = 400
     )
