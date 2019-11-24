@@ -12,7 +12,9 @@ def main():
     debug = -1
     mode = 0
     nbdiamand = 0
-    carte, tempstotal, diamand = fonction.creer_map("map_test.txt")
+    # carte, tempstotal, diamand = fonction.creer_map("map_test.txt") 
+    carte, tempstotal, diamand = fonction.creation_map_aleatoire() 
+
     diamand = int(diamand)
     fonction.initialiser_partie(carte)
     temps_pierre = time()

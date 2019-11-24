@@ -1,8 +1,9 @@
 import upemtk
 from variable import var, _touche
-from random import choice
+from random import choice, randint
 from time import time
 import esthetique
+from copy import deepcopy
 
 
 def creer_map(nomdufichier):
@@ -230,6 +231,7 @@ def win(nbdiamand, diamand, tempsrestant):
         esthetique.personnage_victorieux()
         esthetique.coffre()
         esthetique.affiche_score_victoire(score)
+        del var["carte"]
         return True
     return False
 
@@ -439,6 +441,41 @@ def test_suivant(S, a):
     and a[1] > S[1]):
         return 1
     return 0
+
+
+def creation_map_aleatoire(x=40, y=22):
+    if "carte" not in var.keys():
+        carte = [["W" for _ in range(x)] for _ in range(y)]
+        nb_diam = 0
+
+        for j in range(1, y -1):
+            for i in range(1, x -1):
+                nb_random = randint(0, 1000)
+                if nb_random < 650:
+                    carte[j][i] = "G"
+                elif nb_random < 750:
+                    carte[j][i] = "."
+                elif nb_random < 850:
+                    carte[j][i] = "P"
+                elif nb_random < 900:
+                    carte[j][i] = "D"
+                    nb_diam += 1
+
+        coord_entree = (randint(1, x -2), randint(1, y -2))
+        coord_sortie = (randint(1, x -2), randint(1, y -2))
+        while coord_entree == coord_sortie:
+            coord_sortie = (randint(1, x -2), randint(1, y -2))
+
+        carte[coord_entree[1]][coord_entree[0]] = "R"
+        carte[coord_sortie[1]][coord_sortie[0]] = "E"
+        var["carte"] = (carte, nb_diam - randint(3, 8))
+        return deepcopy(var["carte"][0]), 100, var["carte"][1]
+    else:
+        return deepcopy(var["carte"][0]), 100, var["carte"][1]
+    
+
+
+
 
 
 if __name__ == "__main__":
