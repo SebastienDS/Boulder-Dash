@@ -127,7 +127,7 @@ def deplace(carte, t):
     var["pos_y"] += _touche[t][1]
 
 
-def deplacer_perso(carte, nbdiamand, ev, diamand):
+def deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal):
     """Test si le perso peut se deplacer, si oui, deplace le perso sur la carte en fonction de la touche utilisé"""
     type_ev = upemtk.type_evenement(ev)
     if type_ev == "Touche":
@@ -135,25 +135,27 @@ def deplacer_perso(carte, nbdiamand, ev, diamand):
         if t in _touche:
             if test_deplacement(carte, t, "D"):
                 deplace(carte, t)
-                return nbdiamand + 1
+                return nbdiamand + 1, int(tempstotal) + 5
             elif test_deplacement(carte, t, {"G", ".", "F"}):
                 deplace(carte, t)
-                return nbdiamand
+                return nbdiamand, tempstotal
             if (
-                nbdiamand >= diamand
+                nbdiamand >= diamand, tempstotal
                 and test_deplacement(carte, t, "E")
                 and var["porte"] == 0
             ):
                 deplace(carte, t)
-                return nbdiamand
-    return nbdiamand
+                return nbdiamand, tempstotal
+    return nbdiamand, tempstotal
 
-# def tomber_pierre_laterale(carte):
-#     for y in range (len(carte) - 1, -1, -1):
-#         for x in range(len(carte[0]) - 1, -1, -1):
-#             if ...:
-#                 ...
-#     return carte
+def tomber_pierre_laterale(carte):
+    for y in range (len(carte) - 2, 0, -1):
+        for x in range(len(carte[0]) - 2, 0, -1):
+            if carte[y][x] in ["P", "D"] and carte[y][x + 1] == "." and carte[y + 1][x + 1] == "." and carte[y + 1][x] in ["P", "D", "W"]:
+                carte[y][x], carte[y][x + 1] = ".", carte[y][x]
+            if carte[y][x] in ["P", "D"] and carte[y][x - 1] == "." and carte[y + 1][x - 1] == "." and carte[y + 1][x] in ["P", "D", "W"]:
+                carte[y][x], carte[y][x - 1] = ".", carte[y][x]
+    return carte
 
 def test_pousser_pierre(carte, ev):
     type_ev = upemtk.type_evenement(ev)
@@ -240,20 +242,21 @@ def initialiser_partie(carte):
     var["taille_case"] = var["dimension_fenetre"] // var["nb_cases"]
 
 
-def debug(carte, nbdiamand, debug):
+def debug(carte, nbdiamand, debug, tempstotal):
     """Perso joue aléatoirement"""
     choix = ["Up", "Down", "Left", "Right"]
     while True:
         x = choice(choix)
         if test_deplacement(carte, x, "D"):
             deplace(carte, x)
-            return nbdiamand + 1, debug
+            tempstotal += 10
+            return nbdiamand + 1, debug, tempstotal
         elif test_deplacement(carte, x, {"G", "."}):
             deplace(carte, x)
-            return nbdiamand, debug
+            return nbdiamand, debug, tempstotal
         elif test_deplacement(carte, x, "E") and var["porte"] == 0:
             deplace(carte, x)
-            return nbdiamand, debug
+            return nbdiamand, debug, tempstotal
         elif (
             x == "Right"
             and carte[var["pos_y"]][var["pos_x"] + 1] == "P"
@@ -261,7 +264,7 @@ def debug(carte, nbdiamand, debug):
         ):
             pousser_pierre(carte, x)
             deplace(carte, x)
-            return nbdiamand, debug
+            return nbdiamand, debug, tempstotal
         elif (
             x == "Left"
             and carte[var["pos_y"]][var["pos_x"] - 1] == "P"
@@ -269,12 +272,12 @@ def debug(carte, nbdiamand, debug):
         ):
             pousser_pierre(carte, x)
             deplace(carte, x)
-            return nbdiamand, debug
+            return nbdiamand, debug, tempstotal
         choix.remove(x)
         if choix == []:
             debug = -1
-            return nbdiamand, debug
-    return nbdiamand, debug
+            return nbdiamand, debug, tempstotal
+    return nbdiamand, debug, tempstotal
 
 
 def encadrement(
