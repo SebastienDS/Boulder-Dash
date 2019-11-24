@@ -204,7 +204,7 @@ def loose(carte, tempsrestant):
     return False
 
 
-def win(nbdiamand, diamand):
+def win(nbdiamand, diamand, tempsrestant):
     """Regarde si l'utilisateur gagne
     si oui, met l'image de victoire et retourne True"""
     if (
@@ -212,6 +212,10 @@ def win(nbdiamand, diamand):
         and var["pos_y"] == var["pos_sortie_y"]
         and nbdiamand >= diamand
     ):
+        suivant = 0
+        upemtk.efface_tout()
+        while suivant == 0:
+            suivant, score = esthetique.menu_score(nbdiamand, tempsrestant)
         upemtk.efface_tout()
         esthetique.fond("cyan")
         upemtk.texte(
@@ -224,6 +228,7 @@ def win(nbdiamand, diamand):
         )
         esthetique.personnage_victorieux()
         esthetique.coffre()
+        esthetique.affiche_score_victoire(score)
         return True
     return False
 

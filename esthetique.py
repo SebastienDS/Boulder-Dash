@@ -1,5 +1,6 @@
 from upemtk import *
 from variable import *
+from time import time
 
 
 def terre(x, y, taille_case, *args):
@@ -1044,3 +1045,75 @@ def noir_lumiere():
         var["taille_case"] * 6,
         epaisseur = 400
     )
+
+def menu_score(nbdiamand, tempsrestant):
+    '''affiche un menu avec les différentes parties du score '''
+    fond("cyan")
+    texte(
+        10000000,
+        0,
+        "5c c ccc c ccccc",
+        taille = 24,
+        police = 'Arial'
+        )
+    personnage_victorieux()
+    rectangle(
+        var["dimension_fenetre"] // 8,
+        var["dimension_fenetre"] // 8,
+        7 * var["dimension_fenetre"] // 8,
+        7 * var["dimension_fenetre"] // 8,
+        couleur = 'white',
+        remplissage = 'gray39'
+    )
+    a = time()
+    while time() - a <= 1:
+        texte(
+            var["dimension_fenetre"] // 2 - longueur_texte("{} x 350 = {}".format(nbdiamand, nbdiamand * 350)) // 2,
+            var["dimension_fenetre"] // 3 - hauteur_texte() // 2,
+            "{} x 350 = {}".format(nbdiamand, nbdiamand * 350),
+            taille = 24,
+            police = 'Arial',
+            couleur = "red"
+        )
+        mise_a_jour()
+    while time() - a <= 2:
+        texte(
+            var["dimension_fenetre"] // 2 - longueur_texte("{} x 100 = {}".format(tempsrestant, tempsrestant * 100)) // 2,
+            var["dimension_fenetre"] // 2 - hauteur_texte() // 2,
+            "{} x 350 = {}".format(tempsrestant, tempsrestant * 100),
+            taille = 24,
+            police = 'Arial',
+            couleur = "red"
+        )
+        mise_a_jour()
+    while time() - a <= 3:    
+        texte(
+            var["dimension_fenetre"] // 2 - longueur_texte("Score final : {}".format(nbdiamand * 350 + tempsrestant * 100)) // 2,
+            2 * var["dimension_fenetre"] // 3 - hauteur_texte() // 2,
+            "Score final : {}".format(nbdiamand * 350 + tempsrestant * 100),
+            taille = 24,
+            police = 'Arial',
+            couleur = "red"
+        )
+        mise_a_jour()
+    suivant = 1
+    return suivant, nbdiamand * 350 + tempsrestant * 100
+
+def affiche_score_victoire(score):
+    '''affiche le score en cas de victoire'''
+    
+    texte(
+        10000000,
+        0,
+        "5c c ccc c ccccc",
+        taille = 24,
+        police = 'Arial'
+        )
+    texte(
+            var["dimension_fenetre"] // 2 - longueur_texte("Score final : {}".format(score)) // 2,
+            var["dimension_fenetre"] + 50 - hauteur_texte() // 2,
+            "Score final : {}".format(score),
+            taille = 24,
+            police = 'Arial',
+            couleur = "red"
+        )

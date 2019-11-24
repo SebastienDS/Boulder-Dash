@@ -1,8 +1,8 @@
-150s 0d
+150s 1d
 WWWWWWWWW
+WRDE....W
+W.G.....W
 W.......W
-W.......W
-W..R.E..W
 W.......W
 W.G...G.W
 W..GGG..W

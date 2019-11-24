@@ -12,7 +12,7 @@ def main():
     debug = -1
     mode = 0
     nbdiamand = 0
-    carte, tempstotal, diamand = fonction.creer_map("map2.txt")
+    carte, tempstotal, diamand = fonction.creer_map("map_test.txt")
     diamand = int(diamand)
     fonction.initialiser_partie(carte)
     temps_pierre = time()
@@ -71,7 +71,7 @@ def main():
         mise_a_jour()
         if mode != 0:
             return mode
-        if fonction.win(nbdiamand, diamand) or fonction.loose(carte, tempsrestant):
+        if fonction.win(nbdiamand, diamand, tempsrestant) or fonction.loose(carte, tempsrestant):
             while mode == 0:
                 coordretry = fonction.encadrement(
                     "Retry", var["dimension_fenetre"] // 7, 40, "red", "red", 12, 5, 5
