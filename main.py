@@ -23,6 +23,7 @@ def main():
         if time() - temps_pierre > 0.3:
             fonction.test_pierre_ou_diamand_eboulement(carte)
             fonction.tomber_de_pierre_ou_diamand(carte)
+            fonction.tomber_pierre_laterale(carte)
             temps_pierre = time()
 
         if time() - temps_pierre > 0.15:
@@ -63,9 +64,9 @@ def main():
         if type_ev == "Touche" and touche(ev) == "d":
             debug *= -1
         if debug == 1:
-            nbdiamand, debug = fonction.debug(carte, nbdiamand, debug)
+            nbdiamand, debug, tempstotal = fonction.debug(carte, nbdiamand, debug, tempstotal)
         else:
-            nbdiamand = fonction.deplacer_perso(carte, nbdiamand, ev, diamand)
+            nbdiamand, tempstotal = fonction.deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal)
         if var["porte"] == 1:
             fonction.enleve_porte(carte, ev, nbdiamand, diamand)
         mise_a_jour()
