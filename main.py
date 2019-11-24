@@ -12,7 +12,7 @@ def main():
     debug = -1
     mode = 0
     nbdiamand = 0
-    carte, tempstotal, diamand = fonction.creer_map("Vincemaptropdur.txt")
+    carte, tempstotal, diamand = fonction.creer_map("map2.txt")
     diamand = int(diamand)
     fonction.initialiser_partie(carte)
     temps_pierre = time()

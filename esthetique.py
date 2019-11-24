@@ -1028,13 +1028,9 @@ def lumiere():
 
 def lumiere_escalier():
     cercle(
-        (var["pos_sortie_x"] + (var["nb_cases"] // 2 - var["pos_x"]))
-        * var["taille_case"]
-        + var["taille_case"] // 2,
-        var["pos_sortie_y"]
-        + (var["nb_cases"] // 2 - var["pos_y"]) * var["taille_case"]
-        + var["taille_case"] // 2,
-        var["taille_case"] // 2,
+        (var["pos_sortie_x"] + (var["nb_cases"] // 2 - var["pos_x"])) * var["taille_case"] + var["taille_case"] / 2,
+        (var["pos_sortie_y"] + (var["nb_cases"] // 2 - var["pos_y"])) * var["taille_case"] + var["taille_case"] / 2,
+        var["taille_case"] * 2 / 3,
         couleur="white",
         remplissage="white",
 
