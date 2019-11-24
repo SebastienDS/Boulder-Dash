@@ -47,9 +47,9 @@ def timer(tempstotal, tempscommencement):
 def affichage(carte, nbdiamand, diamand):
     """Affiche la carte"""
     esthetique.fond("black")
+    esthetique.lumiere()
     if var["porte"] == 0:
         esthetique.lumiere_escalier()
-    esthetique.lumiere()
     carte[2][0] = "F"
     for y in range(len(carte) - 1, -1, -1):  # y = ligne
         for x in range(len(carte[y]) - 1, -1, -1):  # x = colonne
