@@ -135,7 +135,7 @@ def deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal, score):
         if t in _touche:
             if test_deplacement(carte, t, "D"):
                 deplace(carte, t)
-                return nbdiamand + 1, int(tempstotal) + 10, 8 - (str(int(score) +350)) * '0' + (str(int(score) +350))
+                return nbdiamand + 1, int(tempstotal) + 10, (8 - len((str(int(score) +350)))) * '0' + (str(int(score) +350))
             elif test_deplacement(carte, t, {"G", ".", "F"}):
                 deplace(carte, t)
                 return nbdiamand, tempstotal, score
@@ -249,7 +249,7 @@ def debug(carte, nbdiamand, debug, tempstotal):
         x = choice(choix)
         if test_deplacement(carte, x, "D"):
             deplace(carte, x)
-            return nbdiamand + 1, debug, int(tempstotal) + 10, 8 - (len(str(int(score) +350))) * '0' + (len(str(int(score) +350)))
+            return nbdiamand + 1, debug, int(tempstotal) + 10, (8 - (len(str(int(score) +350)))) * '0' + (str(int(score) +350))
         elif test_deplacement(carte, x, {"G", "."}):
             deplace(carte, x)
             return nbdiamand, debug, tempstotal, score
