@@ -53,7 +53,6 @@ def main():
             5,
             5,
         )
-
         ev = donne_evenement()
         type_ev = type_evenement(ev)
         if fonction.test_pousser_pierre(carte, ev):
@@ -64,9 +63,9 @@ def main():
         if type_ev == "Touche" and touche(ev) == "d":
             debug *= -1
         if debug == 1:
-            nbdiamand, debug, tempstotal = fonction.debug(carte, nbdiamand, debug, tempstotal)
+            nbdiamand, debug, tempstotal, score = fonction.debug(carte, nbdiamand, debug, tempstotal, score)
         else:
-            nbdiamand, tempstotal = fonction.deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal)
+            nbdiamand, tempstotal, score = fonction.deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal, score)
         if var["porte"] == 1:
             fonction.enleve_porte(carte, ev, nbdiamand, diamand)
         mise_a_jour()

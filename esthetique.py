@@ -1012,7 +1012,7 @@ def lumiere():
     cercle(
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
-        var["taille_case"] // 2 + var["taille_case"] - 1,
+        3 * var["taille_case"],
         couleur="goldenrod4",
         remplissage="goldenrod4",
     )
@@ -1020,7 +1020,7 @@ def lumiere():
     cercle(
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
-        var["taille_case"] // 2,
+        var["taille_case"],
         couleur="goldenrod3",
         remplissage="goldenrod3",
     )
