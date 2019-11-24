@@ -1073,7 +1073,7 @@ def menu_score(nbdiamand, tempsrestant, suivant):
     diamand(5, 5.1, 100)
     rockford(0, 2.5, 100, 0, 0, "cyan")
     rockford(5, 2.5, 100, 0, 0, "cyan")
-
+    couronne(2.5, 0.1, 100)
     a = time()
     while time() - a <= 1:
         texte(
@@ -1087,15 +1087,24 @@ def menu_score(nbdiamand, tempsrestant, suivant):
         mise_a_jour()
     while time() - a <= 2:
         texte(
-            var["dimension_fenetre"] // 2 - longueur_texte("{} x 100 = {}".format(tempsrestant, tempsrestant * 100)) // 2,
+            var["dimension_fenetre"] // 2 - longueur_texte("+ {} x 100 = {}".format(tempsrestant, tempsrestant * 100)) // 2,
             var["dimension_fenetre"] // 2 - hauteur_texte() // 2,
-            "{} x 350 = {}".format(tempsrestant, tempsrestant * 100),
+            "+ {} x 100 = {}".format(tempsrestant, tempsrestant * 100),
             taille = 24,
             police = 'Arial',
             couleur = "red"
         )
         mise_a_jour()
-    while time() - a <= 3:    
+    while time() - a <= 3:  
+        ligne(
+            var["dimension_fenetre"] // 2 - longueur_texte("Score final : {}".format(nbdiamand * 350 + tempsrestant * 100)) // 2,
+            4 * var["dimension_fenetre"] // 7 - hauteur_texte() // 2,
+            var["dimension_fenetre"] // 2 + longueur_texte("Score final : {}".format(nbdiamand * 350 + tempsrestant * 100)) // 2,
+            4 * var["dimension_fenetre"] // 7 - hauteur_texte() // 2,
+            couleur ='red',
+            epaisseur = 3
+            )
+
         texte(
             var["dimension_fenetre"] // 2 - longueur_texte("Score final : {}".format(nbdiamand * 350 + tempsrestant * 100)) // 2,
             2 * var["dimension_fenetre"] // 3 - hauteur_texte() // 2,
@@ -1137,3 +1146,59 @@ def affiche_score_victoire(score):
             police = 'Arial',
             couleur = "red"
         )
+
+def couronne(x, y, taille_case):
+    polygone(
+        [
+            (x * taille_case - taille_case // 2, y * taille_case + taille_case),
+            (x * taille_case - taille_case // 2, y * taille_case),
+            (x * taille_case, y * taille_case + taille_case // 2),
+            (x * taille_case + taille_case // 2, y * taille_case),
+            (x * taille_case + taille_case, y * taille_case + taille_case // 2),
+            (x * taille_case + 3 * taille_case // 2, y * taille_case),
+            (x * taille_case + 3 * taille_case // 2, y * taille_case + taille_case),
+        ],
+        couleur="yellow",
+        remplissage="yellow",
+    )
+    polygone(
+        [
+            (x * taille_case + taille_case // 2, y * taille_case + taille_case // 4),
+            (x * taille_case + 2 * taille_case // 5, y * taille_case + 5 * taille_case // 12),
+            (x * taille_case + 2 * taille_case // 5, y * taille_case + 9 * taille_case // 12),
+            (x * taille_case + taille_case // 2, y * taille_case + 11 * taille_case // 12),
+            (x * taille_case + 3 * taille_case // 5, y * taille_case + 9 * taille_case // 12),
+            (x * taille_case + 3 * taille_case // 5, y * taille_case + 5 * taille_case // 12),
+        ],
+        couleur = 'black',
+        remplissage = 'green'
+    )
+    polygone(
+        [
+            (x * taille_case + taille_case // 2, y * taille_case + 6 * taille_case // 20),
+            (x * taille_case + 9 * taille_case // 20, y * taille_case + 5 * taille_case // 12),
+            (x * taille_case + 9 * taille_case // 20, y * taille_case + 9 * taille_case // 12),
+            (x * taille_case + taille_case // 2, y * taille_case + 11 * taille_case // 12 - taille_case // 20),
+            (x * taille_case + 11 * taille_case // 20, y * taille_case + 9 * taille_case // 12),
+            (x * taille_case + 11 * taille_case // 20, y * taille_case + 5 * taille_case // 12),
+        ],
+        couleur = 'black',
+        remplissage = 'green2'
+    )
+    # polygone(
+    #     [
+    #         (x * taille_case + taille_case // 6, y * taille_case + 6 * taille_case // 20),
+    #         (x * taille_case + taille_case // 6 - taille_case // 30,
+    #         y * taille_case + 5 * taille_case // 12),
+    #         (x * taille_case + 9 * taille_case // 20,
+    #         y * taille_case + 9 * taille_case // 12),
+    #         (x * taille_case + taille_case // 6,
+    #         y * taille_case + 11 * taille_case // 12 - taille_case // 20),
+    #         (x * taille_case + 11 * taille_case // 20,
+    #         y * taille_case + 9 * taille_case // 12),
+    #         (x * taille_case + 11 * taille_case // 20,
+    #          y * taille_case + 5 * taille_case // 12),
+    #     ],
+    #     couleur = 'black',
+    #     remplissage = 'red'
+    # )
