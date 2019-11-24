@@ -114,6 +114,40 @@ def rockford(x, y, taille_case, nbdiamand, diamand):
         couleur="black",
         remplissage="red",
     )
+    rectangle(
+        x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 9,
+        y * taille_case + 1 * taille_case // 3,
+        x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 9,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 9,
+        couleur ="goldenrod3",
+        remplissage = "goldenrod3"
+    )
+    polygone(
+        [(x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 9,
+        y * taille_case + 1 * taille_case // 3),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 9,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 9),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 18,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 18),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20, 
+        y * taille_case + 1 * taille_case // 3 - taille_case // 9),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 18,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 18),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 9,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 9),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 9,
+        y * taille_case + 1 * taille_case // 3)],
+        couleur ="black",
+        remplissage = "red"
+    )
+    ligne(
+        x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 9 + 1,
+        y * taille_case + 1 * taille_case // 3,
+        x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 9 - 1,
+        y * taille_case + 1 * taille_case // 3,
+        couleur = "red",
+        epaisseur = 1
+        )
     cercle(
         x * taille_case + 1 * taille_case // 4 - taille_case // 20,
         y * taille_case + 1 * taille_case // 3,
@@ -121,6 +155,32 @@ def rockford(x, y, taille_case, nbdiamand, diamand):
         couleur="black",
         remplissage="orange",
     )
+    polygone(
+        [(x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 15,
+        y * taille_case + 1 * taille_case // 3),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 15,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 15),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 30,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 30),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20, 
+        y * taille_case + 1 * taille_case // 3 - taille_case // 15),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 30,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 30),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 15,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 15),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 15,
+        y * taille_case + 1 * taille_case // 3)],
+        couleur = "black",
+        remplissage = "orange"
+    )
+    ligne(
+        x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 15 + 1,
+        y * taille_case + 1 * taille_case // 3,
+        x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 15 - 1,
+        y * taille_case + 1 * taille_case // 3,
+        couleur = "orange",
+        epaisseur = 1
+        )
     
   
     if nbdiamand >= diamand and var["porte"] == 1:
@@ -981,7 +1041,7 @@ def lumiere_escalier():
     )
 
 def noir_lumiere():
-    """Affiche un cercle dont l'intérieur est le jeu, l'extérieur est noir"""
+    """Affiche un cercle dont l'intérieur est le jeu, l'extérieur est noir pour un effet de lumière"""
     cercle(
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
