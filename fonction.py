@@ -59,6 +59,7 @@ def affichage(carte, nbdiamand, diamand):
                 var["taille_case"],
                 nbdiamand,
                 diamand,
+                "goldenrod3"
             )  # centre le perso
     esthetique.noir_lumiere()
 

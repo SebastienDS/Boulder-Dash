@@ -27,7 +27,7 @@ def pierre(x, y, taille_case, *args):
     )
 
 
-def rockford(x, y, taille_case, nbdiamand, diamand):
+def rockford(x, y, taille_case, nbdiamand, diamand, fond_):
     """Dessine rockford aux coordonnées x, y"""
     # main à gauche
     cercle(
@@ -121,8 +121,8 @@ def rockford(x, y, taille_case, nbdiamand, diamand):
         y * taille_case + 1 * taille_case // 3,
         x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 9,
         y * taille_case + 1 * taille_case // 3 - taille_case // 9,
-        couleur ="goldenrod3",
-        remplissage = "goldenrod3"
+        couleur =fond_,
+        remplissage = fond_
     )
     polygone(
         [(x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 9,
@@ -1066,10 +1066,13 @@ def menu_score(nbdiamand, tempsrestant, suivant):
         couleur = 'white',
         remplissage = 'gray39'
     )
+    var["porte"] = 1
     diamand(0, 0.1, 100)
     diamand(5, 0.1, 100)
     diamand(0, 5.1, 100)
     diamand(5, 5.1, 100)
+    rockford(0, 2.5, 100, 0, 0, "cyan")
+    rockford(5, 2.5, 100, 0, 0, "cyan")
 
     a = time()
     while time() - a <= 1:
