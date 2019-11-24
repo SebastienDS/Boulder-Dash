@@ -1,6 +1,7 @@
 from upemtk import *
 from variable import *
 from time import time
+import fonction
 
 
 def terre(x, y, taille_case, *args):
@@ -295,8 +296,9 @@ def diamand(x, y, taille_case, *args):
             (x * taille_case + 5 * taille_case // 6, y * taille_case + 1),
             (x * taille_case + taille_case, y * taille_case + taille_case // 6),
         ],
-        couleur="lightblue",
+        couleur="black",
         remplissage="lightblue",
+        epaisseur = taille_case // 25
     )
     for i in range(4):
         ligne(
@@ -1046,7 +1048,7 @@ def noir_lumiere():
         epaisseur = 400
     )
 
-def menu_score(nbdiamand, tempsrestant):
+def menu_score(nbdiamand, tempsrestant, suivant):
     '''affiche un menu avec les différentes parties du score '''
     fond("cyan")
     texte(
@@ -1056,15 +1058,19 @@ def menu_score(nbdiamand, tempsrestant):
         taille = 24,
         police = 'Arial'
         )
-    personnage_victorieux()
     rectangle(
-        var["dimension_fenetre"] // 8,
-        var["dimension_fenetre"] // 8,
-        7 * var["dimension_fenetre"] // 8,
-        7 * var["dimension_fenetre"] // 8,
+        var["dimension_fenetre"] // 6,
+        var["dimension_fenetre"] // 6,
+        5 * var["dimension_fenetre"] // 6,
+        5 * var["dimension_fenetre"] // 6,
         couleur = 'white',
         remplissage = 'gray39'
     )
+    diamand(0, 0.1, 100)
+    diamand(5, 0.1, 100)
+    diamand(0, 5.1, 100)
+    diamand(5, 5.1, 100)
+
     a = time()
     while time() - a <= 1:
         texte(
@@ -1096,7 +1102,18 @@ def menu_score(nbdiamand, tempsrestant):
             couleur = "red"
         )
         mise_a_jour()
-    suivant = 1
+    S = fonction.encadrement(
+        "SUIVANT",
+        2 * var["dimension_fenetre"] // 3,
+        var["dimension_fenetre"] + 30,
+        "red",
+        "red",
+        24,
+        5,
+        5
+    )
+    while suivant == 0:
+        suivant = fonction.test_suivant(S, attente_clic())
     return suivant, nbdiamand * 350 + tempsrestant * 100
 
 def affiche_score_victoire(score):

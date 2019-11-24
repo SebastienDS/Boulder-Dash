@@ -215,7 +215,7 @@ def win(nbdiamand, diamand, tempsrestant):
         suivant = 0
         upemtk.efface_tout()
         while suivant == 0:
-            suivant, score = esthetique.menu_score(nbdiamand, tempsrestant)
+            suivant, score = esthetique.menu_score(nbdiamand, tempsrestant, suivant)
         upemtk.efface_tout()
         esthetique.fond("cyan")
         upemtk.texte(
@@ -430,6 +430,14 @@ def my_input(msg, type_retour, reponse_defaut=""):
             upemtk.efface("texte_input")
             upemtk.efface("cadre")
             return _var
+
+def test_suivant(S, a):
+    if (a[0] < S[2]
+    and a[0] > S[0]
+    and a[1] < S[3]
+    and a[1] > S[1]):
+        return 1
+    return 0
 
 
 if __name__ == "__main__":
