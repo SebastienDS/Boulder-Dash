@@ -140,7 +140,7 @@ def deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal):
                 deplace(carte, t)
                 return nbdiamand, tempstotal
             if (
-                nbdiamand >= diamand, tempstotal
+                nbdiamand >= diamand
                 and test_deplacement(carte, t, "E")
                 and var["porte"] == 0
             ):
