@@ -34,7 +34,7 @@ dico = {
     "W": esthetique.mur,
     "D": esthetique.diamand,
     "E": esthetique.sortie,
-    ".": lambda *argd: None,
+    ".": lambda *args: None,
     "P1": esthetique.pierre_eboulement,
     "D1": esthetique.diamand_eboulement,
     "F": esthetique.mur,
