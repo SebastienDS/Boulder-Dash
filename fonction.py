@@ -250,7 +250,7 @@ def initialiser_partie(carte):
     var["taille_case"] = var["dimension_fenetre"] // var["nb_cases"]
 
 
-def debug(carte, nbdiamand, debug, tempstotal):
+def debug(carte, nbdiamand, debug, tempstotal, score):
     """Perso joue aléatoirement"""
     choix = ["Up", "Down", "Left", "Right"]
     while True:
