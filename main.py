@@ -4,6 +4,41 @@ from upemtk import *
 from variable import var
 from time import time
 
+def menu():
+    esthetique.fond("black")
+    fonction.encadrement('BOULDER DASH', 
+        var["dimension_fenetre"] // 2, 
+        50, "White", "black", 
+        50, 1, 1) 
+    MAP = fonction.encadrement('SELECTION MAP',
+        var["dimension_fenetre"] // 2,
+        var["dimension_fenetre"] // 3,
+        "White", "white",
+        36, 1, 5) 
+    EDIT_MAP = fonction.encadrement('EDITEUR DE MAP',
+        var["dimension_fenetre"] // 2,
+        var["dimension_fenetre"] // 2,
+        "White", "white", 
+        36, 1, 5) 
+    EDIT_PERSO = fonction.encadrement('EDITEUR DE PERSONNAGE', 
+        var["dimension_fenetre"] // 2, 
+        2 * var["dimension_fenetre"] // 3, 
+        "White", "white", 
+        36, 1, 5) 
+    ev = donne_evenement()
+    if type_evenement(ev) in "ClicGauche":
+        coords = [clic_x(ev), clic_y(ev)]
+        if fonction.test_MAP(coords, MAP):
+            return 1
+        if fonction.test_EDIT_MAP(coords, EDIT_MAP):
+            return 2
+        if fonction.test_EDIT_PERSO(coords, EDIT_PERSO):
+            return 3
+    mise_a_jour()
+    return 0
+    
+def
+
 
 def main():
     tempscommencement = time()
@@ -12,7 +47,7 @@ def main():
     debug = -1
     mode = 0
     nbdiamand = 0
-    # carte, tempstotal, diamand = fonction.creer_map("map_test.txt") 
+    #carte, tempstotal, diamand = fonction.creer_map("map_test.txt") 
     carte, tempstotal, diamand = fonction.creation_map_aleatoire() 
 
     diamand = int(diamand)
@@ -98,7 +133,18 @@ if __name__ == "__main__":
         "Made by Uniiiiiifffffay corporation with the collaboration of Natsouuuuuu corporation!!! All right reserved!"
     )
     cree_fenetre(var["dimension_fenetre"], var["dimension_fenetre"] + var["bandeau"])
+    
+    menu1 = 0
     while True:
+        while menu1 == 0:
+            menu1 = menu()
+        while menu1 == 1:
+            menu_map()
+        while menu1 == 2:
+            pass
+        while menu1 == 3:
+            pass
+        
         if main() == 1:
             break
 

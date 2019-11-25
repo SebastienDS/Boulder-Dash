@@ -291,11 +291,12 @@ def encadrement(
     msg, x, y, couleurTXT, couleurCadre, Taille, Epaisseur, Espacement
 ):  # Ecrit et encadre un texte puis donne les coordonnées du cadre (pour clic)
     upemtk.texte(10000000, y, msg, couleur=couleurTXT, police="Impact", taille=Taille)
-    x2 = x + upemtk.longueur_texte(msg) + Espacement
+    upemtk.longueur_texte(msg)
+    x2 = x + upemtk.longueur_texte(msg) // 2 + Espacement
     y2 = y + upemtk.hauteur_texte() + Espacement
-    upemtk.texte(x, y, msg, couleur=couleurTXT, police="Impact", taille=Taille)
+    upemtk.texte(x - upemtk.longueur_texte(msg) // 2, y, msg, couleur=couleurTXT, police="Impact", taille=Taille)
     upemtk.rectangle(
-        x - Espacement,
+        x - Espacement - upemtk.longueur_texte(msg) // 2,
         y - Espacement,
         x2,
         y2,
@@ -473,10 +474,48 @@ def creation_map_aleatoire(x=40, y=22):
     else:
         return deepcopy(var["carte"][0]), 100, var["carte"][1]
     
+def test_MAP(coords, MAP):
+    if (coords[0] < MAP[2]
+    and coords[0] > MAP[0]
+    and coords[1] < MAP[3]
+    and coords[1] > MAP[1]):
+        return 1
+    return 0
 
+def test_EDIT_MAP(coords, EDIT_MAP):
+    if (coords[0] < EDIT_MAP[2]
+    and coords[0] > EDIT_MAP[0]
+    and coords[1] < EDIT_MAP[3]
+    and coords[1] > EDIT_MAP[1]):
+        return 2
+    return 0
 
+def test_EDIT_PERSO(coords, EDIT_PERSO):
+    if (coords[0] < EDIT_PERSO[2]
+    and coords[0] > EDIT_PERSO[0]
+    and coords[1] < EDIT_PERSO[3]
+    and coords[1] > EDIT_PERSO[1]):
+        return 3
+    return 0
 
-
+def affichageV2(carte, nbdiamand, diamand, taille, x_, y_):
+    """Affiche la carte"""
+    esthetique.fond("black")
+    esthetique.lumiere()
+    if var["porte"] == 0:
+        esthetique.lumiere_escalier()
+    carte[2][0] = "F"
+    for y in range(len(carte) - 1, -1, -1):  # y = ligne
+        for x in range(len(carte[y]) - 1, -1, -1):  # x = colonne
+            dico[carte[y][x]](
+                (x + (var["nb_cases"] // 2 - var["pos_x"])) + x_ ,
+                (y + (var["nb_cases"] // 2 - var["pos_y"])) + y_,
+                taille,
+                nbdiamand,
+                diamand,
+                "goldenrod3"
+            )  # centre le perso
+    esthetique.noir_lumiere()
 
 if __name__ == "__main__":
     import doctest
