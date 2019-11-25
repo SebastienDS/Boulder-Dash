@@ -2,6 +2,7 @@ import upemtk
 from variable import var
 from fonction import dico, my_input
 import esthetique
+import os
 
 
 
@@ -16,12 +17,12 @@ def affiche_map(carte):
     )
     for j in range(var["h_map"]):
         for i in range(var["w_map"]):
-            dico[carte[j][i]](i, j, var["taille_case"], 0, 0)
+            dico[carte[j][i]](i, j, var["taille_case"], 0, 0, "goldenrod3")
 
 
 def affiche_tools(tools):
     for i, elem in enumerate(tools):
-        dico[elem](i, 6, var["bandeau"], 0, 0)
+        dico[elem](i, 6, var["bandeau"], 0, 0, "goldenrod3")
 
 
 def save_map(carte, file_name, temps, diamand):
@@ -50,15 +51,13 @@ def save(carte):
 
 
 def main():
-    taille_fen = (var["dimension_fenetre"], var["dimension_fenetre"] + var["bandeau"])
     tools = ["G", "P", "W", "D", "R", "E"]
-    upemtk.cree_fenetre(taille_fen[0], taille_fen[1])
 
     esthetique.fond("black")
     var["w_map"] = my_input("Nombre de colonnes:", "int")
     var["h_map"] = my_input("Nombre de lignes:", "int")
 
-    var["taille_case"] = int(min(taille_fen) / max([var["w_map"], var["h_map"]]))
+    var["taille_case"] = int(var["dimension_fenetre"] / max([var["w_map"], var["h_map"]]))
     carte = [["." for i in range(var["w_map"])] for i in range(var["h_map"])]
     element = "."
 
@@ -92,8 +91,5 @@ def main():
             carte[ev[1] // var["taille_case"]][ev[0] // var["taille_case"]] = "."
 
     upemtk.attente_clic()
-    upemtk.ferme_fenetre()
+    return 0
 
-
-if __name__ == "__main__":
-    main()

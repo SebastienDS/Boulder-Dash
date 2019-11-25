@@ -1,3 +1,5 @@
+import editeur_map
+import editeur_personnage
 import fonction
 import esthetique
 from upemtk import *
@@ -37,7 +39,6 @@ def menu():
     mise_a_jour()
     return 0
     
-def
 
 
 def main():
@@ -141,9 +142,9 @@ if __name__ == "__main__":
         while menu1 == 1:
             menu_map()
         while menu1 == 2:
-            pass
+            menu1 = editeur_map.main()
         while menu1 == 3:
-            pass
+            menu1 = editeur_personnage.main()
         
         if main() == 1:
             break

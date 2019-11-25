@@ -65,9 +65,6 @@ def main():
     liste_clic = []
     forme_active = ""
 
-    taille_fen = (var["dimension_fenetre"], var["dimension_fenetre"] + var["bandeau"])
-    upemtk.cree_fenetre(taille_fen[0], taille_fen[1])
-
     while True:
         ev = upemtk.donne_evenement()
         type_ev = upemtk.type_evenement(ev)
@@ -141,7 +138,7 @@ def main():
         upemtk.mise_a_jour()
         
     upemtk.attente_clic()
-    upemtk.ferme_fenetre()
+    return 0
 
 
 if __name__ == '__main__':
