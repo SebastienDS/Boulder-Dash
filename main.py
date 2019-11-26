@@ -28,7 +28,8 @@ def menu():
         "White", "white", 
         36, 1, 5) 
     ev = donne_evenement()
-    if type_evenement(ev) in "ClicGauche":
+    type_ev = type_evenement(ev)
+    if type_ev == "ClicGauche":
         coords = [clic_x(ev), clic_y(ev)]
         if fonction.test_MAP(coords, MAP):
             return 1
@@ -36,6 +37,8 @@ def menu():
             return 2
         if fonction.test_EDIT_PERSO(coords, EDIT_PERSO):
             return 3
+    elif type_ev == "Quitte":
+        return -1
     mise_a_jour()
     return 0
     
@@ -95,7 +98,9 @@ def main():
         type_ev = type_evenement(ev)
         if fonction.test_pousser_pierre(carte, ev):
             fonction.pousser_pierre(carte, touche(ev))
-        if type_ev == "ClicGauche":
+        if type_ev == "Quitte":
+            return 1
+        elif type_ev == "ClicGauche":
             coords = [clic_x(ev), clic_y(ev)]
             mode = fonction.quitte_or_retry(coords, coordretry, coordquitte)
         if type_ev == "Touche" and touche(ev) == "d":
