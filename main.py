@@ -36,8 +36,7 @@ def menu(d, temps):
         if fonction.test_EDIT_MAP(coords, EDIT_MAP):
             return 2, temps
         if fonction.test_EDIT_PERSO(coords, EDIT_PERSO):
-            return 3, temps
-    
+            return 3, temps    
     if time() - d >= 1:
         temps += 0.1
         d = time()
@@ -55,6 +54,7 @@ def menu(d, temps):
     mise_a_jour()
     return 0, temps
     
+
 def menu_map(cartes, d):
     cartes1, inutile, inutile1 = fonction.creer_map(cartes)
     fonction.initialiser_partie(cartes1)
