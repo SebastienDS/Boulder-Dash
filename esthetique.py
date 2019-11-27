@@ -1202,3 +1202,210 @@ def couronne(x, y, taille_case):
     #     couleur = 'black',
     #     remplissage = 'red'
     # )
+    
+    
+def rockford_dead(x, y, taille_case, nbdiamand, diamand, fond_):
+    """Dessine rockford aux coordonnées x, y"""
+    # main à gauche
+    cercle(
+        x * taille_case + taille_case // 2 - taille_case // 4,
+        y * taille_case + 3 * taille_case // 4 - taille_case // 8,
+        taille_case // 12,
+        couleur="black",
+        remplissage="lightpink",
+    )
+    # main à droite
+    cercle(
+        x * taille_case + taille_case // 2 + taille_case // 4,
+        y * taille_case + 3 * taille_case // 4 - taille_case // 8,
+        taille_case // 12,
+        couleur="black",
+        remplissage="lightpink",
+    )
+    # pied à gauche
+    cercle(
+        x * taille_case + taille_case // 3,
+        y * taille_case + 8 * taille_case // 9,
+        taille_case // 12,
+        couleur="black",
+        remplissage="red",
+    )
+    # pied à droite
+    cercle(
+        x * taille_case + 2 * taille_case // 3,
+        y * taille_case + 8 * taille_case // 9,
+        taille_case // 12,
+        couleur="black",
+        remplissage="red",
+    )
+    # Tête
+    cercle(
+        x * taille_case + taille_case // 2,
+        y * taille_case + 2 * taille_case // 3,
+        taille_case // 4,
+        couleur="black",
+        remplissage="lightpink",
+    )
+    # Bouche(cercle + rectangle)
+    cercle(
+        x * taille_case + taille_case // 2,
+        y * taille_case + 2 * taille_case // 3 + taille_case // 12,
+        taille_case // 8,
+        couleur="black",
+        remplissage="black",
+    )
+    rectangle(
+        x * taille_case + taille_case // 2 - taille_case // 8,
+        y * taille_case + 2 * taille_case // 3 - taille_case // 12,
+        x * taille_case + taille_case // 2 + taille_case // 8,
+        y * taille_case + 2 * taille_case // 3 + taille_case // 12,
+        couleur="lightpink",
+        remplissage="lightpink",
+    )
+    ligne(
+        x * taille_case + taille_case // 2 - taille_case // 20,
+        y * taille_case + taille_case // 2,
+        x * taille_case + taille_case // 2 - taille_case // 8,
+        y * taille_case + taille_case // 2 + taille_case // 10,
+        couleur="black",
+        epaisseur= 3,
+    )
+    ligne(
+        x * taille_case + taille_case // 2 - taille_case // 8,
+        y * taille_case + taille_case // 2,
+        x * taille_case + taille_case // 2 - taille_case // 20,
+        y * taille_case + taille_case // 2 + taille_case // 10,
+        couleur="black",
+        epaisseur= 3,
+    )
+    ligne(
+        x * taille_case + taille_case // 2 + taille_case // 20,
+        y * taille_case + taille_case // 2,
+        x * taille_case + taille_case // 2 + taille_case // 8,
+        y * taille_case + taille_case // 2 + taille_case // 10,
+        couleur="black",
+        epaisseur= 3,
+    )
+    ligne(
+        x * taille_case + taille_case // 2 + taille_case // 8,
+        y * taille_case + taille_case // 2,
+        x * taille_case + taille_case // 2 + taille_case // 20,
+        y * taille_case + taille_case // 2 + taille_case // 10,
+        couleur="black",
+        epaisseur= 3,
+    )
+    #Torche
+    rectangle(
+        x * taille_case + 1 * taille_case // 4 - taille_case // 12,
+        y * taille_case + 1 * taille_case // 3,
+        x * taille_case + 1 * taille_case // 5 + taille_case // 30,
+        y * taille_case + 3 * taille_case // 4 - taille_case // 8,
+        couleur = "black",
+        remplissage = "sienna4")
+    cercle(
+        x * taille_case + 1 * taille_case // 4 - taille_case // 20,
+        y * taille_case + 1 * taille_case // 3,
+        taille_case // 9,
+        couleur="black",
+        remplissage="red",
+    )
+    rectangle(
+        x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 9,
+        y * taille_case + 1 * taille_case // 3,
+        x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 9,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 9,
+        couleur =fond_,
+        remplissage = fond_
+    )
+    polygone(
+        [(x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 9,
+        y * taille_case + 1 * taille_case // 3),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 9,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 9),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 18,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 18),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20, 
+        y * taille_case + 1 * taille_case // 3 - taille_case // 9),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 18,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 18),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 9,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 9),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 9,
+        y * taille_case + 1 * taille_case // 3)],
+        couleur ="black",
+        remplissage = "red"
+    )
+    ligne(
+        x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 9 + 1,
+        y * taille_case + 1 * taille_case // 3,
+        x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 9 - 1,
+        y * taille_case + 1 * taille_case // 3,
+        couleur = "red",
+        epaisseur = 1
+        )
+    cercle(
+        x * taille_case + 1 * taille_case // 4 - taille_case // 20,
+        y * taille_case + 1 * taille_case // 3,
+        taille_case // 15,
+        couleur="black",
+        remplissage="orange",
+    )
+    polygone(
+        [(x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 15,
+        y * taille_case + 1 * taille_case // 3),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 15,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 15),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 30,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 30),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20, 
+        y * taille_case + 1 * taille_case // 3 - taille_case // 15),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 30,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 30),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 15,
+        y * taille_case + 1 * taille_case // 3 - taille_case // 15),
+        (x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 15,
+        y * taille_case + 1 * taille_case // 3)],
+        couleur = "black",
+        remplissage = "orange"
+    )
+    ligne(
+        x * taille_case + 1 * taille_case // 4 - taille_case // 20 - taille_case // 15 + 1,
+        y * taille_case + 1 * taille_case // 3,
+        x * taille_case + 1 * taille_case // 4 - taille_case // 20 + taille_case // 15 - 1,
+        y * taille_case + 1 * taille_case // 3,
+        couleur = "orange",
+        epaisseur = 1
+        )
+    
+  
+    if nbdiamand >= diamand and var["porte"] == 1:
+        cercle(
+            x * taille_case + taille_case // 2 + taille_case // 4 + taille_case // 14,
+            y * taille_case + 3 * taille_case // 4 - taille_case // 8,
+            taille_case // 15,
+            couleur="black",
+            remplissage="yellow",
+        )
+        cercle(
+            x * taille_case + taille_case // 2 + taille_case // 4 + taille_case // 15,
+            y * taille_case + 3 * taille_case // 4 - taille_case // 8,
+            taille_case // 28,
+            couleur="black",
+            remplissage="lightpink",
+        )
+        rectangle(
+            x * taille_case + taille_case // 2 + taille_case // 4 + taille_case // 15,
+            y * taille_case + 3 * taille_case // 4 - taille_case // 6,
+            x * taille_case + taille_case // 2 + taille_case // 4 + taille_case // 12,
+            y * taille_case + 1 * taille_case // 4,
+            couleur="black",
+            remplissage="yellow",
+        )
+        rectangle(
+            x * taille_case + taille_case // 2 + taille_case // 4 + taille_case // 15,
+            y * taille_case + 1 * taille_case // 4,
+            x * taille_case + 3 * taille_case // 4,
+            y * taille_case + 2 * taille_case // 5,
+            couleur="black",
+            remplissage="yellow",
+        )

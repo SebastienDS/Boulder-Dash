@@ -1,10 +1,12 @@
+import editeur_map
+import editeur_personnage
 import fonction
 import esthetique
 from upemtk import *
 from variable import var
 from time import time
 
-def menu():
+def menu(d, temps):
     esthetique.fond("black")
     fonction.encadrement('BOULDER DASH', 
         var["dimension_fenetre"] // 2, 
@@ -26,19 +28,41 @@ def menu():
         "White", "white", 
         36, 1, 5) 
     ev = donne_evenement()
-    if type_evenement(ev) in "ClicGauche":
+    type_ev = type_evenement(ev)
+    if type_ev == "ClicGauche":
         coords = [clic_x(ev), clic_y(ev)]
         if fonction.test_MAP(coords, MAP):
-            return 1
+            return 1, temps
         if fonction.test_EDIT_MAP(coords, EDIT_MAP):
-            return 2
+            return 2, temps
         if fonction.test_EDIT_PERSO(coords, EDIT_PERSO):
-            return 3
-    mise_a_jour()
-    return 0
+            return 3, temps
     
-def
-
+    if time() - d >= 1:
+        temps += 0.1
+        d = time()
+        if temps < 4:
+            esthetique.rockford(1 + temps, 5, 100, 0, 1, "black")
+            esthetique.diamand(5.5, 5, 100, 0, 1, "black")
+        if temps >= 4 and temps < 16.4 / 3:
+            esthetique.pierre_eboulement(5, 0 + (temps  - 4)* 3, 100)
+            esthetique.rockford(5, 5, 100, 1, 1, "black")
+        if temps >= 16.4 / 3:
+            esthetique.pierre_eboulement(5, 4.4, 100)
+            esthetique.rockford_dead(5, 5, 100, 1, 1, "black")
+    elif type_ev == "Quitte":
+        return -1
+    mise_a_jour()
+    return 0, temps
+    
+def menu_map(cartes, d):
+    cartes1, inutile, inutile1 = fonction.creer_map(cartes)
+    fonction.initialiser_partie(cartes1)
+    fonction.affichageV2(cartes1, 0, 1, 50, 0, -2, 8)
+    mise_a_jour()
+    if time() - d > 50:
+        return 0
+    return 1
 
 def main():
     tempscommencement = time()
@@ -94,7 +118,9 @@ def main():
         type_ev = type_evenement(ev)
         if fonction.test_pousser_pierre(carte, ev):
             fonction.pousser_pierre(carte, touche(ev))
-        if type_ev == "ClicGauche":
+        if type_ev == "Quitte":
+            return 1
+        elif type_ev == "ClicGauche":
             coords = [clic_x(ev), clic_y(ev)]
             mode = fonction.quitte_or_retry(coords, coordretry, coordquitte)
         if type_ev == "Touche" and touche(ev) == "d":
@@ -133,17 +159,18 @@ if __name__ == "__main__":
         "Made by Uniiiiiifffffay corporation with the collaboration of Natsouuuuuu corporation!!! All right reserved!"
     )
     cree_fenetre(var["dimension_fenetre"], var["dimension_fenetre"] + var["bandeau"])
-    
     menu1 = 0
+    temps = 0
+    d = time()
     while True:
         while menu1 == 0:
-            menu1 = menu()
+            menu1, temps = menu(d, temps)
         while menu1 == 1:
-            menu_map()
+            menu1 = menu_map('default/map2.txt', d)
         while menu1 == 2:
-            pass
+            menu1 = editeur_map.main()
         while menu1 == 3:
-            pass
+            menu1 = editeur_personnage.main()
         
         if main() == 1:
             break

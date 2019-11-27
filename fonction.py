@@ -498,13 +498,9 @@ def test_EDIT_PERSO(coords, EDIT_PERSO):
         return 3
     return 0
 
-def affichageV2(carte, nbdiamand, diamand, taille, x_, y_):
+def affichageV2(carte, nbdiamand, diamand, taille, x_, y_, nbrcase):
     """Affiche la carte"""
     esthetique.fond("black")
-    esthetique.lumiere()
-    if var["porte"] == 0:
-        esthetique.lumiere_escalier()
-    carte[2][0] = "F"
     for y in range(len(carte) - 1, -1, -1):  # y = ligne
         for x in range(len(carte[y]) - 1, -1, -1):  # x = colonne
             dico[carte[y][x]](
@@ -515,8 +511,20 @@ def affichageV2(carte, nbdiamand, diamand, taille, x_, y_):
                 diamand,
                 "goldenrod3"
             )  # centre le perso
-    esthetique.noir_lumiere()
-
+    upemtk.rectangle(
+        x_ * taille + nbrcase * taille + 2 * taille,
+        y_ * taille, 
+        var["dimension_fenetre"],
+        var["dimension_fenetre"] + 100,
+        remplissage = "black"
+    )
+    upemtk.rectangle(
+        x_ * taille,
+        y_ * taille + nbrcase * taille + 2 * taille, 
+        var["dimension_fenetre"],
+        var["dimension_fenetre"] + 100,
+        remplissage = "black"
+    )
 if __name__ == "__main__":
     import doctest
 
