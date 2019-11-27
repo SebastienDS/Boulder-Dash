@@ -11,22 +11,22 @@ def menu(d, temps):
     fonction.encadrement('BOULDER DASH', 
         var["dimension_fenetre"] // 2, 
         50, "White", "black", 
-        50, 1, 1) 
+        50, 1, 1, "Impact") 
     MAP = fonction.encadrement('SELECTION MAP',
         var["dimension_fenetre"] // 2,
         var["dimension_fenetre"] // 3,
         "White", "white",
-        36, 1, 5) 
+        36, 1, 5, "Impact") 
     EDIT_MAP = fonction.encadrement('EDITEUR DE MAP',
         var["dimension_fenetre"] // 2,
         var["dimension_fenetre"] // 2,
         "White", "white", 
-        36, 1, 5) 
+        36, 1, 5, "Impact") 
     EDIT_PERSO = fonction.encadrement('EDITEUR DE PERSONNAGE', 
         var["dimension_fenetre"] // 2, 
         2 * var["dimension_fenetre"] // 3, 
         "White", "white", 
-        36, 1, 5) 
+        36, 1, 5, "Impact") 
     ev = donne_evenement()
     type_ev = type_evenement(ev)
     if type_ev == "ClicGauche":
@@ -55,14 +55,47 @@ def menu(d, temps):
     return 0, temps
     
 
-def menu_map(cartes, d):
-    cartes1, inutile, inutile1 = fonction.creer_map(cartes)
-    fonction.initialiser_partie(cartes1)
-    fonction.affichageV2(cartes1, 0, 1, 50, 0, -2, 8)
-    mise_a_jour()
-    if time() - d > 50:
-        return 0
-    return 1
+def menu_map(d):
+    numcarte = 0
+    choisis_carte = 0
+    while choisis_carte == 0:
+        if numcarte == 4:
+            esthetique.fond("black")
+            esthetique.point_dinterogation()
+        else:
+            cartes = 'default/map' + '{}'.format(numcarte) + '.txt'
+            cartes1, inutile, inutile1 = fonction.creer_map(cartes)
+            fonction.initialiser_partie(cartes1)
+            fonction.affichageV2(cartes1, 0, 1, 50, 0, -2, 8)
+        suivant = esthetique.fleche_(11, 5, 50, 1)
+        precedent = esthetique.fleche_(1, 5, 50, -1)
+        choix = fonction.encadrement(
+            "SUIVANT",
+            4 * var["dimension_fenetre"] // 5,
+            var["dimension_fenetre"] + 30,
+            "red",
+            "red",
+            24,
+            5,
+            5,
+            "Impact"
+        )
+        mise_a_jour()
+        efface_tout()
+        ev = donne_evenement()
+        if type_evenement(ev) == "ClicGauche":
+            coords = [clic_x(ev), clic_y(ev)]
+            if fonction.test_suivant(suivant, coords):
+                numcarte += 1
+                numcarte = numcarte % 5
+            if fonction.test_precedent(precedent, coords):
+                numcarte -= 1
+                numcarte = numcarte % 5
+            if fonction.test_choix(choix, coords):
+                if numcarte != 4:
+                    return cartes
+                else:
+                    return 6
 
 def main():
     tempscommencement = time()
@@ -103,6 +136,7 @@ def main():
             12,
             5,
             5,
+            "Impact"
         )
         coordquitte = fonction.encadrement(
             "Exit_Game",
@@ -113,6 +147,7 @@ def main():
             12,
             5,
             5,
+            "Impact"
         )
         ev = donne_evenement()
         type_ev = type_evenement(ev)
@@ -137,7 +172,7 @@ def main():
         if fonction.win(nbdiamand, diamand, tempsrestant) or fonction.loose(carte, tempsrestant):
             while mode == 0:
                 coordretry = fonction.encadrement(
-                    "Retry", var["dimension_fenetre"] // 7, 40, "red", "red", 12, 5, 5
+                    "Retry", var["dimension_fenetre"] // 7, 40, "red", "red", 12, 5, 5,"Impact"
                 )
                 coordquitte = fonction.encadrement(
                     "Exit_Game",
@@ -148,6 +183,7 @@ def main():
                     12,
                     5,
                     5,
+                    "Impact"
                 )
                 a = attente_clic()
                 mode = fonction.quitte_or_retry(a, coordretry, coordquitte)
@@ -165,8 +201,8 @@ if __name__ == "__main__":
     while True:
         while menu1 == 0:
             menu1, temps = menu(d, temps)
-        while menu1 == 1:
-            menu1 = menu_map('default/map2.txt', d)
+        if menu1 == 1:
+            menu1 = menu_map(d)
         while menu1 == 2:
             menu1 = editeur_map.main()
         while menu1 == 3:

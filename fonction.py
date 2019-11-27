@@ -288,9 +288,9 @@ def debug(carte, nbdiamand, debug, tempstotal, score):
 
 
 def encadrement(
-    msg, x, y, couleurTXT, couleurCadre, Taille, Epaisseur, Espacement
+    msg, x, y, couleurTXT, couleurCadre, Taille, Epaisseur, Espacement, polise
 ):  # Ecrit et encadre un texte puis donne les coordonnées du cadre (pour clic)
-    upemtk.texte(10000000, y, msg, couleur=couleurTXT, police="Impact", taille=Taille)
+    upemtk.texte(10000000, y, msg, couleur=couleurTXT, police=polise, taille=Taille)
     upemtk.longueur_texte(msg)
     x2 = x + upemtk.longueur_texte(msg) // 2 + Espacement
     y2 = y + upemtk.hauteur_texte() + Espacement
@@ -525,6 +525,34 @@ def affichageV2(carte, nbdiamand, diamand, taille, x_, y_, nbrcase):
         var["dimension_fenetre"] + 100,
         remplissage = "black"
     )
+    upemtk.rectangle(
+        x_ * taille + 2 * taille,
+        y_ * taille + 3 * taille,
+        x_ * taille + nbrcase * taille + 2 * taille + 5,
+        y_ * taille + nbrcase * taille + 2 * taille + 5,
+        couleur ="gold",
+        epaisseur = 10
+    ) 
+
+def test_suivant(suivant, coords):
+    if suivant[0][0] <= coords[0] <= suivant[2][0] and suivant[0][1] + (coords[0] - suivant[0][0]) * 0.5 <= coords[1] <= suivant[1][1] - (coords[0] - suivant[0][0]) * 0.5:
+        return 1
+    return 0
+
+def test_precedent(precedent, coords):
+    if precedent[0][0] >= coords[0] >= precedent[2][0] and precedent[0][1] + (precedent[0][0] - coords[0]) * 0.5 <= coords[1] <= precedent[1][1] - (precedent[0][0] - coords[0]) * 0.5:
+        return 1
+    return 0
+
+def test_choix(choix, a):
+    '''a = coordonné du clic et choix est le bouton suivant, test si l'utilisateur à choisis sa map'''
+    if (a[0] < choix[2]
+    and a[0] > choix[0]
+    and a[1] < choix[3]
+    and a[1] > choix[1]):
+        return 1
+    return 0
+
 if __name__ == "__main__":
     import doctest
 

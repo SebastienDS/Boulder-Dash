@@ -1122,7 +1122,8 @@ def menu_score(nbdiamand, tempsrestant, suivant):
         "red",
         24,
         5,
-        5
+        5,
+        "Impact"
     )
     while suivant == 0:
         suivant = fonction.test_suivant(S, attente_clic())
@@ -1409,3 +1410,26 @@ def rockford_dead(x, y, taille_case, nbdiamand, diamand, fond_):
             couleur="black",
             remplissage="yellow",
         )
+
+def fleche_(x, y, taille, sens):
+    '''Créer une flèche au coordonnée x, y ayant pour sens droite si sens = 1 et gauche pour sens = -1'''
+    assert(sens == 1 or sens != 1)
+    polygone(
+        [
+        (x * taille, y * taille),
+        (x * taille, y * taille + taille),
+        (x * taille + taille * sens, y * taille + taille // 2 )
+        ],
+        remplissage ="gray50",
+        couleur = "white",
+    )
+    return [(x * taille, y * taille), (x * taille, y * taille + taille), (x * taille + taille * sens, y * taille + taille // 2)]
+
+def point_dinterogation():
+    fonction.encadrement(
+        "?",
+        var["dimension_fenetre"] // 2,
+        var["dimension_fenetre"] // 5,
+        "white", "white",
+        200, 10, 40, "Calibri"
+    )
