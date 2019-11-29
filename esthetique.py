@@ -1429,7 +1429,19 @@ def point_dinterogation():
     fonction.encadrement(
         "?",
         var["dimension_fenetre"] // 2,
-        var["dimension_fenetre"] // 5,
+        var["dimension_fenetre"] // 7,
         "white", "white",
-        200, 10, 40, "Calibri"
+        180, 10, 40, "Calibri"
     )
+
+def affiche_score(L):
+    for i in range(3):
+        texte(1000000, 1000000, L[i], police = "Impact", taille = 24)
+        texte(
+            var["dimension_fenetre"] // 2 - longueur_texte(L[i]) // 2,
+            3 * var["dimension_fenetre"] // 4 + hauteur_texte() * i ,
+            L[i], 
+            police = "Impact", 
+            taille = 24,
+            couleur= "white"
+        )

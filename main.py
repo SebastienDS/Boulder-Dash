@@ -64,10 +64,10 @@ def menu_map(d):
             esthetique.point_dinterogation()
         else:
             cartes = 'default/map' + '{}'.format(numcarte) + '.txt'
-            cartes1, inutile, inutile1 = fonction.creer_map(cartes)
+            cartes1, inutile, inutile1, score1, score2, score3 = fonction.creer_map(cartes)
             fonction.initialiser_partie(cartes1)
             fonction.affichageV2(cartes1, 0, 1, 50, 0, -2, 8)
-        suivant = esthetique.fleche_(11, 5, 50, 1)
+        suivant_menu = esthetique.fleche_(11, 5, 50, 1)
         precedent = esthetique.fleche_(1, 5, 50, -1)
         choix = fonction.encadrement(
             "SUIVANT",
@@ -80,12 +80,15 @@ def menu_map(d):
             5,
             "Impact"
         )
+        esthetique.affiche_score([score1, score2, score3])
         mise_a_jour()
         efface_tout()
         ev = donne_evenement()
+        if type_evenement(ev) == "Quitte":
+            return -1
         if type_evenement(ev) == "ClicGauche":
             coords = [clic_x(ev), clic_y(ev)]
-            if fonction.test_suivant(suivant, coords):
+            if fonction.test_suivant_menu(suivant_menu, coords):
                 numcarte += 1
                 numcarte = numcarte % 5
             if fonction.test_precedent(precedent, coords):
@@ -97,16 +100,17 @@ def menu_map(d):
                 else:
                     return 6
 
-def main():
+def main(cartes):
     tempscommencement = time()
     ev1 = donne_evenement()
     score = "00000000"
     debug = -1
     mode = 0
     nbdiamand = 0
-    #carte, tempstotal, diamand = fonction.creer_map("map_test.txt") 
-    carte, tempstotal, diamand = fonction.creation_map_aleatoire() 
-
+    if cartes == 6:
+        carte, tempstotal, diamand = fonction.creation_map_aleatoire() 
+    else:
+        carte, tempstotal, diamand, s1, s2, s3 = fonction.creer_map(cartes) 
     diamand = int(diamand)
     fonction.initialiser_partie(carte)
     temps_pierre = time()
@@ -154,7 +158,7 @@ def main():
         if fonction.test_pousser_pierre(carte, ev):
             fonction.pousser_pierre(carte, touche(ev))
         if type_ev == "Quitte":
-            return 1
+            return -1
         elif type_ev == "ClicGauche":
             coords = [clic_x(ev), clic_y(ev)]
             mode = fonction.quitte_or_retry(coords, coordretry, coordquitte)
@@ -169,7 +173,7 @@ def main():
         mise_a_jour()
         if mode != 0:
             return mode
-        if fonction.win(nbdiamand, diamand, tempsrestant) or fonction.loose(carte, tempsrestant):
+        if fonction.win(nbdiamand, diamand, tempsrestant, cartes) or fonction.loose(carte, tempsrestant):
             while mode == 0:
                 coordretry = fonction.encadrement(
                     "Retry", var["dimension_fenetre"] // 7, 40, "red", "red", 12, 5, 5,"Impact"
@@ -197,18 +201,21 @@ if __name__ == "__main__":
     cree_fenetre(var["dimension_fenetre"], var["dimension_fenetre"] + var["bandeau"])
     menu1 = 0
     temps = 0
+    x = 9
     d = time()
     while True:
         while menu1 == 0:
             menu1, temps = menu(d, temps)
         if menu1 == 1:
-            menu1 = menu_map(d)
+            choix = menu_map(d)
         while menu1 == 2:
             menu1 = editeur_map.main()
         while menu1 == 3:
             menu1 = editeur_personnage.main()
-        
-        if main() == 1:
+        if choix == -1 or menu1 == -1:
             break
-
+        while x == 9:
+            x = main(choix)
+        if x == -1:
+            break
     ferme_fenetre()

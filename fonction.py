@@ -19,11 +19,14 @@ def creer_map(nomdufichier):
         ted = ted.split()
         t = ted[0][:-1]
         d = ted[1][:-1]
+        score3 = contenu.pop()
+        score2 = contenu.pop()
+        score1 = contenu.pop()
         for i in range(len(contenu)):
             contenu[i] = list(
                 contenu[i]
             )  # transforme la chaine de caractère en une list('abc'=['a','b','c'])
-    return contenu, t, d
+    return contenu, t, d, score1, score2, score3
 
 
 # on associe les lettres aux fonctions les dessinant
@@ -206,7 +209,7 @@ def loose(carte, tempsrestant):
     return False
 
 
-def win(nbdiamand, diamand, tempsrestant):
+def win(nbdiamand, diamand, tempsrestant, cartes):
     """Regarde si l'utilisateur gagne
     si oui, met l'image de victoire et retourne True"""
     if (
@@ -231,7 +234,8 @@ def win(nbdiamand, diamand, tempsrestant):
         esthetique.personnage_victorieux()
         esthetique.coffre()
         esthetique.affiche_score_victoire(score)
-        del var["carte"]
+        if cartes == 6:
+            del var["carte"]
         return True
     return False
 
@@ -315,14 +319,14 @@ def quitte_or_retry(a, coordretry, coordquitte):
         and a[1] < coordretry[3]
         and a[1] > coordretry[1]
     ):
-        return 2
+        return 9
     if (
         a[0] < coordquitte[2]
         and a[0] > coordquitte[0]
         and a[1] < coordquitte[3]
         and a[1] > coordquitte[1]
     ):
-        return 1
+        return -1
     return 0
 
 
@@ -534,7 +538,7 @@ def affichageV2(carte, nbdiamand, diamand, taille, x_, y_, nbrcase):
         epaisseur = 10
     ) 
 
-def test_suivant(suivant, coords):
+def test_suivant_menu(suivant, coords):
     if suivant[0][0] <= coords[0] <= suivant[2][0] and suivant[0][1] + (coords[0] - suivant[0][0]) * 0.5 <= coords[1] <= suivant[1][1] - (coords[0] - suivant[0][0]) * 0.5:
         return 1
     return 0

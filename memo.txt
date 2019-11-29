@@ -1,0 +1,5 @@
+-1 = quitte
+1 = choix_map
+2 = editeur_map
+3 = editeur_personnage
+9 = retry
