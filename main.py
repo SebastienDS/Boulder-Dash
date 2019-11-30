@@ -181,9 +181,13 @@ def main(cartes):
         elif type_ev == "ClicGauche":
             coords = [clic_x(ev), clic_y(ev)]
             mode = fonction.quitte_or_retry(coords, coordretry, coordquitte)
-
-        if type_ev == "Touche" and touche(ev) == "d":
-            debug *= -1
+        elif type_ev == "Touche":
+            t = touche(ev)
+            if t == "Escape":
+                fonction.my_input("inserer menu ici", "str")
+            elif t == "d":
+                debug *= -1
+            
         if debug == 1:
             nbdiamand, debug, tempstotal, score = fonction.debug(carte, nbdiamand, debug, tempstotal, score)
         else:
@@ -245,5 +249,5 @@ if __name__ == "__main__":
             x = main(choix)
         if x == -1:
             break
-            
+
     ferme_fenetre()
