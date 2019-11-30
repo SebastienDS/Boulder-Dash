@@ -4,3 +4,13 @@
 3 = editeur_map
 4 = editeur_personnage
 9 = retry
+
+
+Lettre:
+R = Rockford
+P = pierre
+K = pierre en eboulement
+D = diamant
+C = diamant en eboulement
+G = terre
+W = mur
