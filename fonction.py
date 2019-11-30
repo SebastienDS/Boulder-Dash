@@ -25,7 +25,6 @@ def creer_map(nomdufichier):
         score3 = contenu.pop()
         score2 = contenu.pop()
         score1 = contenu.pop()
-        print(score1, score2, score3, score4)
         for i in range(len(contenu)):
             contenu[i] = list(
                 contenu[i]
@@ -54,8 +53,8 @@ dico = {
     "D": esthetique.diamand,
     "E": esthetique.sortie,
     ".": lambda *args: None,
-    "P1": esthetique.pierre_eboulement,
-    "D1": esthetique.diamand_eboulement,
+    "K": esthetique.pierre_eboulement,
+    "C": esthetique.diamand_eboulement,
     "F": esthetique.mur,
 }
 
@@ -96,25 +95,26 @@ def tomber_de_pierre_ou_diamand(carte):
     """Fais tomber les pierres"""
     for y in range(len(carte) - 2, -1, -1):
         for x in range(len(carte[0]) - 1, -1, -1):
-            if carte[y][x] == "P1" and carte[y + 1][x] == ".":
-                carte[y][x], carte[y + 1][x] = ".", "P1"
-            if carte[y][x] == "D1" and carte[y + 1][x] == ".":
-                carte[y][x], carte[y + 1][x] = ".", "D1"
+            if carte[y][x] == "K" and carte[y + 1][x] == ".":
+                carte[y][x], carte[y + 1][x] = ".", "K"
+            if carte[y][x] == "C" and carte[y + 1][x] == ".":
+                carte[y][x], carte[y + 1][x] = ".", "C"
 
 
 def test_si_pierre_va_tomber(carte):
     for y in range(len(carte) - 2, -1, -1):
         for x in range(len(carte[0]) - 1, -1, -1):
-            if carte[y][x] in {"P", "D"} and carte[y + 1][x] == ".":
-                carte[y][x] = carte[y][x] + "1"
-
+            if carte[y][x] == "P" and carte[y + 1][x] == ".":
+                carte[y][x] = "K"
+            if carte[y][x] == "D" and carte[y + 1][x] == ".":
+                carte[y][x] = "C"
 
 def test_pierre_ou_diamand_eboulement(carte):
     for y in range(len(carte) - 1):
         for x in range(len(carte[0])):
-            if carte[y][x] == "P1" and carte[y + 1][x] not in [".", "R"]:
+            if carte[y][x] == "K" and carte[y + 1][x] not in [".", "R"]:
                 carte[y][x] = "P"
-            if carte[y][x] == "D1" and carte[y + 1][x] not in [".", "R"]:
+            if carte[y][x] == "C" and carte[y + 1][x] not in [".", "R"]:
                 carte[y][x] = "D"
 
 
@@ -226,7 +226,7 @@ def loose(carte, tempsrestant):
     """test si joueur s'est pris une pierre
     si oui met l'image de défaite et retourne True
     """
-    if carte[var["pos_y"] - 1][var["pos_x"]] in ["P1", "D1"] or tempsrestant <= 0:
+    if carte[var["pos_y"] - 1][var["pos_x"]] in ["K", "C"] or tempsrestant <= 0:
         upemtk.efface_tout()
         esthetique.fond("black")
         esthetique.personnage_defaitiste()

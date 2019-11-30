@@ -1075,8 +1075,6 @@ def menu_score(nbdiamand, tempsrestant, suivant, score):
     rockford(5, 2.5, 100, 0, 0, "cyan")
     couronne(2.5, 0.1, 100)
     a = time()
-    print(int(score))
-    print(int(score) // 350)
     while time() - a <= 1:
         texte(
             var["dimension_fenetre"] // 2 - longueur_texte("{} x 350 = {}".format(int(score) // 350, int(score))) // 2,

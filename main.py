@@ -126,7 +126,7 @@ def main(cartes):
     while True:
         efface_tout()
 
-        #mettre chaque P1 avec son temps de changement d'etat afin de tomber apres un certain temps sans avoir de temps commun entre tous les P1
+        #mettre chaque K avec son temps de changement d'etat afin de tomber apres un certain temps sans avoir de temps commun entre tous les K
         if time() - temps_pierre > 0.3:
             fonction.test_pierre_ou_diamand_eboulement(carte)
             fonction.tomber_de_pierre_ou_diamand(carte)
