@@ -44,7 +44,8 @@ def menu(d, temps):
             return 3, temps
         if fonction.test_EDIT_PERSO(coords, EDIT_PERSO):
             return 4, temps
-           
+    elif type_ev == "Quitte":
+        return -1, temps       
     if time() - d >= 1:
         temps += 0.1
         d = time()
@@ -59,8 +60,7 @@ def menu(d, temps):
             esthetique.rockford_dead(5, 6, 100, 1, 1, "black")
         if temps >= 6:
             temps = 0
-    elif type_ev == "Quitte":
-        return -1
+    
     mise_a_jour()
     return 0, temps
     
@@ -210,6 +210,7 @@ if __name__ == "__main__":
     )
     cree_fenetre(var["dimension_fenetre"], var["dimension_fenetre"] + var["bandeau"])
     menu1 = 0
+    choix = 0
     temps = 0
     x = 9
     d = time()
@@ -227,7 +228,7 @@ if __name__ == "__main__":
             menu1 = editeur_personnage.main()
         if choix == -1 or menu1 == -1:
             break
-        while x == 9:
+        while choix != 0 and x == 9:
             x = main(choix)
         if x == -1:
             break
