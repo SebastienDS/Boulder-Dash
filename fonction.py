@@ -19,10 +19,13 @@ def creer_map(nomdufichier):
         ted = ted.split()
         t = ted[0][:-1]
         d = ted[1][:-1]
+        while contenu[-1] == "":
+            contenu.pop()
         score4 = contenu.pop()
         score3 = contenu.pop()
         score2 = contenu.pop()
         score1 = contenu.pop()
+        print(score1, score2, score3, score4)
         for i in range(len(contenu)):
             contenu[i] = list(
                 contenu[i]
@@ -239,7 +242,7 @@ def loose(carte, tempsrestant):
     return False
 
 
-def win(nbdiamand, diamand, tempsrestant, cartes):
+def win(nbdiamand, diamand, tempsrestant, cartes, score):
     """Regarde si l'utilisateur gagne
     si oui, met l'image de victoire et retourne True"""
     if (
@@ -250,7 +253,7 @@ def win(nbdiamand, diamand, tempsrestant, cartes):
         suivant = 0
         upemtk.efface_tout()
         while suivant == 0:
-            suivant, score = esthetique.menu_score(nbdiamand, tempsrestant, suivant)
+            suivant, score = esthetique.menu_score(nbdiamand, tempsrestant, suivant, score)
         upemtk.efface_tout()
         esthetique.fond("cyan")
         upemtk.texte(
@@ -529,6 +532,15 @@ def test_MAP(coords, MAP):
         return 1
     return 0
 
+def test_sauvegarde(coords, sauvegarde):
+    if (
+        coords[0] < sauvegarde[2]
+        and coords[0] > sauvegarde[0]
+        and coords[1] < sauvegarde[3]
+        and coords[1] > sauvegarde[1]
+    ):
+        return 3
+    return 0
 
 def test_EDIT_MAP(coords, EDIT_MAP):
     if (
@@ -537,7 +549,7 @@ def test_EDIT_MAP(coords, EDIT_MAP):
         and coords[1] < EDIT_MAP[3]
         and coords[1] > EDIT_MAP[1]
     ):
-        return 2
+        return 3
     return 0
 
 
@@ -548,7 +560,7 @@ def test_EDIT_PERSO(coords, EDIT_PERSO):
         and coords[1] < EDIT_PERSO[3]
         and coords[1] > EDIT_PERSO[1]
     ):
-        return 3
+        return 4
     return 0
 
 

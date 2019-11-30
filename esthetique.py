@@ -1048,7 +1048,7 @@ def noir_lumiere():
         epaisseur = 400
     )
 
-def menu_score(nbdiamand, tempsrestant, suivant):
+def menu_score(nbdiamand, tempsrestant, suivant, score):
     '''affiche un menu avec les différentes parties du score '''
     fond("cyan")
     texte(
@@ -1075,11 +1075,13 @@ def menu_score(nbdiamand, tempsrestant, suivant):
     rockford(5, 2.5, 100, 0, 0, "cyan")
     couronne(2.5, 0.1, 100)
     a = time()
+    print(int(score))
+    print(int(score) // 350)
     while time() - a <= 1:
         texte(
-            var["dimension_fenetre"] // 2 - longueur_texte("{} x 350 = {}".format(nbdiamand, nbdiamand * 350)) // 2,
+            var["dimension_fenetre"] // 2 - longueur_texte("{} x 350 = {}".format(int(score) // 350, int(score))) // 2,
             var["dimension_fenetre"] // 3 - hauteur_texte() // 2,
-            "{} x 350 = {}".format(nbdiamand, nbdiamand * 350),
+            "{} x 350 = {}".format(int(score) // 350, int(score)),
             taille = 24,
             police = 'Arial',
             couleur = "red"
@@ -1097,9 +1099,9 @@ def menu_score(nbdiamand, tempsrestant, suivant):
         mise_a_jour()
     while time() - a <= 3:  
         ligne(
-            var["dimension_fenetre"] // 2 - longueur_texte("Score final : {}".format(nbdiamand * 350 + tempsrestant * 100)) // 2,
+            var["dimension_fenetre"] // 2 - longueur_texte("Score final : {}".format(int(score) + tempsrestant * 100)) // 2,
             4 * var["dimension_fenetre"] // 7 - hauteur_texte() // 2,
-            var["dimension_fenetre"] // 2 + longueur_texte("Score final : {}".format(nbdiamand * 350 + tempsrestant * 100)) // 2,
+            var["dimension_fenetre"] // 2 + longueur_texte("Score final : {}".format(int(score) + tempsrestant * 100)) // 2,
             4 * var["dimension_fenetre"] // 7 - hauteur_texte() // 2,
             couleur ='red',
             epaisseur = 3
@@ -1108,7 +1110,7 @@ def menu_score(nbdiamand, tempsrestant, suivant):
         texte(
             var["dimension_fenetre"] // 2 - longueur_texte("Score final : {}".format(nbdiamand * 350 + tempsrestant * 100)) // 2,
             2 * var["dimension_fenetre"] // 3 - hauteur_texte() // 2,
-            "Score final : {}".format(nbdiamand * 350 + tempsrestant * 100),
+            "Score final : {}".format(int(score) + tempsrestant * 100),
             taille = 24,
             police = 'Arial',
             couleur = "red"
@@ -1127,7 +1129,7 @@ def menu_score(nbdiamand, tempsrestant, suivant):
     )
     while suivant == 0:
         suivant = fonction.test_suivant(S, attente_clic())
-    return suivant, nbdiamand * 350 + tempsrestant * 100
+    return suivant, int(score) + tempsrestant * 100
 
 def affiche_score_victoire(score):
     '''affiche le score en cas de victoire'''

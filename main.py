@@ -10,21 +10,26 @@ def menu(d, temps):
     esthetique.fond("black")
     fonction.encadrement('BOULDER DASH', 
         var["dimension_fenetre"] // 2, 
-        50, "White", "black", 
+        30, "White", "black", 
         50, 1, 1, "Impact") 
     MAP = fonction.encadrement('SELECTION MAP',
         var["dimension_fenetre"] // 2,
-        var["dimension_fenetre"] // 3,
+        var["dimension_fenetre"] // 5,
+        "White", "white",
+        36, 1, 5, "Impact") 
+    Sauvegarde_ = fonction.encadrement('DERNIERE SAUVEGARDE',
+        var["dimension_fenetre"] // 2,
+        2 * var["dimension_fenetre"] // 5,
         "White", "white",
         36, 1, 5, "Impact") 
     EDIT_MAP = fonction.encadrement('EDITEUR DE MAP',
         var["dimension_fenetre"] // 2,
-        var["dimension_fenetre"] // 2,
+        3 * var["dimension_fenetre"] // 5,
         "White", "white", 
         36, 1, 5, "Impact") 
     EDIT_PERSO = fonction.encadrement('EDITEUR DE PERSONNAGE', 
         var["dimension_fenetre"] // 2, 
-        2 * var["dimension_fenetre"] // 3, 
+        4 * var["dimension_fenetre"] // 5, 
         "White", "white", 
         36, 1, 5, "Impact") 
     ev = donne_evenement()
@@ -33,22 +38,27 @@ def menu(d, temps):
         coords = [clic_x(ev), clic_y(ev)]
         if fonction.test_MAP(coords, MAP):
             return 1, temps
-        if fonction.test_EDIT_MAP(coords, EDIT_MAP):
+        if fonction.test_sauvegarde(coords, Sauvegarde_):
             return 2, temps
+        if fonction.test_EDIT_MAP(coords, EDIT_MAP):
+            return 3, temps
         if fonction.test_EDIT_PERSO(coords, EDIT_PERSO):
-            return 3, temps    
+            return 4, temps
+           
     if time() - d >= 1:
         temps += 0.1
         d = time()
         if temps < 4:
-            esthetique.rockford(1 + temps, 5, 100, 0, 1, "black")
-            esthetique.diamand(5.5, 5, 100, 0, 1, "black")
-        if temps >= 4 and temps < 16.4 / 3:
-            esthetique.pierre_eboulement(5, 0 + (temps  - 4)* 3, 100)
-            esthetique.rockford(5, 5, 100, 1, 1, "black")
-        if temps >= 16.4 / 3:
-            esthetique.pierre_eboulement(5, 4.4, 100)
-            esthetique.rockford_dead(5, 5, 100, 1, 1, "black")
+            esthetique.rockford(1 + temps, 6, 100, 0, 1, "black")
+            esthetique.diamand(5.5, 6, 100, 0, 1, "black")
+        if temps >= 4 and temps < 15.4 / 3:
+            esthetique.pierre_eboulement(5, 2 + (temps  - 4)* 3, 100)
+            esthetique.rockford(5, 6, 100, 1, 1, "black")
+        if temps >= 15.4 / 3:
+            esthetique.pierre_eboulement(5, 5.4, 100)
+            esthetique.rockford_dead(5, 6, 100, 1, 1, "black")
+        if temps >= 6:
+            temps = 0
     elif type_ev == "Quitte":
         return -1
     mise_a_jour()
@@ -109,7 +119,7 @@ def main(cartes):
     if cartes == 6:
         carte, tempstotal, diamand = fonction.creation_map_aleatoire() 
     else:
-        carte, tempstotal, diamand, s1, s2, s3, score = fonction.creer_map(cartes) 
+        carte, tempstotal, diamand, var["score1"], var["score2"], var["score3"], score = fonction.creer_map(cartes) 
     diamand = int(diamand)
     fonction.initialiser_partie(carte)
     temps_pierre = time()
@@ -173,7 +183,7 @@ def main(cartes):
         mise_a_jour()
         if mode != 0:
             return mode
-        if fonction.win(nbdiamand, diamand, tempsrestant, cartes) or fonction.loose(carte, tempsrestant):
+        if fonction.win(nbdiamand, diamand, tempsrestant, cartes, score) or fonction.loose(carte, tempsrestant):
             while mode == 0:
                 coordretry = fonction.encadrement(
                     "Retry", var["dimension_fenetre"] // 7, 40, "red", "red", 12, 5, 5,"Impact"
@@ -208,9 +218,12 @@ if __name__ == "__main__":
             menu1, temps = menu(d, temps)
         if menu1 == 1:
             choix = menu_map(d)
-        while menu1 == 2:
-            menu1 = editeur_map.main()
+        if menu1 == 2:
+            choix = "map_sauvegarde.txt"
+            menu1 = 0
         while menu1 == 3:
+            menu1 = editeur_map.main()
+        while menu1 == 4:
             menu1 = editeur_personnage.main()
         if choix == -1 or menu1 == -1:
             break
