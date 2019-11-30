@@ -130,17 +130,14 @@ def main(cartes):
 
     while True:
         efface_tout()
-
-        #mettre chaque K avec son temps de changement d'etat afin de tomber apres un certain temps sans avoir de temps commun entre tous les K
-        if time() - temps_pierre > 0.3:
+        if time() - temps_pierre > 0.3:     # fait tomber pierre toute les ~ 0.3 sec
             fonction.test_pierre_ou_diamand_eboulement(carte)
             fonction.tomber_de_pierre_ou_diamand(carte)
             fonction.tomber_pierre_laterale(carte)
             temps_pierre = time()
 
-        if time() - temps_pierre > 0.15:
+        if time() - temps_pierre > 0.15:   # transforme des pierre qui peuvent tomber en des pierres qui vont tomber
             fonction.test_si_pierre_va_tomber(carte)  
-           
         fonction.affichage(carte, nbdiamand, diamand)
         tempsrestant = fonction.timer(tempstotal, tempscommencement)
         fonction.fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand)
@@ -148,14 +145,11 @@ def main(cartes):
         type_ev = type_evenement(ev)
         if fonction.test_pousser_pierre(carte, ev):
             fonction.pousser_pierre(carte, touche(ev))
-
-        if type_ev == "Quitte":
+        if type_ev == "Quitte": #Peut quitter avec la croix
             return -1
-        elif type_ev == "ClicGauche":
-            coords = [clic_x(ev), clic_y(ev)]
         elif type_ev == "Touche":
             t = touche(ev)
-            if t == "Escape":
+            if t == "Escape":       # ALLUME UN MENU pour sauvegarder recommencer ou quitter si l'utilisateur appui sur echap
                 suite = fonction.menu_echap()
                 if suite == 6:
                     fonction.save_map_en_cours(carte, diamand - nbdiamand, score, tempsrestant)
@@ -166,25 +160,22 @@ def main(cartes):
                     return 9
             elif t == "d":
                 debug *= -1
-            
         if debug == 1:
             nbdiamand, debug, tempstotal, score = fonction.debug(carte, nbdiamand, debug, tempstotal, score)
         else:
             nbdiamand, tempstotal, score = fonction.deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal, score)
         if var["porte"] == 1:
             fonction.enleve_porte(carte, ev, nbdiamand, diamand)
-
         mise_a_jour()
         if mode != 0:
             return mode
-
         if fonction.win(nbdiamand, diamand, tempsrestant, cartes, score) or fonction.loose(carte, tempsrestant):
             while mode == 0:
                 coordretry = fonction.encadrement(
                     "Retry", var["dimension_fenetre"] // 7, 40, "red", "red", 12, 5, 5,"Impact"
                 )
-                coordquitte = fonction.encadrement(
-                    "Exit_Game",
+                coordmenu = fonction.encadrement(
+                    "Menu",
                     4 * var["dimension_fenetre"] // 5,
                     40,
                     "red",
@@ -195,7 +186,7 @@ def main(cartes):
                     "Impact"
                 )
                 a = attente_clic()
-                mode = fonction.quitte_or_retry(a, coordretry, coordquitte)
+                mode = fonction.menu_or_retry(a, coordretry, coordmenu)
             return mode
 
 

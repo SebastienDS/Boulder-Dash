@@ -494,7 +494,7 @@ def creation_map_aleatoire(x=40, y=22):
     else:
         return deepcopy(var["carte"][0]), 100, var["carte"][1]
 
-def quitte_or_retry(a, coordretry, coordquitte):
+def menu_or_retry(a, coordretry, coordmenu):
     """Regarde si l'utilisateur à décidé de quitté ou de recommencer
     et retourne donc sa réponse"""
     if (
@@ -505,12 +505,12 @@ def quitte_or_retry(a, coordretry, coordquitte):
     ):
         return 9
     if (
-        a[0] < coordquitte[2]
-        and a[0] > coordquitte[0]
-        and a[1] < coordquitte[3]
-        and a[1] > coordquitte[1]
+        a[0] < coordmenu[2]
+        and a[0] > coordmenu[0]
+        and a[1] < coordmenu[3]
+        and a[1] > coordmenu[1]
     ):
-        return -1
+        return 7
     return 0
 
 def test_clic(coordsclic, coordscarre):

@@ -1,8 +1,11 @@
 -1 = quitte
 1 = choix_map
-2 = sauvegarde
+2 = map_sauvegarde
 3 = editeur_map
 4 = editeur_personnage
+5 = continuer
+6 = sauvegarder
+7 = retourmenu
 9 = retry
 
 
