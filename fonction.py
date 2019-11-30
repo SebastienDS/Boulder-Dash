@@ -19,6 +19,7 @@ def creer_map(nomdufichier):
         ted = ted.split()
         t = ted[0][:-1]
         d = ted[1][:-1]
+        score4 = contenu.pop()
         score3 = contenu.pop()
         score2 = contenu.pop()
         score1 = contenu.pop()
@@ -26,7 +27,7 @@ def creer_map(nomdufichier):
             contenu[i] = list(
                 contenu[i]
             )  # transforme la chaine de caractère en une list('abc'=['a','b','c'])
-    return contenu, t, d, score1, score2, score3
+    return contenu, t, d, score1, score2, score3, score4
 
 
 def save_map_en_cours(carte, nb_diamand, score, temps_restant):
@@ -39,10 +40,6 @@ def save_map_en_cours(carte, nb_diamand, score, temps_restant):
         for i in range(1, 4):
             f.write("{}\n".format(var["score{}".format(i)]))
         f.write("{}\n".format(score))
-
-
-
-
 
 
 # on associe les lettres aux fonctions les dessinant

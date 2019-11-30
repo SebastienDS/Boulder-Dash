@@ -64,7 +64,7 @@ def menu_map(d):
             esthetique.point_dinterogation()
         else:
             cartes = 'default/map' + '{}'.format(numcarte) + '.txt'
-            cartes1, inutile, inutile1, var["score1"], var["score2"], var["score3"] = fonction.creer_map(cartes)
+            cartes1, inutile, inutile1, var["score1"], var["score2"], var["score3"], score = fonction.creer_map(cartes)
             fonction.initialiser_partie(cartes1)
             fonction.affichageV2(cartes1, 0, 1, 50, 0, -2, 8)
         suivant_menu = esthetique.fleche_(11, 5, 50, 1)
@@ -103,14 +103,13 @@ def menu_map(d):
 def main(cartes):
     tempscommencement = time()
     ev1 = donne_evenement()
-    score = "00000000"
     debug = -1
     mode = 0
     nbdiamand = 0
     if cartes == 6:
         carte, tempstotal, diamand = fonction.creation_map_aleatoire() 
     else:
-        carte, tempstotal, diamand, s1, s2, s3 = fonction.creer_map(cartes) 
+        carte, tempstotal, diamand, s1, s2, s3, score = fonction.creer_map(cartes) 
     diamand = int(diamand)
     fonction.initialiser_partie(carte)
     temps_pierre = time()
