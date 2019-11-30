@@ -7,7 +7,7 @@ from copy import deepcopy
 
 
 def creer_map(nomdufichier):
-    """Transforme un fichier texte contenant une map en une matriche"""
+    """Transforme un fichier texte contenant une map en une matrice"""
     with open(
         "map/" + nomdufichier, "r"
     ) as fichier:  # ouvre le fichier contenant la carte
@@ -27,6 +27,22 @@ def creer_map(nomdufichier):
                 contenu[i]
             )  # transforme la chaine de caractère en une list('abc'=['a','b','c'])
     return contenu, t, d, score1, score2, score3
+
+
+def save_map_en_cours(carte, nb_diamand, score, temps_restant):
+    with open("map/map_sauvegarde.txt", "w") as f:
+        f.write("{}s {}d\n".format(temps_restant, nb_diamand))
+        for j in range(len(carte)):
+            for i in range(len(carte[0])):
+                f.write(carte[j][i])
+            f.write("\n")
+        for i in range(1, 4):
+            f.write("{}\n".format(var["score{}".format(i)]))
+        f.write("{}\n".format(score))
+
+
+
+
 
 
 # on associe les lettres aux fonctions les dessinant
@@ -63,9 +79,10 @@ def affichage(carte, nbdiamand, diamand):
                 var["taille_case"],
                 nbdiamand,
                 diamand,
-                "goldenrod3"
+                "goldenrod3",
             )  # centre le perso
     esthetique.noir_lumiere()
+
 
 def fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand):
     """Affiche une banderolle avec le score et le bouton exitgame et retry"""
@@ -87,7 +104,7 @@ def tomber_de_pierre_ou_diamand(carte):
 
 def test_si_pierre_va_tomber(carte):
     for y in range(len(carte) - 2, -1, -1):
-        for x in range(len(carte[0]) -1, -1, -1):
+        for x in range(len(carte[0]) - 1, -1, -1):
             if carte[y][x] in {"P", "D"} and carte[y + 1][x] == ".":
                 carte[y][x] = carte[y][x] + "1"
 
@@ -140,7 +157,11 @@ def deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal, score):
         if t in _touche:
             if test_deplacement(carte, t, "D"):
                 deplace(carte, t)
-                return nbdiamand + 1, int(tempstotal) + 10, (8 - len((str(int(score) +350)))) * '0' + (str(int(score) +350))
+                return (
+                    nbdiamand + 1,
+                    int(tempstotal) + 10,
+                    (8 - len((str(int(score) + 350)))) * "0" + (str(int(score) + 350)),
+                )
             elif test_deplacement(carte, t, {"G", ".", "F"}):
                 deplace(carte, t)
                 return nbdiamand, tempstotal, score
@@ -153,14 +174,26 @@ def deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal, score):
                 return nbdiamand, tempstotal, score
     return nbdiamand, tempstotal, score
 
+
 def tomber_pierre_laterale(carte):
-    for y in range (len(carte) - 2, 0, -1):
+    for y in range(len(carte) - 2, 0, -1):
         for x in range(len(carte[0]) - 2, 0, -1):
-            if carte[y][x] in ["P", "D"] and carte[y][x + 1] == "." and carte[y + 1][x + 1] == "." and carte[y + 1][x] in ["P", "D", "W"]:
+            if (
+                carte[y][x] in ["P", "D"]
+                and carte[y][x + 1] == "."
+                and carte[y + 1][x + 1] == "."
+                and carte[y + 1][x] in ["P", "D", "W"]
+            ):
                 carte[y][x], carte[y][x + 1] = ".", carte[y][x]
-            if carte[y][x] in ["P", "D"] and carte[y][x - 1] == "." and carte[y + 1][x - 1] == "." and carte[y + 1][x] in ["P", "D", "W"]:
+            if (
+                carte[y][x] in ["P", "D"]
+                and carte[y][x - 1] == "."
+                and carte[y + 1][x - 1] == "."
+                and carte[y + 1][x] in ["P", "D", "W"]
+            ):
                 carte[y][x], carte[y][x - 1] = ".", carte[y][x]
     return carte
+
 
 def test_pousser_pierre(carte, ev):
     type_ev = upemtk.type_evenement(ev)
@@ -261,7 +294,12 @@ def debug(carte, nbdiamand, debug, tempstotal, score):
         x = choice(choix)
         if test_deplacement(carte, x, "D"):
             deplace(carte, x)
-            return nbdiamand + 1, debug, int(tempstotal) + 10, (8 - (len(str(int(score) +350)))) * '0' + (str(int(score) +350))
+            return (
+                nbdiamand + 1,
+                debug,
+                int(tempstotal) + 10,
+                (8 - (len(str(int(score) + 350)))) * "0" + (str(int(score) + 350)),
+            )
         elif test_deplacement(carte, x, {"G", "."}):
             deplace(carte, x)
             return nbdiamand, debug, tempstotal, score
@@ -298,7 +336,14 @@ def encadrement(
     upemtk.longueur_texte(msg)
     x2 = x + upemtk.longueur_texte(msg) // 2 + Espacement
     y2 = y + upemtk.hauteur_texte() + Espacement
-    upemtk.texte(x - upemtk.longueur_texte(msg) // 2, y, msg, couleur=couleurTXT, police="Impact", taille=Taille)
+    upemtk.texte(
+        x - upemtk.longueur_texte(msg) // 2,
+        y,
+        msg,
+        couleur=couleurTXT,
+        police="Impact",
+        taille=Taille,
+    )
     upemtk.rectangle(
         x - Espacement - upemtk.longueur_texte(msg) // 2,
         y - Espacement,
@@ -353,7 +398,7 @@ def _input(msg, reponse_defaut):
                 texte += "_"
             elif x == "period":
                 texte += "."
-                
+
         elif type_ev == "ClicGauche":
             return texte
 
@@ -439,11 +484,9 @@ def my_input(msg, type_retour, reponse_defaut=""):
             upemtk.efface("cadre")
             return _var
 
+
 def test_suivant(S, a):
-    if (a[0] < S[2]
-    and a[0] > S[0]
-    and a[1] < S[3]
-    and a[1] > S[1]):
+    if a[0] < S[2] and a[0] > S[0] and a[1] < S[3] and a[1] > S[1]:
         return 1
     return 0
 
@@ -453,8 +496,8 @@ def creation_map_aleatoire(x=40, y=22):
         carte = [["W" for _ in range(x)] for _ in range(y)]
         nb_diam = 0
 
-        for j in range(1, y -1):
-            for i in range(1, x -1):
+        for j in range(1, y - 1):
+            for i in range(1, x - 1):
                 nb_random = randint(0, 1000)
                 if nb_random < 650:
                     carte[j][i] = "G"
@@ -466,10 +509,10 @@ def creation_map_aleatoire(x=40, y=22):
                     carte[j][i] = "D"
                     nb_diam += 1
 
-        coord_entree = (randint(1, x -2), randint(1, y -2))
-        coord_sortie = (randint(1, x -2), randint(1, y -2))
+        coord_entree = (randint(1, x - 2), randint(1, y - 2))
+        coord_sortie = (randint(1, x - 2), randint(1, y - 2))
         while coord_entree == coord_sortie:
-            coord_sortie = (randint(1, x -2), randint(1, y -2))
+            coord_sortie = (randint(1, x - 2), randint(1, y - 2))
 
         carte[coord_entree[1]][coord_entree[0]] = "R"
         carte[coord_sortie[1]][coord_sortie[0]] = "E"
@@ -477,30 +520,40 @@ def creation_map_aleatoire(x=40, y=22):
         return deepcopy(var["carte"][0]), 100, var["carte"][1]
     else:
         return deepcopy(var["carte"][0]), 100, var["carte"][1]
-    
+
+
 def test_MAP(coords, MAP):
-    if (coords[0] < MAP[2]
-    and coords[0] > MAP[0]
-    and coords[1] < MAP[3]
-    and coords[1] > MAP[1]):
+    if (
+        coords[0] < MAP[2]
+        and coords[0] > MAP[0]
+        and coords[1] < MAP[3]
+        and coords[1] > MAP[1]
+    ):
         return 1
     return 0
 
+
 def test_EDIT_MAP(coords, EDIT_MAP):
-    if (coords[0] < EDIT_MAP[2]
-    and coords[0] > EDIT_MAP[0]
-    and coords[1] < EDIT_MAP[3]
-    and coords[1] > EDIT_MAP[1]):
+    if (
+        coords[0] < EDIT_MAP[2]
+        and coords[0] > EDIT_MAP[0]
+        and coords[1] < EDIT_MAP[3]
+        and coords[1] > EDIT_MAP[1]
+    ):
         return 2
     return 0
 
+
 def test_EDIT_PERSO(coords, EDIT_PERSO):
-    if (coords[0] < EDIT_PERSO[2]
-    and coords[0] > EDIT_PERSO[0]
-    and coords[1] < EDIT_PERSO[3]
-    and coords[1] > EDIT_PERSO[1]):
+    if (
+        coords[0] < EDIT_PERSO[2]
+        and coords[0] > EDIT_PERSO[0]
+        and coords[1] < EDIT_PERSO[3]
+        and coords[1] > EDIT_PERSO[1]
+    ):
         return 3
     return 0
+
 
 def affichageV2(carte, nbdiamand, diamand, taille, x_, y_, nbrcase):
     """Affiche la carte"""
@@ -508,56 +561,62 @@ def affichageV2(carte, nbdiamand, diamand, taille, x_, y_, nbrcase):
     for y in range(len(carte) - 1, -1, -1):  # y = ligne
         for x in range(len(carte[y]) - 1, -1, -1):  # x = colonne
             dico[carte[y][x]](
-                (x + (var["nb_cases"] // 2 - var["pos_x"])) + x_ ,
+                (x + (var["nb_cases"] // 2 - var["pos_x"])) + x_,
                 (y + (var["nb_cases"] // 2 - var["pos_y"])) + y_,
                 taille,
                 nbdiamand,
                 diamand,
-                "goldenrod3"
+                "goldenrod3",
             )  # centre le perso
     upemtk.rectangle(
         x_ * taille + nbrcase * taille + 2 * taille,
-        y_ * taille, 
+        y_ * taille,
         var["dimension_fenetre"],
         var["dimension_fenetre"] + 100,
-        remplissage = "black"
+        remplissage="black",
     )
     upemtk.rectangle(
         x_ * taille,
-        y_ * taille + nbrcase * taille + 2 * taille, 
+        y_ * taille + nbrcase * taille + 2 * taille,
         var["dimension_fenetre"],
         var["dimension_fenetre"] + 100,
-        remplissage = "black"
+        remplissage="black",
     )
     upemtk.rectangle(
         x_ * taille + 2 * taille,
         y_ * taille + 3 * taille,
         x_ * taille + nbrcase * taille + 2 * taille + 5,
         y_ * taille + nbrcase * taille + 2 * taille + 5,
-        couleur ="gold",
-        epaisseur = 10
-    ) 
+        couleur="gold",
+        epaisseur=10,
+    )
+
 
 def test_suivant_menu(suivant, coords):
-    if suivant[0][0] <= coords[0] <= suivant[2][0] and suivant[0][1] + (coords[0] - suivant[0][0]) * 0.5 <= coords[1] <= suivant[1][1] - (coords[0] - suivant[0][0]) * 0.5:
+    if (
+        suivant[0][0] <= coords[0] <= suivant[2][0]
+        and suivant[0][1] + (coords[0] - suivant[0][0]) * 0.5
+        <= coords[1]
+        <= suivant[1][1] - (coords[0] - suivant[0][0]) * 0.5
+    ):
         return 1
     return 0
+
 
 def test_precedent(precedent, coords):
-    if precedent[0][0] >= coords[0] >= precedent[2][0] and precedent[0][1] + (precedent[0][0] - coords[0]) * 0.5 <= coords[1] <= precedent[1][1] - (precedent[0][0] - coords[0]) * 0.5:
+    if (
+        precedent[0][0] >= coords[0] >= precedent[2][0]
+        and precedent[0][1] + (precedent[0][0] - coords[0]) * 0.5
+        <= coords[1]
+        <= precedent[1][1] - (precedent[0][0] - coords[0]) * 0.5
+    ):
         return 1
     return 0
+
 
 def test_choix(choix, a):
-    '''a = coordonné du clic et choix est le bouton suivant, test si l'utilisateur à choisis sa map'''
-    if (a[0] < choix[2]
-    and a[0] > choix[0]
-    and a[1] < choix[3]
-    and a[1] > choix[1]):
+    """a = coordonné du clic et choix est le bouton suivant, test si l'utilisateur à choisis sa map"""
+    if a[0] < choix[2] and a[0] > choix[0] and a[1] < choix[3] and a[1] > choix[1]:
         return 1
     return 0
 
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()

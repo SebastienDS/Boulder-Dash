@@ -64,7 +64,7 @@ def menu_map(d):
             esthetique.point_dinterogation()
         else:
             cartes = 'default/map' + '{}'.format(numcarte) + '.txt'
-            cartes1, inutile, inutile1, score1, score2, score3 = fonction.creer_map(cartes)
+            cartes1, inutile, inutile1, var["score1"], var["score2"], var["score3"] = fonction.creer_map(cartes)
             fonction.initialiser_partie(cartes1)
             fonction.affichageV2(cartes1, 0, 1, 50, 0, -2, 8)
         suivant_menu = esthetique.fleche_(11, 5, 50, 1)
@@ -80,7 +80,7 @@ def menu_map(d):
             5,
             "Impact"
         )
-        esthetique.affiche_score([score1, score2, score3])
+        esthetique.affiche_score([var["score1"], var["score2"], var["score3"]])
         mise_a_jour()
         efface_tout()
         ev = donne_evenement()
@@ -158,6 +158,7 @@ def main(cartes):
         if fonction.test_pousser_pierre(carte, ev):
             fonction.pousser_pierre(carte, touche(ev))
         if type_ev == "Quitte":
+            fonction.save_map_en_cours(carte, diamand - nbdiamand, score, tempsrestant)         ###################################################################
             return -1
         elif type_ev == "ClicGauche":
             coords = [clic_x(ev), clic_y(ev)]

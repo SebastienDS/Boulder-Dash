@@ -7,6 +7,6 @@ WPGPPGGGGGGGGW
 WGG.PGGGGGGGGW
 WGGG.GG.GGGGEW
 WWWWWWWWWWWWWW
-personne = "00000000"
-personne = "00000000"
-personne = "00000000"
+personne = 00000000
+personne = 00000000
+personne = 00000000
