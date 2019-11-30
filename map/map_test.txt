@@ -8,3 +8,7 @@ W.G...G.W
 W..GGG..W
 W.......W
 WWWWWWWWW
+personne = 00000000
+personne = 00000000
+personne = 00000000
+00000000

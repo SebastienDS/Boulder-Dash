@@ -74,12 +74,10 @@ def main():
                 forme_active = t.upper()
 
             elif t == "space":
-                break 
-                upemtk.ferme_fenetre()
+                break
 
         elif type_ev == "Quitte":
-            break 
-            upemtk.ferme_fenetre()
+            return -1
 
         elif type_ev == "Deplacement":
             coordonnee_souris_x = upemtk.clic_x(ev)

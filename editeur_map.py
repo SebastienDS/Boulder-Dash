@@ -32,6 +32,9 @@ def save_map(carte, file_name, temps, diamand):
             for i in range(var["w_map"]):
                 f.write(carte[j][i])
             f.write("\n")
+        for i in range(3):
+            f.write("personne = 00000000\n")
+        f.write("00000000\n")
     my_input("Map sauvegardée", "str")
 
 
@@ -85,7 +88,6 @@ def main():
                 save(carte)
             elif ev[1] == "space":
                 break
-                upemtk.ferme_fenetre()
 
         elif ev[2] == "ClicDroit":
             carte[ev[1] // var["taille_case"]][ev[0] // var["taille_case"]] = "."

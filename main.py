@@ -36,15 +36,17 @@ def menu(d, temps):
     type_ev = type_evenement(ev)
     if type_ev == "ClicGauche":
         coords = [clic_x(ev), clic_y(ev)]
-        if fonction.test_MAP(coords, MAP):
+        if fonction.test_clic(coords, MAP):
             return 1, temps
-        if fonction.test_sauvegarde(coords, Sauvegarde_):
+        if fonction.test_clic(coords, Sauvegarde_):
             return 2, temps
-        if fonction.test_EDIT_MAP(coords, EDIT_MAP):
+        if fonction.test_clic(coords, EDIT_MAP):
             return 3, temps
-        if fonction.test_EDIT_PERSO(coords, EDIT_PERSO):
+        if fonction.test_clic(coords, EDIT_PERSO):
             return 4, temps
-           
+    elif type_ev == "Quitte":
+        return -1, temps 
+
     if time() - d >= 1:
         temps += 0.1
         d = time()
@@ -59,8 +61,7 @@ def menu(d, temps):
             esthetique.rockford_dead(5, 6, 100, 1, 1, "black")
         if temps >= 6:
             temps = 0
-    elif type_ev == "Quitte":
-        return -1
+    
     mise_a_jour()
     return 0, temps
     
@@ -68,6 +69,7 @@ def menu(d, temps):
 def menu_map(d):
     numcarte = 0
     choisis_carte = 0
+
     while choisis_carte == 0:
         if numcarte == 4:
             esthetique.fond("black")
@@ -77,6 +79,7 @@ def menu_map(d):
             cartes1, inutile, inutile1, var["score1"], var["score2"], var["score3"], score = fonction.creer_map(cartes)
             fonction.initialiser_partie(cartes1)
             fonction.affichageV2(cartes1, 0, 1, 50, 0, -2, 8)
+
         suivant_menu = esthetique.fleche_(11, 5, 50, 1)
         precedent = esthetique.fleche_(1, 5, 50, -1)
         choix = fonction.encadrement(
@@ -98,13 +101,13 @@ def menu_map(d):
             return -1
         if type_evenement(ev) == "ClicGauche":
             coords = [clic_x(ev), clic_y(ev)]
-            if fonction.test_suivant_menu(suivant_menu, coords):
+            if fonction.test_suivant_menu(coords, suivant_menu):
                 numcarte += 1
                 numcarte = numcarte % 5
-            if fonction.test_precedent(precedent, coords):
+            if fonction.test_precedent(coords, precedent):
                 numcarte -= 1
                 numcarte = numcarte % 5
-            if fonction.test_choix(choix, coords):
+            if fonction.test_clic(coords, choix):
                 if numcarte != 4:
                     return cartes
                 else:
@@ -120,9 +123,11 @@ def main(cartes):
         carte, tempstotal, diamand = fonction.creation_map_aleatoire() 
     else:
         carte, tempstotal, diamand, var["score1"], var["score2"], var["score3"], score = fonction.creer_map(cartes) 
+
     diamand = int(diamand)
     fonction.initialiser_partie(carte)
     temps_pierre = time()
+
     while True:
         efface_tout()
 
@@ -139,50 +144,40 @@ def main(cartes):
         fonction.affichage(carte, nbdiamand, diamand)
         tempsrestant = fonction.timer(tempstotal, tempscommencement)
         fonction.fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand)
-
-        coordretry = fonction.encadrement(
-            "Retry",
-            var["dimension_fenetre"] // 15,
-            var["dimension_fenetre"] + 60,
-            "white",
-            "white",
-            12,
-            5,
-            5,
-            "Impact"
-        )
-        coordquitte = fonction.encadrement(
-            "Exit_Game",
-            4 * var["dimension_fenetre"] // 5,
-            var["dimension_fenetre"] + 60,
-            "white",
-            "white",
-            12,
-            5,
-            5,
-            "Impact"
-        )
         ev = donne_evenement()
         type_ev = type_evenement(ev)
         if fonction.test_pousser_pierre(carte, ev):
             fonction.pousser_pierre(carte, touche(ev))
+
         if type_ev == "Quitte":
-            fonction.save_map_en_cours(carte, diamand - nbdiamand, score, tempsrestant)         ###################################################################
             return -1
         elif type_ev == "ClicGauche":
             coords = [clic_x(ev), clic_y(ev)]
-            mode = fonction.quitte_or_retry(coords, coordretry, coordquitte)
-        if type_ev == "Touche" and touche(ev) == "d":
-            debug *= -1
+        elif type_ev == "Touche":
+            t = touche(ev)
+            if t == "Escape":
+                suite = fonction.menu_echap()
+                if suite == 6:
+                    fonction.save_map_en_cours(carte, diamand - nbdiamand, score, tempsrestant)
+                    return 0
+                if suite == -1:
+                    return -1
+                if suite == 9:
+                    return 9
+            elif t == "d":
+                debug *= -1
+            
         if debug == 1:
             nbdiamand, debug, tempstotal, score = fonction.debug(carte, nbdiamand, debug, tempstotal, score)
         else:
             nbdiamand, tempstotal, score = fonction.deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal, score)
         if var["porte"] == 1:
             fonction.enleve_porte(carte, ev, nbdiamand, diamand)
+
         mise_a_jour()
         if mode != 0:
             return mode
+
         if fonction.win(nbdiamand, diamand, tempsrestant, cartes, score) or fonction.loose(carte, tempsrestant):
             while mode == 0:
                 coordretry = fonction.encadrement(
@@ -210,14 +205,15 @@ if __name__ == "__main__":
     )
     cree_fenetre(var["dimension_fenetre"], var["dimension_fenetre"] + var["bandeau"])
     menu1 = 0
+    choix = 0
     temps = 0
-    x = 9
     d = time()
     while True:
         while menu1 == 0:
             menu1, temps = menu(d, temps)
         if menu1 == 1:
             choix = menu_map(d)
+            menu1 = 0
         if menu1 == 2:
             choix = "map_sauvegarde.txt"
             menu1 = 0
@@ -227,8 +223,10 @@ if __name__ == "__main__":
             menu1 = editeur_personnage.main()
         if choix == -1 or menu1 == -1:
             break
-        while x == 9:
+        x = 9
+        while choix != 0 and x == 9:
             x = main(choix)
         if x == -1:
             break
+
     ferme_fenetre()

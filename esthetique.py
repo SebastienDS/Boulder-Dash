@@ -1126,7 +1126,7 @@ def menu_score(nbdiamand, tempsrestant, suivant, score):
         "Impact"
     )
     while suivant == 0:
-        suivant = fonction.test_suivant(S, attente_clic())
+        suivant = fonction.test_clic(attente_clic(), S)
     return suivant, int(score) + tempsrestant * 100
 
 def affiche_score_victoire(score):

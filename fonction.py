@@ -355,26 +355,6 @@ def encadrement(
     return [x - Espacement, y - Espacement, x2, y2]
 
 
-def quitte_or_retry(a, coordretry, coordquitte):
-    """Regarde si l'utilisateur à décidé de quitté ou de recommencer
-    et retourne donc sa réponse"""
-    if (
-        a[0] < coordretry[2]
-        and a[0] > coordretry[0]
-        and a[1] < coordretry[3]
-        and a[1] > coordretry[1]
-    ):
-        return 9
-    if (
-        a[0] < coordquitte[2]
-        and a[0] > coordquitte[0]
-        and a[1] < coordquitte[3]
-        and a[1] > coordquitte[1]
-    ):
-        return -1
-    return 0
-
-
 def _input(msg, reponse_defaut):
     texte = reponse_defaut
     while True:
@@ -484,13 +464,6 @@ def my_input(msg, type_retour, reponse_defaut=""):
             upemtk.efface("cadre")
             return _var
 
-
-def test_suivant(S, a):
-    if a[0] < S[2] and a[0] > S[0] and a[1] < S[3] and a[1] > S[1]:
-        return 1
-    return 0
-
-
 def creation_map_aleatoire(x=40, y=22):
     if "carte" not in var.keys():
         carte = [["W" for _ in range(x)] for _ in range(y)]
@@ -521,48 +494,55 @@ def creation_map_aleatoire(x=40, y=22):
     else:
         return deepcopy(var["carte"][0]), 100, var["carte"][1]
 
-
-def test_MAP(coords, MAP):
+def quitte_or_retry(a, coordretry, coordquitte):
+    """Regarde si l'utilisateur à décidé de quitté ou de recommencer
+    et retourne donc sa réponse"""
     if (
-        coords[0] < MAP[2]
-        and coords[0] > MAP[0]
-        and coords[1] < MAP[3]
-        and coords[1] > MAP[1]
+        a[0] < coordretry[2]
+        and a[0] > coordretry[0]
+        and a[1] < coordretry[3]
+        and a[1] > coordretry[1]
+    ):
+        return 9
+    if (
+        a[0] < coordquitte[2]
+        and a[0] > coordquitte[0]
+        and a[1] < coordquitte[3]
+        and a[1] > coordquitte[1]
+    ):
+        return -1
+    return 0
+
+def test_clic(coordsclic, coordscarre):
+    if (
+        coordsclic[0] < coordscarre[2]
+        and coordsclic[0] > coordscarre[0]
+        and coordsclic[1] < coordscarre[3]
+        and coordsclic[1] > coordscarre[1]
+    ):
+        return True
+    return False
+
+def test_suivant_menu(coords, suivant):
+    if (
+        suivant[0][0] <= coords[0] <= suivant[2][0]
+        and suivant[0][1] + (coords[0] - suivant[0][0]) * 0.5
+        <= coords[1]
+        <= suivant[1][1] - (coords[0] - suivant[0][0]) * 0.5
     ):
         return 1
     return 0
 
-def test_sauvegarde(coords, sauvegarde):
+
+def test_precedent(coords, precedent):
     if (
-        coords[0] < sauvegarde[2]
-        and coords[0] > sauvegarde[0]
-        and coords[1] < sauvegarde[3]
-        and coords[1] > sauvegarde[1]
+        precedent[0][0] >= coords[0] >= precedent[2][0]
+        and precedent[0][1] + (precedent[0][0] - coords[0]) * 0.5
+        <= coords[1]
+        <= precedent[1][1] - (precedent[0][0] - coords[0]) * 0.5
     ):
-        return 3
+        return 1
     return 0
-
-def test_EDIT_MAP(coords, EDIT_MAP):
-    if (
-        coords[0] < EDIT_MAP[2]
-        and coords[0] > EDIT_MAP[0]
-        and coords[1] < EDIT_MAP[3]
-        and coords[1] > EDIT_MAP[1]
-    ):
-        return 3
-    return 0
-
-
-def test_EDIT_PERSO(coords, EDIT_PERSO):
-    if (
-        coords[0] < EDIT_PERSO[2]
-        and coords[0] > EDIT_PERSO[0]
-        and coords[1] < EDIT_PERSO[3]
-        and coords[1] > EDIT_PERSO[1]
-    ):
-        return 4
-    return 0
-
 
 def affichageV2(carte, nbdiamand, diamand, taille, x_, y_, nbrcase):
     """Affiche la carte"""
@@ -600,32 +580,47 @@ def affichageV2(carte, nbdiamand, diamand, taille, x_, y_, nbrcase):
         epaisseur=10,
     )
 
-
-def test_suivant_menu(suivant, coords):
-    if (
-        suivant[0][0] <= coords[0] <= suivant[2][0]
-        and suivant[0][1] + (coords[0] - suivant[0][0]) * 0.5
-        <= coords[1]
-        <= suivant[1][1] - (coords[0] - suivant[0][0]) * 0.5
-    ):
-        return 1
-    return 0
-
-
-def test_precedent(precedent, coords):
-    if (
-        precedent[0][0] >= coords[0] >= precedent[2][0]
-        and precedent[0][1] + (precedent[0][0] - coords[0]) * 0.5
-        <= coords[1]
-        <= precedent[1][1] - (precedent[0][0] - coords[0]) * 0.5
-    ):
-        return 1
-    return 0
-
-
-def test_choix(choix, a):
-    """a = coordonné du clic et choix est le bouton suivant, test si l'utilisateur à choisis sa map"""
-    if a[0] < choix[2] and a[0] > choix[0] and a[1] < choix[3] and a[1] > choix[1]:
-        return 1
-    return 0
-
+def menu_echap():
+    while True:
+        esthetique.fond("black")
+        encadrement('MENU', 
+            var["dimension_fenetre"] // 2, 
+            30, "White", "black", 
+            50, 1, 1, "Impact") 
+        continuer = encadrement('CONTINUER',
+            var["dimension_fenetre"] // 2,
+            var["dimension_fenetre"] // 5,
+            "White", "white",
+            36, 1, 5, "Impact") 
+        sauvegarder = encadrement('SAUVEGARDER',
+            var["dimension_fenetre"] // 2,
+            2 * var["dimension_fenetre"] // 5,
+            "White", "white",
+            36, 1, 5, "Impact") 
+        recommencer = encadrement('RECOMMENCER',
+            var["dimension_fenetre"] // 2,
+            3 * var["dimension_fenetre"] // 5,
+            "White", "white", 
+            36, 1, 5, "Impact") 
+        quitter = encadrement('QUITTER LE JEU', 
+            var["dimension_fenetre"] // 2, 
+            4 * var["dimension_fenetre"] // 5, 
+            "White", "white", 
+            36,1, 5, "Impact")
+        upemtk.mise_a_jour()
+        ev = upemtk.donne_evenement()
+        type_ev = upemtk.type_evenement(ev)
+        if type_ev == "Touche":
+            t = upemtk.touche(ev)
+            if t == "Escape":
+                return 5
+        if type_ev == "ClicGauche":
+            coords = [upemtk.clic_x(ev), upemtk.clic_y(ev)]
+            if test_clic(coords, continuer):
+                return 5
+            if test_clic(coords, sauvegarder):
+                return 6
+            if test_clic(coords, recommencer):
+                return 9
+            if test_clic(coords, quitter):
+                return -1
