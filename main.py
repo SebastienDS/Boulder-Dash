@@ -32,6 +32,7 @@ def menu(d, temps):
         4 * var["dimension_fenetre"] // 5, 
         "White", "white", 
         36, 1, 5, "Impact") 
+
     ev = donne_evenement()
     type_ev = type_evenement(ev)
     if type_ev == "ClicGauche":
@@ -45,7 +46,8 @@ def menu(d, temps):
         if fonction.test_EDIT_PERSO(coords, EDIT_PERSO):
             return 4, temps
     elif type_ev == "Quitte":
-        return -1, temps       
+        return -1, temps 
+
     if time() - d >= 1:
         temps += 0.1
         d = time()
@@ -68,6 +70,7 @@ def menu(d, temps):
 def menu_map(d):
     numcarte = 0
     choisis_carte = 0
+
     while choisis_carte == 0:
         if numcarte == 4:
             esthetique.fond("black")
@@ -77,6 +80,7 @@ def menu_map(d):
             cartes1, inutile, inutile1, var["score1"], var["score2"], var["score3"], score = fonction.creer_map(cartes)
             fonction.initialiser_partie(cartes1)
             fonction.affichageV2(cartes1, 0, 1, 50, 0, -2, 8)
+
         suivant_menu = esthetique.fleche_(11, 5, 50, 1)
         precedent = esthetique.fleche_(1, 5, 50, -1)
         choix = fonction.encadrement(
@@ -93,6 +97,7 @@ def menu_map(d):
         esthetique.affiche_score([var["score1"], var["score2"], var["score3"]])
         mise_a_jour()
         efface_tout()
+
         ev = donne_evenement()
         if type_evenement(ev) == "Quitte":
             return -1
@@ -120,9 +125,11 @@ def main(cartes):
         carte, tempstotal, diamand = fonction.creation_map_aleatoire() 
     else:
         carte, tempstotal, diamand, var["score1"], var["score2"], var["score3"], score = fonction.creer_map(cartes) 
+
     diamand = int(diamand)
     fonction.initialiser_partie(carte)
     temps_pierre = time()
+
     while True:
         efface_tout()
 
@@ -162,16 +169,19 @@ def main(cartes):
             5,
             "Impact"
         )
+
         ev = donne_evenement()
         type_ev = type_evenement(ev)
         if fonction.test_pousser_pierre(carte, ev):
             fonction.pousser_pierre(carte, touche(ev))
+
         if type_ev == "Quitte":
             fonction.save_map_en_cours(carte, diamand - nbdiamand, score, tempsrestant)         ###################################################################
             return -1
         elif type_ev == "ClicGauche":
             coords = [clic_x(ev), clic_y(ev)]
             mode = fonction.quitte_or_retry(coords, coordretry, coordquitte)
+
         if type_ev == "Touche" and touche(ev) == "d":
             debug *= -1
         if debug == 1:
@@ -180,9 +190,11 @@ def main(cartes):
             nbdiamand, tempstotal, score = fonction.deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal, score)
         if var["porte"] == 1:
             fonction.enleve_porte(carte, ev, nbdiamand, diamand)
+
         mise_a_jour()
         if mode != 0:
             return mode
+
         if fonction.win(nbdiamand, diamand, tempsrestant, cartes, score) or fonction.loose(carte, tempsrestant):
             while mode == 0:
                 coordretry = fonction.encadrement(
@@ -214,6 +226,7 @@ if __name__ == "__main__":
     temps = 0
     x = 9
     d = time()
+
     while True:
         while menu1 == 0:
             menu1, temps = menu(d, temps)
@@ -232,4 +245,5 @@ if __name__ == "__main__":
             x = main(choix)
         if x == -1:
             break
+            
     ferme_fenetre()
