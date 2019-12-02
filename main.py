@@ -119,6 +119,7 @@ def main(cartes):
     debug = -1
     mode = 0
     nbdiamand = 0
+    MS = 0
     if cartes == 6:
         carte, tempstotal, diamand = fonction.creation_map_aleatoire() 
     else:
@@ -185,6 +186,9 @@ def main(cartes):
                     5,
                     "Impact"
                 )
+                if MS == 0:
+                    fonction.test_meilleurscore(nommap, score, tempsrestant)
+                    MS = 1
                 a = attente_clic()
                 mode = fonction.menu_or_retry(a, coordretry, coordmenu)
             return mode, nommap

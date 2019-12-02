@@ -7,8 +7,8 @@ WPGPPGGGGGGGGW
 WGG.PGGGGGGGGW
 WGGG.GG.GGGGEW
 WWWWWWWWWWWWWW
-personne = 00000000
-personne = 00000000
-personne = 00000000
+pseudo             = 00000000
+pseudo             = 00000000
+pseudo             = 00000000
 00000000
 default/map0.txt

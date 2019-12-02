@@ -22,7 +22,7 @@ def creer_map(nomdufichier):
         while contenu[-1] == "":
             contenu.pop()
         nommap = contenu.pop()
-        score4 = contenu.pop()
+        score4 = contenu.pop() #score actuelle ("00000000" de base puis autre quand partie sauvegardé)
         score3 = contenu.pop()
         score2 = contenu.pop()
         score1 = contenu.pop()
@@ -34,6 +34,7 @@ def creer_map(nomdufichier):
 
 
 def save_map_en_cours(carte, nb_diamand, score, temps_restant, nommap):
+    """sauvegarde la map"""
     with open("map/map_sauvegarde.txt", "w") as f:
         f.write("{}s {}d\n".format(temps_restant, nb_diamand))
         for j in range(len(carte)):
@@ -641,3 +642,41 @@ def menu_echap(temps):
                 return 9, temps + time() - d
             if test_clic(coords, quitter):
                 return -1, temps + time() - d
+
+def test_meilleurscore(nommap, score, tempsrestant):
+    """test si le score de fin est l'un de ses meilleurs scores"""
+    pseudo = ""
+    with open("map/" + nommap, "r") as f1:
+        contenu = f1.read()
+    contenu = contenu.split("\n")
+    ted = contenu.pop(0)
+    nommap = contenu.pop()
+    inutile = contenu.pop() # score de début de partie("00000000")
+    score3 = contenu.pop() + "\n"
+    score2 = contenu.pop() + "\n"
+    score1 = contenu.pop() + "\n"
+    print(score)
+    score4 = str(int(score) + tempsrestant * 100) + "\n"
+    score4 = "0" * (8 - len(score4[:-1])) + score4
+    print(score1, score2, score3, score4)
+    if int(score3[-10:-2]) < int(score4):
+        while pseudo == "":
+            pseudo = my_input("Quel est votre pseudo", "str", reponse_defaut="pseudo")
+        score3 = pseudo + ' ' * (19 - len(pseudo)) + "= " + score4 
+        if int(score2[-10:-2]) < int(score3[-10:-2]):
+            score2, score3 = score3, score2
+            if int(score1[-10:-2]) < int(score2[-10:-2]):
+                score1, score2 = score2, score1
+
+    with open("map/" + nommap, "w") as f1:
+        f1.write(ted)
+        f1.write("\n")
+        f1.write("\n".join(contenu))
+        f1.write("\n")
+        f1.write(score1)
+        f1.write(score2)
+        f1.write(score3)
+        f1.write("00000000\n")
+        f1.write(nommap)
+
+
