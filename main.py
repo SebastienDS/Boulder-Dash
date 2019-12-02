@@ -76,10 +76,9 @@ def menu_map(d):
             esthetique.point_dinterogation()
         else:
             cartes = 'default/map' + '{}'.format(numcarte) + '.txt'
-            cartes1, inutile, inutile1, var["score1"], var["score2"], var["score3"], score = fonction.creer_map(cartes)
+            cartes1, inutile, inutile1, var["score1"], var["score2"], var["score3"], score, nommap = fonction.creer_map(cartes)
             fonction.initialiser_partie(cartes1)
             fonction.affichageV2(cartes1, 0, 1, 50, 0, -2, 8)
-
         suivant_menu = esthetique.fleche_(11, 5, 50, 1)
         precedent = esthetique.fleche_(1, 5, 50, -1)
         choix = fonction.encadrement(
@@ -114,6 +113,7 @@ def menu_map(d):
                     return 6
 
 def main(cartes):
+    """Lance le jeu"""
     tempscommencement = time()
     ev1 = donne_evenement()
     debug = -1
@@ -122,7 +122,7 @@ def main(cartes):
     if cartes == 6:
         carte, tempstotal, diamand = fonction.creation_map_aleatoire() 
     else:
-        carte, tempstotal, diamand, var["score1"], var["score2"], var["score3"], score = fonction.creer_map(cartes) 
+        carte, tempstotal, diamand, var["score1"], var["score2"], var["score3"], score, nommap = fonction.creer_map(cartes) 
 
     diamand = int(diamand)
     fonction.initialiser_partie(carte)
@@ -146,18 +146,18 @@ def main(cartes):
         if fonction.test_pousser_pierre(carte, ev):
             fonction.pousser_pierre(carte, touche(ev))
         if type_ev == "Quitte": #Peut quitter avec la croix
-            return -1
+            return -1, nommap
         elif type_ev == "Touche":
             t = touche(ev)
             if t == "Escape":       # ALLUME UN MENU pour sauvegarder recommencer ou quitter si l'utilisateur appui sur echap
                 suite, tempscommencement = fonction.menu_echap(tempscommencement)
                 if suite == 6:
-                    fonction.save_map_en_cours(carte, diamand - nbdiamand, score, tempsrestant)
-                    return 0
+                    fonction.save_map_en_cours(carte, diamand - nbdiamand, score, tempsrestant, nommap)
+                    return 0, nommap
                 if suite == -1:
-                    return -1
+                    return -1, nommap
                 if suite == 9:
-                    return 9
+                    return 9, nommap
             elif t == "d":
                 debug *= -1
         if debug == 1:
@@ -168,7 +168,7 @@ def main(cartes):
             fonction.enleve_porte(carte, ev, nbdiamand, diamand)
         mise_a_jour()
         if mode != 0:
-            return mode
+            return mode, nommap
         if fonction.win(nbdiamand, diamand, tempsrestant, cartes, score) or fonction.loose(carte, tempsrestant):
             while mode == 0:
                 coordretry = fonction.encadrement(
@@ -187,7 +187,7 @@ def main(cartes):
                 )
                 a = attente_clic()
                 mode = fonction.menu_or_retry(a, coordretry, coordmenu)
-            return mode
+            return mode, nommap
 
 
 if __name__ == "__main__":
@@ -216,7 +216,7 @@ if __name__ == "__main__":
             break
         x = 9
         while choix != 0 and x == 9:
-            x = main(choix)
+            x, choix = main(choix)
         if x == -1:
             break
 

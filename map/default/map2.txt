@@ -24,3 +24,4 @@ personne = 00000000
 personne = 00000000
 personne = 00000000
 00000000
+default/map2.txt

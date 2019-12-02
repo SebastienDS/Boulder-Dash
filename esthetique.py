@@ -510,6 +510,7 @@ def pierre_eboulement(x, y, taille_case, *args):
 
 
 def diamand_eboulement(x, y, taille_case, *args):
+    """affiche diamant qui tombe"""
     polygone(
         [
             (x * taille_case, y * taille_case + taille_case // 6),
@@ -632,7 +633,7 @@ def diamand_eboulement(x, y, taille_case, *args):
 
 
 def fond(couleur):
-    """Affiche le fond"""
+    """Affiche le fond de la couleur demander"""
     rectangle(
         0,
         0,
@@ -644,6 +645,7 @@ def fond(couleur):
 
 
 def fond_score_temps_diams(score, tempsrestant, nbdiamandrestant):
+    """affiche un fond(banderolle) avec le nombre de temps restant et de diamant"""
     rectangle(
         0,
         var["dimension_fenetre"],
@@ -1030,6 +1032,7 @@ def lumiere():
 
 
 def lumiere_escalier():
+    """lumière afficher quand la porte est ouverte"""
     cercle(
         (var["pos_sortie_x"] + (var["nb_cases"] // 2 - var["pos_x"])) * var["taille_case"] + var["taille_case"] / 2,
         (var["pos_sortie_y"] + (var["nb_cases"] // 2 - var["pos_y"])) * var["taille_case"] + var["taille_case"] / 2,
@@ -1131,7 +1134,6 @@ def menu_score(nbdiamand, tempsrestant, suivant, score):
 
 def affiche_score_victoire(score):
     '''affiche le score en cas de victoire'''
-    
     texte(
         10000000,
         0,
@@ -1149,6 +1151,7 @@ def affiche_score_victoire(score):
         )
 
 def couronne(x, y, taille_case):
+    """affiche une couronne"""
     polygone(
         [
             (x * taille_case - taille_case // 2, y * taille_case + taille_case),
@@ -1426,6 +1429,7 @@ def fleche_(x, y, taille, sens):
     return [(x * taille, y * taille), (x * taille, y * taille + taille), (x * taille + taille * sens, y * taille + taille // 2)]
 
 def point_dinterogation():
+    """affiche un point d'interrogation pour la map aléatoire"""
     fonction.encadrement(
         "?",
         var["dimension_fenetre"] // 2,
@@ -1435,6 +1439,7 @@ def point_dinterogation():
     )
 
 def affiche_score(L):
+    """affiche le score"""
     for i in range(3):
         texte(1000000, 1000000, L[i], police = "Impact", taille = 24)
         texte(

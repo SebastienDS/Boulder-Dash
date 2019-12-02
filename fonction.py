@@ -21,6 +21,7 @@ def creer_map(nomdufichier):
         d = ted[1][:-1]
         while contenu[-1] == "":
             contenu.pop()
+        nommap = contenu.pop()
         score4 = contenu.pop()
         score3 = contenu.pop()
         score2 = contenu.pop()
@@ -29,10 +30,10 @@ def creer_map(nomdufichier):
             contenu[i] = list(
                 contenu[i]
             )  # transforme la chaine de caractère en une list('abc'=['a','b','c'])
-    return contenu, t, d, score1, score2, score3, score4
+    return contenu, t, d, score1, score2, score3, score4, nommap
 
 
-def save_map_en_cours(carte, nb_diamand, score, temps_restant):
+def save_map_en_cours(carte, nb_diamand, score, temps_restant, nommap):
     with open("map/map_sauvegarde.txt", "w") as f:
         f.write("{}s {}d\n".format(temps_restant, nb_diamand))
         for j in range(len(carte)):
@@ -42,6 +43,7 @@ def save_map_en_cours(carte, nb_diamand, score, temps_restant):
         for i in range(1, 4):
             f.write("{}\n".format(var["score{}".format(i)]))
         f.write("{}\n".format(score))
+        f.write("{}\n".format(nommap))
 
 
 # on associe les lettres aux fonctions les dessinant
@@ -84,7 +86,7 @@ def affichage(carte, nbdiamand, diamand):
 
 
 def fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand):
-    """Affiche une banderolle avec le score et le bouton exitgame et retry"""
+    """Affiche une banderolle avec le score le temps et le nombre de diamand restant"""
     nbdiamandrestant = diamand - nbdiamand
     if nbdiamandrestant < 0:
         nbdiamandrestant = 0
@@ -102,6 +104,7 @@ def tomber_de_pierre_ou_diamand(carte):
 
 
 def test_si_pierre_va_tomber(carte):
+    """test si une pierre va tomber et la transforme en une pierre qui tombe si oui(pareil pour diams)"""
     for y in range(len(carte) - 2, -1, -1):
         for x in range(len(carte[0]) - 1, -1, -1):
             if carte[y][x] == "P" and carte[y + 1][x] == ".":
@@ -110,6 +113,7 @@ def test_si_pierre_va_tomber(carte):
                 carte[y][x] = "C"
 
 def test_pierre_ou_diamand_eboulement(carte):
+    """test si une pierre est toujours en train de tomber et la transforme en pierre normal si non(pareil pour diams)"""
     for y in range(len(carte) - 1):
         for x in range(len(carte[0])):
             if carte[y][x] == "K" and carte[y + 1][x] not in [".", "R"]:
@@ -129,6 +133,7 @@ def test_deplacement(carte, direction, liste):
 
 
 def enleve_porte(carte, ev, nbdiamand, diamand):
+    """test si la porte a été ouverte"""
     type_ev = upemtk.type_evenement(ev)
     if type_ev == "Touche":
         t = upemtk.touche(ev)
@@ -176,6 +181,7 @@ def deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal, score):
 
 
 def tomber_pierre_laterale(carte):
+    """test si une pierre peut tomber sur les cotés et la bouge si oui"""
     for y in range(len(carte) - 2, 0, -1):
         for x in range(len(carte[0]) - 2, 0, -1):
             if (
@@ -196,6 +202,7 @@ def tomber_pierre_laterale(carte):
 
 
 def test_pousser_pierre(carte, ev):
+    """test si une pierre peut etre poussé et return true or false selon le résultat"""
     type_ev = upemtk.type_evenement(ev)
     if type_ev == "Touche":
         t = upemtk.touche(ev)
@@ -331,7 +338,8 @@ def debug(carte, nbdiamand, debug, tempstotal, score):
 
 def encadrement(
     msg, x, y, couleurTXT, couleurCadre, Taille, Epaisseur, Espacement, polise
-):  # Ecrit et encadre un texte puis donne les coordonnées du cadre (pour clic)
+):  
+    """ Ecrit et encadre un texte puis donne les coordonnées du cadre (pour clic)"""
     upemtk.texte(10000000, y, msg, couleur=couleurTXT, police=polise, taille=Taille)
     upemtk.longueur_texte(msg)
     x2 = x + upemtk.longueur_texte(msg) // 2 + Espacement
@@ -356,6 +364,7 @@ def encadrement(
 
 
 def _input(msg, reponse_defaut):
+    """meme fonction que input mais cette fois si s'affiche à l'écran et non sur la console"""
     texte = reponse_defaut
     while True:
         ev = upemtk.donne_evenement()
@@ -395,6 +404,7 @@ def _input(msg, reponse_defaut):
 
 
 def my_input(msg, type_retour, reponse_defaut=""):
+    """affichage de l'input"""
     upemtk.rectangle(
         var["dimension_fenetre"] // 2 - 180,
         var["dimension_fenetre"] // 2 - 100,
@@ -465,6 +475,7 @@ def my_input(msg, type_retour, reponse_defaut=""):
             return _var
 
 def creation_map_aleatoire(x=40, y=22):
+    """renvoie une map aléatoire de taille(40 * 22(x * y))"""
     if "carte" not in var.keys():
         carte = [["W" for _ in range(x)] for _ in range(y)]
         nb_diam = 0
@@ -514,6 +525,7 @@ def menu_or_retry(a, coordretry, coordmenu):
     return 0
 
 def test_clic(coordsclic, coordscarre):
+    """test si l'utilisateur a cliqué dans le carré"""
     if (
         coordsclic[0] < coordscarre[2]
         and coordsclic[0] > coordscarre[0]
@@ -524,6 +536,7 @@ def test_clic(coordsclic, coordscarre):
     return False
 
 def test_suivant_menu(coords, suivant):
+    """test si l'utilisateur a cliqué sur la flèche qui donne la map suivante dans le menu"""
     if (
         suivant[0][0] <= coords[0] <= suivant[2][0]
         and suivant[0][1] + (coords[0] - suivant[0][0]) * 0.5
@@ -535,6 +548,7 @@ def test_suivant_menu(coords, suivant):
 
 
 def test_precedent(coords, precedent):
+    """test si l'utilisateur a cliqué sur la flèche qui donne la map précédente dans le menu"""
     if (
         precedent[0][0] >= coords[0] >= precedent[2][0]
         and precedent[0][1] + (precedent[0][0] - coords[0]) * 0.5
@@ -545,7 +559,7 @@ def test_precedent(coords, precedent):
     return 0
 
 def affichageV2(carte, nbdiamand, diamand, taille, x_, y_, nbrcase):
-    """Affiche la carte"""
+    """Affiche la carte dans le menu des map"""
     esthetique.fond("black")
     for y in range(len(carte) - 1, -1, -1):  # y = ligne
         for x in range(len(carte[y]) - 1, -1, -1):  # x = colonne
@@ -581,6 +595,7 @@ def affichageV2(carte, nbdiamand, diamand, taille, x_, y_, nbrcase):
     )
 
 def menu_echap(temps):
+    """ affiche un menu si jamais l'utilisateur à appuyer sur echap et renvoie un des différents choix disponible(retry, continue, sauvegarder, quitter le jeu)"""
     d = time()
     while True:
         esthetique.fond("black")
@@ -615,7 +630,7 @@ def menu_echap(temps):
         if type_ev == "Touche":
             t = upemtk.touche(ev)
             if t == "Escape":
-                return 5
+                return 5, temps + time() - d
         if type_ev == "ClicGauche":
             coords = [upemtk.clic_x(ev), upemtk.clic_y(ev)]
             if test_clic(coords, continuer):
