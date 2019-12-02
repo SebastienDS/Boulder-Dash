@@ -7,8 +7,8 @@ WPGPPGGGGGGGGW
 WGG.PGGGGGGGGW
 WGGG.GG.GGGGEW
 WWWWWWWWWWWWWW
-pseudo             = 00000000
-pseudo             = 00000000
-pseudo             = 00000000
+WTHELL             = 00031750
+WTF I WON          = 00030950
+ITS GOOD THIS WORK = 00016150
 00000000
 default/map0.txt

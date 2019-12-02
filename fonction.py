@@ -250,9 +250,10 @@ def loose(carte, tempsrestant):
     return False
 
 
-def win(nbdiamand, diamand, tempsrestant, cartes, score):
+def win(nbdiamand, diamand, tempsrestant, cartes, score, nommap):
     """Regarde si l'utilisateur gagne
     si oui, met l'image de victoire et retourne True"""
+    MS = 0
     if (
         var["pos_x"] == var["pos_sortie_x"]
         and var["pos_y"] == var["pos_sortie_y"]
@@ -275,6 +276,9 @@ def win(nbdiamand, diamand, tempsrestant, cartes, score):
         esthetique.personnage_victorieux()
         esthetique.coffre()
         esthetique.affiche_score_victoire(score)
+        if MS == 0:
+                    test_meilleurscore(nommap, score, tempsrestant)
+                    MS = 1
         if cartes == 6:
             del var["carte"]
         return True
@@ -656,13 +660,13 @@ def test_meilleurscore(nommap, score, tempsrestant):
     score2 = contenu.pop() + "\n"
     score1 = contenu.pop() + "\n"
     print(score)
-    score4 = str(int(score) + tempsrestant * 100) + "\n"
+    score4 = str(int(score)) + "\n"
     score4 = "0" * (8 - len(score4[:-1])) + score4
     print(score1, score2, score3, score4)
     if int(score3[-10:-2]) < int(score4):
         while pseudo == "":
             pseudo = my_input("Quel est votre pseudo", "str", reponse_defaut="pseudo")
-        score3 = pseudo + ' ' * (19 - len(pseudo)) + "= " + score4 
+        score3 = pseudo + "  =  " + score4 
         if int(score2[-10:-2]) < int(score3[-10:-2]):
             score2, score3 = score3, score2
             if int(score1[-10:-2]) < int(score2[-10:-2]):

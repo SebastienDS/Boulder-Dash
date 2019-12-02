@@ -79,6 +79,7 @@ def menu_map(d):
             cartes1, inutile, inutile1, var["score1"], var["score2"], var["score3"], score, nommap = fonction.creer_map(cartes)
             fonction.initialiser_partie(cartes1)
             fonction.affichageV2(cartes1, 0, 1, 50, 0, -2, 8)
+            esthetique.affiche_score([var["score1"], var["score2"], var["score3"]])
         suivant_menu = esthetique.fleche_(11, 5, 50, 1)
         precedent = esthetique.fleche_(1, 5, 50, -1)
         choix = fonction.encadrement(
@@ -92,7 +93,6 @@ def menu_map(d):
             5,
             "Impact"
         )
-        esthetique.affiche_score([var["score1"], var["score2"], var["score3"]])
         mise_a_jour()
         efface_tout()
         ev = donne_evenement()
@@ -119,7 +119,6 @@ def main(cartes):
     debug = -1
     mode = 0
     nbdiamand = 0
-    MS = 0
     if cartes == 6:
         carte, tempstotal, diamand = fonction.creation_map_aleatoire() 
     else:
@@ -170,7 +169,7 @@ def main(cartes):
         mise_a_jour()
         if mode != 0:
             return mode, nommap
-        if fonction.win(nbdiamand, diamand, tempsrestant, cartes, score) or fonction.loose(carte, tempsrestant):
+        if fonction.win(nbdiamand, diamand, tempsrestant, cartes, score, nommap) or fonction.loose(carte, tempsrestant):
             while mode == 0:
                 coordretry = fonction.encadrement(
                     "Retry", var["dimension_fenetre"] // 7, 40, "red", "red", 12, 5, 5,"Impact"
@@ -186,9 +185,6 @@ def main(cartes):
                     5,
                     "Impact"
                 )
-                if MS == 0:
-                    fonction.test_meilleurscore(nommap, score, tempsrestant)
-                    MS = 1
                 a = attente_clic()
                 mode = fonction.menu_or_retry(a, coordretry, coordmenu)
             return mode, nommap
