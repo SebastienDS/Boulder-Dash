@@ -150,7 +150,7 @@ def main(cartes):
         elif type_ev == "Touche":
             t = touche(ev)
             if t == "Escape":       # ALLUME UN MENU pour sauvegarder recommencer ou quitter si l'utilisateur appui sur echap
-                suite = fonction.menu_echap()
+                suite, tempscommencement = fonction.menu_echap(tempscommencement)
                 if suite == 6:
                     fonction.save_map_en_cours(carte, diamand - nbdiamand, score, tempsrestant)
                     return 0

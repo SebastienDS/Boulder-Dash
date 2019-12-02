@@ -3,6 +3,6 @@ TO DO:
 		- MODIFIER AFIN QUE LE RETRY RELANCE MAP COMPLETE EN CAS DE MAPSAUVEGARDER
 		-FAIRE EN SORTE QUE LA PERSONNE PUISSE ENREGISTRER SON SCORE
 		-README.txt
-		-Echap = temps ne secoule pas
+		X -Echap = temps ne secoule pas
 		-DOCSTRING +  commenter
 		

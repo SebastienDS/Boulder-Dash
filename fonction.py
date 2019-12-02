@@ -580,13 +580,15 @@ def affichageV2(carte, nbdiamand, diamand, taille, x_, y_, nbrcase):
         epaisseur=10,
     )
 
-def menu_echap():
+def menu_echap(temps):
+    d = time()
     while True:
         esthetique.fond("black")
         encadrement('MENU', 
             var["dimension_fenetre"] // 2, 
             30, "White", "black", 
             50, 1, 1, "Impact") 
+
         continuer = encadrement('CONTINUER',
             var["dimension_fenetre"] // 2,
             var["dimension_fenetre"] // 5,
@@ -606,7 +608,7 @@ def menu_echap():
             var["dimension_fenetre"] // 2, 
             4 * var["dimension_fenetre"] // 5, 
             "White", "white", 
-            36,1, 5, "Impact")
+            36, 1, 5, "Impact")
         upemtk.mise_a_jour()
         ev = upemtk.donne_evenement()
         type_ev = upemtk.type_evenement(ev)
@@ -617,10 +619,10 @@ def menu_echap():
         if type_ev == "ClicGauche":
             coords = [upemtk.clic_x(ev), upemtk.clic_y(ev)]
             if test_clic(coords, continuer):
-                return 5
+                return 5, temps + time() - d
             if test_clic(coords, sauvegarder):
-                return 6
+                return 6, temps + time() - d
             if test_clic(coords, recommencer):
-                return 9
+                return 9, temps + time() - d
             if test_clic(coords, quitter):
-                return -1
+                return -1, temps + time() - d
