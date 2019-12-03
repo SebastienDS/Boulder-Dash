@@ -7,6 +7,7 @@ import os
 
 
 def affiche_map(carte):
+    """affiche la map en cours de creation"""
     esthetique.fond("white")
     upemtk.rectangle(
         0,
@@ -21,11 +22,13 @@ def affiche_map(carte):
 
 
 def affiche_tools(tools):
+    """affiche la barre d'outil dans le bandeau en bas"""
     for i, elem in enumerate(tools):
         dico[elem](i, 6, var["bandeau"], 0, 0, "goldenrod3")
 
 
 def save_map(carte, file_name, temps, diamand):
+    """sauvegarde la map cree avec le bon format"""
     with open("map/{}.txt".format(file_name), "w") as f:
         f.write("{}s {}d\n".format(temps, diamand))
         for j in range(var["h_map"]):
@@ -39,6 +42,7 @@ def save_map(carte, file_name, temps, diamand):
 
 
 def save(carte):
+    """test si la map peut etre cree"""
     file_name = my_input("Nom de la map:", "str")
     temps = my_input("temps limite:", "int")
     diamand = my_input("diamand requis:", "int")
@@ -54,13 +58,13 @@ def save(carte):
 
 
 def main():
-    tools = ["G", "P", "W", "D", "R", "E"]
+    tools = ["G", "P", "W", "D", "R", "E"]  #block disponible dans la barre d'outil
 
     esthetique.fond("black")
     var["w_map"] = my_input("Nombre de colonnes:", "int")
     var["h_map"] = my_input("Nombre de lignes:", "int")
 
-    var["taille_case"] = int(var["dimension_fenetre"] / max([var["w_map"], var["h_map"]]))
+    var["taille_case"] = int(var["dimension_fenetre"] / max([var["w_map"], var["h_map"]]))  #fait en sorte que la map reste sur l'ecran
     carte = [["." for i in range(var["w_map"])] for i in range(var["h_map"])]
     element = "."
 
@@ -78,7 +82,7 @@ def main():
 
             if x < var["w_map"] and y < var["h_map"]:
                 carte[y][x] = element
-            elif ev[1] // var["bandeau"] == 6:
+            elif ev[1] // var["bandeau"] == 6:          
                 element = tools[ev[0] // var["bandeau"]]
 
         elif ev[2] == "Touche":
