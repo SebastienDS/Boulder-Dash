@@ -120,9 +120,10 @@ def main(cartes):
     mode = 0
     nbdiamand = 0
     if cartes == 6:
-        carte, tempstotal, diamand = fonction.creation_map_aleatoire() 
-    else:
-        carte, tempstotal, diamand, var["score1"], var["score2"], var["score3"], score, nommap = fonction.creer_map(cartes) 
+        fonction.creation_map_aleatoire() 
+        cartes = "map_aleatoire.txt"
+    
+    carte, tempstotal, diamand, var["score1"], var["score2"], var["score3"], score, nommap = fonction.creer_map(cartes) 
 
     diamand = int(diamand)
     fonction.initialiser_partie(carte)

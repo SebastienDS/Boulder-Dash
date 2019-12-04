@@ -33,16 +33,19 @@ def creer_map(nomdufichier):
     return contenu, t, d, score1, score2, score3, score4, nommap
 
 
-def save_map_en_cours(carte, nb_diamand, score, temps_restant, nommap):
+def save_map_en_cours(carte, nb_diamand, score, temps_restant, nommap, nom_sauvegarde = "map_sauvegarde", aleatoire=False):
     """sauvegarde la map"""
-    with open("map/map_sauvegarde.txt", "w") as f:
+    with open("map/{}.txt".format(nom_sauvegarde), "w") as f:
         f.write("{}s {}d\n".format(temps_restant, nb_diamand))
         for j in range(len(carte)):
             for i in range(len(carte[0])):
                 f.write(carte[j][i])
             f.write("\n")
         for i in range(1, 4):
-            f.write("{}\n".format(var["score{}".format(i)]))
+            if not aleatoire:
+                f.write("{}\n".format(var["score{}".format(i)]))
+            else:
+                f.write("personne = 00000000\n")
         f.write("{}\n".format(score))
         f.write("{}\n".format(nommap))
 
@@ -365,7 +368,7 @@ def encadrement(
         couleur=couleurCadre,
         epaisseur=Epaisseur,
     )
-    return [x - Espacement, y - Espacement, x2, y2]
+    return [x - upemtk.longueur_texte(msg) // 2 - Espacement, y - Espacement, x2, y2]
 
 
 def _input(msg, reponse_defaut):
@@ -481,34 +484,31 @@ def my_input(msg, type_retour, reponse_defaut=""):
 
 def creation_map_aleatoire(x=40, y=22):
     """renvoie une map aléatoire de taille(40 * 22(x * y))"""
-    if "carte" not in var.keys():
-        carte = [["W" for _ in range(x)] for _ in range(y)]
-        nb_diam = 0
+    carte = [["W" for _ in range(x)] for _ in range(y)]
+    nb_diam = 0
 
-        for j in range(1, y - 1):
-            for i in range(1, x - 1):
-                nb_random = randint(0, 1000)
-                if nb_random < 650:
-                    carte[j][i] = "G"
-                elif nb_random < 750:
-                    carte[j][i] = "."
-                elif nb_random < 850:
-                    carte[j][i] = "P"
-                elif nb_random < 900:
-                    carte[j][i] = "D"
-                    nb_diam += 1
+    for j in range(1, y - 1):
+        for i in range(1, x - 1):
+            nb_random = randint(0, 1000)
+            if nb_random < 650:
+                carte[j][i] = "G"
+            elif nb_random < 750:
+                carte[j][i] = "."
+            elif nb_random < 850:
+                carte[j][i] = "P"
+            elif nb_random < 900:
+                carte[j][i] = "D"
+                nb_diam += 1
 
-        coord_entree = (randint(1, x - 2), randint(1, y - 2))
+    coord_entree = (randint(1, x - 2), randint(1, y - 2))
+    coord_sortie = (randint(1, x - 2), randint(1, y - 2))
+    while coord_entree == coord_sortie:
         coord_sortie = (randint(1, x - 2), randint(1, y - 2))
-        while coord_entree == coord_sortie:
-            coord_sortie = (randint(1, x - 2), randint(1, y - 2))
 
-        carte[coord_entree[1]][coord_entree[0]] = "R"
-        carte[coord_sortie[1]][coord_sortie[0]] = "E"
-        var["carte"] = (carte, nb_diam - randint(3, 8))
-        return deepcopy(var["carte"][0]), 100, var["carte"][1]
-    else:
-        return deepcopy(var["carte"][0]), 100, var["carte"][1]
+    carte[coord_entree[1]][coord_entree[0]] = "R"
+    carte[coord_sortie[1]][coord_sortie[0]] = "E"
+    save_map_en_cours(carte, nb_diam - randint(3, 8), "00000000", 100, "map_aleatoire.txt", "map_aleatoire", True)
+
 
 def menu_or_retry(a, coordretry, coordmenu):
     """Regarde si l'utilisateur à décidé de quitté ou de recommencer
