@@ -409,6 +409,8 @@ def _input(msg, reponse_defaut):
                 texte += "_"
             elif x == "period":
                 texte += "."
+            elif x == "quotedbl":
+                texte += "#"
 
         elif type_ev == "ClicGauche":
             return texte
