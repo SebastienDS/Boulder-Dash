@@ -1,9 +1,25 @@
 import upemtk
 from variable import var, _touche
+import esthetique
 from random import choice, randint
 from time import time
-import esthetique
-from copy import deepcopy
+import os
+
+
+
+# on associe les lettres aux fonctions les dessinant
+dico = {
+    "G": esthetique.terre,
+    "P": esthetique.pierre,
+    "R": esthetique.rockford,
+    "W": esthetique.mur,
+    "D": esthetique.diamand,
+    "E": esthetique.sortie,
+    ".": lambda *args: None,
+    "K": esthetique.pierre_eboulement,
+    "C": esthetique.diamand_eboulement,
+    "F": esthetique.mur,
+}
 
 
 def creer_map(nomdufichier):
@@ -22,7 +38,9 @@ def creer_map(nomdufichier):
         while contenu[-1] == "":
             contenu.pop()
         nommap = contenu.pop()
-        score4 = contenu.pop() #score actuelle ("00000000" de base puis autre quand partie sauvegardé)
+        score4 = (
+            contenu.pop()
+        )  # score actuelle ("00000000" de base puis autre quand partie sauvegardé)
         score3 = contenu.pop()
         score2 = contenu.pop()
         score1 = contenu.pop()
@@ -33,7 +51,15 @@ def creer_map(nomdufichier):
     return contenu, t, d, score1, score2, score3, score4, nommap
 
 
-def save_map_en_cours(carte, nb_diamand, score, temps_restant, nommap, nom_sauvegarde = "map_sauvegarde", aleatoire=False):
+def save_map_en_cours(
+    carte,
+    nb_diamand,
+    score,
+    temps_restant,
+    nommap,
+    nom_sauvegarde="map_sauvegarde",
+    aleatoire=False,
+):
     """sauvegarde la map"""
     with open("map/{}.txt".format(nom_sauvegarde), "w") as f:
         f.write("{}s {}d\n".format(temps_restant, nb_diamand))
@@ -48,21 +74,6 @@ def save_map_en_cours(carte, nb_diamand, score, temps_restant, nommap, nom_sauve
                 f.write("personne = 00000000\n")
         f.write("{}\n".format(score))
         f.write("{}\n".format(nommap))
-
-
-# on associe les lettres aux fonctions les dessinant
-dico = {
-    "G": esthetique.terre,
-    "P": esthetique.pierre,
-    "R": esthetique.rockford,
-    "W": esthetique.mur,
-    "D": esthetique.diamand,
-    "E": esthetique.sortie,
-    ".": lambda *args: None,
-    "K": esthetique.pierre_eboulement,
-    "C": esthetique.diamand_eboulement,
-    "F": esthetique.mur,
-}
 
 
 def timer(tempstotal, tempscommencement):
@@ -115,6 +126,7 @@ def test_si_pierre_va_tomber(carte):
                 carte[y][x] = "K"
             if carte[y][x] == "D" and carte[y + 1][x] == ".":
                 carte[y][x] = "C"
+
 
 def test_pierre_ou_diamand_eboulement(carte):
     """test si une pierre est toujours en train de tomber et la transforme en pierre normal si non(pareil pour diams)"""
@@ -265,7 +277,9 @@ def win(nbdiamand, diamand, tempsrestant, cartes, score, nommap):
         suivant = 0
         upemtk.efface_tout()
         while suivant == 0:
-            suivant, score = esthetique.menu_score(nbdiamand, tempsrestant, suivant, score)
+            suivant, score = esthetique.menu_score(
+                nbdiamand, tempsrestant, suivant, score
+            )
         upemtk.efface_tout()
         esthetique.fond("cyan")
         upemtk.texte(
@@ -280,8 +294,8 @@ def win(nbdiamand, diamand, tempsrestant, cartes, score, nommap):
         esthetique.coffre()
         esthetique.affiche_score_victoire(score)
         if MS == 0:
-                    test_meilleurscore(nommap, score, tempsrestant)
-                    MS = 1
+            test_meilleurscore(nommap, score, tempsrestant)
+            MS = 1
         if cartes == 6:
             del var["carte"]
         return True
@@ -346,7 +360,7 @@ def debug(carte, nbdiamand, debug, tempstotal, score):
 
 def encadrement(
     msg, x, y, couleurTXT, couleurCadre, Taille, Epaisseur, Espacement, polise
-):  
+):
     """ Ecrit et encadre un texte puis donne les coordonnées du cadre (pour clic)"""
     upemtk.texte(10000000, y, msg, couleur=couleurTXT, police=polise, taille=Taille)
     upemtk.longueur_texte(msg)
@@ -482,6 +496,7 @@ def my_input(msg, type_retour, reponse_defaut=""):
             upemtk.efface("cadre")
             return _var
 
+
 def creation_map_aleatoire(x=40, y=22):
     """renvoie une map aléatoire de taille(40 * 22(x * y))"""
     carte = [["W" for _ in range(x)] for _ in range(y)]
@@ -507,7 +522,15 @@ def creation_map_aleatoire(x=40, y=22):
 
     carte[coord_entree[1]][coord_entree[0]] = "R"
     carte[coord_sortie[1]][coord_sortie[0]] = "E"
-    save_map_en_cours(carte, nb_diam - randint(3, 8), "00000000", 100, "map_aleatoire.txt", "map_aleatoire", True)
+    save_map_en_cours(
+        carte,
+        nb_diam - randint(3, 8),
+        "00000000",
+        100,
+        "map_aleatoire.txt",
+        "map_aleatoire",
+        True,
+    )
 
 
 def menu_or_retry(a, coordretry, coordmenu):
@@ -529,6 +552,7 @@ def menu_or_retry(a, coordretry, coordmenu):
         return 7
     return 0
 
+
 def test_clic(coordsclic, coordscarre):
     """test si l'utilisateur a cliqué dans le carré"""
     if (
@@ -539,6 +563,7 @@ def test_clic(coordsclic, coordscarre):
     ):
         return True
     return False
+
 
 def test_suivant_menu(coords, suivant):
     """test si l'utilisateur a cliqué sur la flèche qui donne la map suivante dans le menu"""
@@ -562,6 +587,7 @@ def test_precedent(coords, precedent):
     ):
         return 1
     return 0
+
 
 def affichageV2(carte, nbdiamand, diamand, taille, x_, y_, nbrcase):
     """Affiche la carte dans le menu des map"""
@@ -599,36 +625,68 @@ def affichageV2(carte, nbdiamand, diamand, taille, x_, y_, nbrcase):
         epaisseur=10,
     )
 
+
 def menu_echap(temps):
     """ affiche un menu si jamais l'utilisateur à appuyer sur echap et renvoie un des différents choix disponible(retry, continue, sauvegarder, quitter le jeu)"""
     d = time()
     while True:
         esthetique.fond("black")
-        encadrement('MENU', 
-            var["dimension_fenetre"] // 2, 
-            30, "White", "black", 
-            50, 1, 1, "Impact") 
+        encadrement(
+            "MENU",
+            var["dimension_fenetre"] // 2,
+            30,
+            "White",
+            "black",
+            50,
+            1,
+            1,
+            "Impact",
+        )
 
-        continuer = encadrement('CONTINUER',
+        continuer = encadrement(
+            "CONTINUER",
             var["dimension_fenetre"] // 2,
             var["dimension_fenetre"] // 5,
-            "White", "white",
-            36, 1, 5, "Impact") 
-        sauvegarder = encadrement('SAUVEGARDER',
+            "White",
+            "white",
+            36,
+            1,
+            5,
+            "Impact",
+        )
+        sauvegarder = encadrement(
+            "SAUVEGARDER",
             var["dimension_fenetre"] // 2,
             2 * var["dimension_fenetre"] // 5,
-            "White", "white",
-            36, 1, 5, "Impact") 
-        recommencer = encadrement('RECOMMENCER',
+            "White",
+            "white",
+            36,
+            1,
+            5,
+            "Impact",
+        )
+        recommencer = encadrement(
+            "RECOMMENCER",
             var["dimension_fenetre"] // 2,
             3 * var["dimension_fenetre"] // 5,
-            "White", "white", 
-            36, 1, 5, "Impact") 
-        quitter = encadrement('QUITTER LE JEU', 
-            var["dimension_fenetre"] // 2, 
-            4 * var["dimension_fenetre"] // 5, 
-            "White", "white", 
-            36, 1, 5, "Impact")
+            "White",
+            "white",
+            36,
+            1,
+            5,
+            "Impact",
+        )
+        quitter = encadrement(
+            "QUITTER LE JEU",
+            var["dimension_fenetre"] // 2,
+            4 * var["dimension_fenetre"] // 5,
+            "White",
+            "white",
+            36,
+            1,
+            5,
+            "Impact",
+        )
         upemtk.mise_a_jour()
         ev = upemtk.donne_evenement()
         type_ev = upemtk.type_evenement(ev)
@@ -647,6 +705,7 @@ def menu_echap(temps):
             if test_clic(coords, quitter):
                 return -1, temps + time() - d
 
+
 def test_meilleurscore(nommap, score, tempsrestant):
     """test si le score de fin est l'un de ses meilleurs scores"""
     pseudo = ""
@@ -655,21 +714,20 @@ def test_meilleurscore(nommap, score, tempsrestant):
     contenu = contenu.split("\n")
     ted = contenu.pop(0)
     nommap = contenu.pop()
-    inutile = contenu.pop() # score de début de partie("00000000")
+    inutile = contenu.pop()  # score de début de partie("00000000")
     score3 = contenu.pop() + "\n"
     score2 = contenu.pop() + "\n"
     score1 = contenu.pop() + "\n"
-    print(score)
     score4 = str(int(score)) + "\n"
     score4 = "0" * (8 - len(score4[:-1])) + score4
-    print(score1, score2, score3, score4)
-    if int(score3[-10:-2]) < int(score4):
+
+    if int(score3[-10:-1]) < int(score4):
         while pseudo == "":
             pseudo = my_input("Quel est votre pseudo", "str", reponse_defaut="pseudo")
-        score3 = pseudo + "  =  " + score4 
-        if int(score2[-10:-2]) < int(score3[-10:-2]):
+        score3 = pseudo + "  =  " + score4
+        if int(score2[-10:-1]) < int(score3[-10:-1]):
             score2, score3 = score3, score2
-            if int(score1[-10:-2]) < int(score2[-10:-2]):
+            if int(score1[-10:-1]) < int(score2[-10:-1]):
                 score1, score2 = score2, score1
 
     with open("map/" + nommap, "w") as f1:
@@ -684,3 +742,9 @@ def test_meilleurscore(nommap, score, tempsrestant):
         f1.write(nommap)
 
 
+def test_ouverture_custom_map():
+    nom = my_input("Custom map:", "str")
+    if not os.path.isfile("map/{}.txt".format(nom)):
+        my_input("La map n'existe pas", "str")
+        return
+    return nom + ".txt"

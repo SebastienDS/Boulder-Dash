@@ -71,9 +71,20 @@ def menu_map(d):
     choisis_carte = 0
 
     while choisis_carte == 0:
+        efface_tout()
         if numcarte == 4:
             esthetique.fond("black")
             esthetique.point_dinterogation()
+        elif numcarte == 5:
+            esthetique.fond("black")
+            fonction.encadrement(
+                "Map perso",
+                var["dimension_fenetre"] // 2,
+                var["dimension_fenetre"] * 2 / 5,
+                "white", "white",
+                60, 10, 20, "Calibri"
+            )
+
         else:
             cartes = 'default/map' + '{}'.format(numcarte) + '.txt'
             cartes1, inutile, inutile1, var["score1"], var["score2"], var["score3"], score, nommap = fonction.creer_map(cartes)
@@ -94,7 +105,6 @@ def menu_map(d):
             "Impact"
         )
         mise_a_jour()
-        efface_tout()
         ev = donne_evenement()
         if type_evenement(ev) == "Quitte":
             return -1
@@ -102,15 +112,20 @@ def menu_map(d):
             coords = [clic_x(ev), clic_y(ev)]
             if fonction.test_suivant_menu(coords, suivant_menu):
                 numcarte += 1
-                numcarte = numcarte % 5
+                numcarte = numcarte % 6
             if fonction.test_precedent(coords, precedent):
                 numcarte -= 1
-                numcarte = numcarte % 5
+                numcarte = numcarte % 6
             if fonction.test_clic(coords, choix):
-                if numcarte != 4:
-                    return cartes
-                else:
+                if numcarte == 4:
                     return 6
+                elif numcarte == 5:
+                    nom = fonction.test_ouverture_custom_map()
+                    if nom:
+                        return nom
+                else:
+                    return cartes
+
 
 def main(cartes):
     """Lance le jeu"""
@@ -122,6 +137,12 @@ def main(cartes):
     if cartes == 6:
         fonction.creation_map_aleatoire() 
         cartes = "map_aleatoire.txt"
+    elif cartes == 7:
+        nom = fonction.test_ouverture_custom_map()
+        if not nom:
+            cartes = "map_aleatoire.txt"
+        else:
+            cartes = nom
     
     carte, tempstotal, diamand, var["score1"], var["score2"], var["score3"], score, nommap = fonction.creer_map(cartes) 
 
