@@ -63,9 +63,10 @@ def choix_couleur(historique):
 
     # couleur = fonction.my_input("Couleur:", "str", couleur_)
     couleur = askcolor()[1]
-    # remplissage = fonction.my_input("Remplissage:", "str", remplissage_)
     epaisseur = fonction.my_input("Epaisseur", "int", epaisseur_)
-    remplissage = askcolor()[1]
+    remplissage = fonction.my_input("Remplissage:", "str", remplissage_)
+    if remplissage == "more":
+        remplissage = askcolor()[1]
     
     return couleur, remplissage, epaisseur
 
