@@ -2,6 +2,7 @@ import upemtk
 import fonction
 import esthetique
 from variable import var
+from tkinter.colorchooser import *
 
 
 def cree_cercle(historique, points):
@@ -60,9 +61,12 @@ def choix_couleur_remplissage_epaisseur(historique):
 def choix_couleur(historique):
     couleur_, remplissage_, epaisseur_ = choix_couleur_remplissage_epaisseur(historique)
 
-    couleur = fonction.my_input("Couleur:", "str", couleur_)
-    remplissage = fonction.my_input("Remplissage:", "str", remplissage_)
+    # couleur = fonction.my_input("Couleur:", "str", couleur_)
+    couleur = askcolor()[1]
+    # remplissage = fonction.my_input("Remplissage:", "str", remplissage_)
     epaisseur = fonction.my_input("Epaisseur", "int", epaisseur_)
+    remplissage = askcolor()[1]
+    
     return couleur, remplissage, epaisseur
 
 
