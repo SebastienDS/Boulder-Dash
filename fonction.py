@@ -384,7 +384,14 @@ def encadrement(
     )
     return [x - upemtk.longueur_texte(msg) // 2 - Espacement, y - Espacement, x2, y2]
 
-
+dico_texte = {
+    "space": " ",
+    "minus": "-",
+    "plus": "+",
+    "underscore": "_",
+    "period": ".",
+    "quotdbl": "#"
+}
 def _input(msg, reponse_defaut):
     """meme fonction que input mais cette fois si s'affiche à l'écran et non sur la console"""
     texte = reponse_defaut
@@ -401,16 +408,8 @@ def _input(msg, reponse_defaut):
 
             elif len(x) == 1 and len(texte) <= 18:
                 texte += x
-            elif x == "space":
-                texte += " "
-            elif x == "minus":
-                texte += "-"
-            elif x == "underscore":
-                texte += "_"
-            elif x == "period":
-                texte += "."
-            elif x == "quotedbl":
-                texte += "#"
+            elif x in dico_texte:
+                texte += dico_texte[x]
 
         elif type_ev == "ClicGauche":
             return texte
