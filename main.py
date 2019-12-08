@@ -5,6 +5,8 @@ import esthetique
 from upemtk import *
 from variable import var
 from time import time
+import os
+import argparse
 
 def menu(d, temps):
     esthetique.fond("black")
@@ -216,20 +218,27 @@ if __name__ == "__main__":
     print(
         "Made by Uniiiiiifffffay corporation with the collaboration of Natsouuuuuu corporation!!! All right reserved!"
     )
-    cree_fenetre(var["dimension_fenetre"], var["dimension_fenetre"] + var["bandeau"])
     menu1 = 0
     choix = 0
     temps = 0
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-m", "--map", help="ouvre la map choisi ")
+    args = parser.parse_args()
+    if args.map and os.path.isfile(os.path.join("map", args.map)):
+        menu1 = 42
+        choix = args.map
+
+    cree_fenetre(var["dimension_fenetre"], var["dimension_fenetre"] + var["bandeau"])
+    
     d = time()
     while True:
         while menu1 == 0:
             menu1, temps = menu(d, temps)
         if menu1 == 1:
             choix = menu_map(d)
-            menu1 = 0
         if menu1 == 2:
             choix = "map_sauvegarde.txt"
-            menu1 = 0
         while menu1 == 3:
             menu1 = editeur_map.main()
         while menu1 == 4:
@@ -239,7 +248,12 @@ if __name__ == "__main__":
         x = 9
         while choix != 0 and x == 9:
             x, choix = main(choix)
+        menu1 = 0
         if x == -1:
             break
 
     ferme_fenetre()
+
+
+
+
