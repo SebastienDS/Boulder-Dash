@@ -85,8 +85,8 @@ def main():
     historique = {}
 
     zone_edit = (
-        var["dimension_fenetre"] - var["dimension_fenetre"] // 6,
-        var["dimension_fenetre"] - var["dimension_fenetre"] // 6,
+        var["dimension_fenetre"],
+        var["dimension_fenetre"],
     )
 
     coordonnee_souris_x = coordonnee_souris_y = 0
