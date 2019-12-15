@@ -8,9 +8,9 @@ Fonctionnalité:
     - Menu principal permettant:
         - lancer une map
         - lancer la derniere sauvegarde
-        - lancer lediteur de map
-        - lancer lediteur de personnage en cours de conception
-        - animation incroyable
+        - lancer l'editeur de map
+        - lancer l'editeur de personnage en cours de conception
+        - animation afin de rendre le menu plus dynamique
 
     - selection map:
         - selecteur de map
@@ -54,7 +54,8 @@ Fonctionnalité:
             - sauvegarder la partie en cours
             - recommencer le niveau
             - quitter le jeu (permet de retourner au menu)
-        - porte accessible uniquement lorsque le nombre de diamant requis a été atteint (clé dans la main)
+        - porte accessible uniquement lorsque le nombre de diamant requis a été atteint (clé dans la main) et ouverture de la porte
+si clé plus direction porte(change la porte en escalier)
         - perd si il n'y a plus de temps
         - lorsqu'on gagne:
             - affichage des scores
@@ -66,13 +67,35 @@ Fonctionnalité:
         - lorsqu'on perd:
             - menu defaite
         - pierre et diamant peuvent tomber avec chute en cascade si les conditions sont réuni:
-            - animation God Tier
+            - animation et effet de vitesse
         - torche dans la main permettant de voir (car nous sommes dans une grottes ce qui implique aucune lumière)
-            - (possibilité d'allumer la lumière dans la grotte bientot disponible ? pour les tricheurs)
 
 Graphisme:
-    - Entièrement fait main par Léonard de Vinci souvent appelé Quentin
+    - Entièrement fait main sans importer d'image, seulement avec les fonctions graphique de upemtk.
 
 Choix technique:
-    - la simplicité quand elle est possible
-    - une Magie Noire souvent utilisé pour plus de beau jeu
+    -Nous avons décider de répartir le code en 6 modules afin de trouver les parties qui nous interesse,
+il ya le module main qui lance le menu et le jeu, le module fonction ou se trouve toute les parties techniques,
+le module esthetique qui comporte tout l'affichage du jeu et le module variable qui stock certaine variable
+importante dans un dictionnaire et les 2 modules d'éditeur.
+    -Afin de ne pas copier coller de if, nous avons décider de changer les 4 if par un dictionnaire qui a
+pour chaque valeur de position possible, ce quel fait (exemple: "Left":(-1,0)). Cela permet de réduire considérablement
+le code.
+    -Pour l'affichage, nous avons aussi utiliser un dictionnaire ou une lettre a pour valeur un nom de fonction('R' : Rockford) et
+l'écran bouge afin de laisser le personnage principale au milieu, on parcours la matrice et affichons les élément du bas vers le haut afin qu'une pierre ou 
+qu'un diamant ne tombe pas instantanément.
+    -Pour changer de mode, nous avons des numéros qui sont ensuite mis dans un fichier texte memo afin de ne pas se perdre
+par exemple quitter le jeu = -1.
+    -La map est créer à partir d'un fichier qui devient une marice, on peut donc ajouter des maps externes si elles ont le bon format( même lettre et bonne position des
+différents éléments(temps+diamand puis map puis meilleurs scores puis score de commencement puis nom map))
+    -Pour sauvegarder, nous mettons la matrice carte dans un nouveau fichier texte qui a le meme format que cité précédemment sauf que score de commencement
+sera le score que le joueur avait avant de sauvegarder.
+    -Pour tout ce qui est déplacement des pierre et diamants, une boucle parcours la map et si l'élément est une pierre ou un diamant, un if vérifie
+toutes les conditions et fais le déplacement.
+    -Pour faire qu'un pierre ne tue pas instantanément Rockford, nous avons différencié une pierre qui tombe d'une pierre qui ne tombais pas(lettre
+et affichage différent).
+    -Pour vérifier si un joueur à perdu ou a gagner, nous avons fait deux fonctions qui lance leur propre menu.
+    -Pour choisir son pseudo, nous avons une fonction qui fonctionne comme un input mais graphique.
+
+
+ 
