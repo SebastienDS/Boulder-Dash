@@ -178,8 +178,8 @@ def main(cartes):
                 if suite == 6:
                     fonction.save_map_en_cours(carte, diamand - nbdiamand, score, tempsrestant, nommap)
                     return 0, nommap
-                if suite == -1:
-                    return -1, nommap
+                if suite == 7:
+                    return 7, nommap
                 if suite == 9:
                     return 9, nommap
             elif t == "d":

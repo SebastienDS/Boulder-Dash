@@ -704,7 +704,7 @@ def menu_echap(temps):
             if test_clic(coords, recommencer):
                 return 9, temps + time() - d
             if test_clic(coords, quitter):
-                return -1, temps + time() - d
+                return 7, temps + time() - d
 
 
 def test_meilleurscore(nommap, score, tempsrestant):
