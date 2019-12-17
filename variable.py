@@ -3,7 +3,8 @@ var = {
 	"nb_cases": 10,
 	"bandeau": 100,
 	"debug": "d",
-    "porte": 1
+    "porte": 1,
+	"personnage": "oui"		#mettre None ou False pour avoir kirby
 }
 
 var["taille_case"] = var["dimension_fenetre"] // var["nb_cases"]

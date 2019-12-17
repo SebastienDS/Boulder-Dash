@@ -1,8 +1,10 @@
 import upemtk
 from variable import var, _touche
+import editeur_personnage
 import esthetique
 from random import choice, randint
 from time import time
+from copy import deepcopy
 import os
 
 
@@ -87,17 +89,37 @@ def affichage(carte, nbdiamand, diamand):
     if var["porte"] == 0:
         esthetique.lumiere_escalier()
     carte[2][0] = "F"
+
     for y in range(len(carte) - 1, -1, -1):  # y = ligne
         for x in range(len(carte[y]) - 1, -1, -1):  # x = colonne
-            dico[carte[y][x]](
-                x + (var["nb_cases"] // 2 - var["pos_x"]),
-                y + (var["nb_cases"] // 2 - var["pos_y"]),
-                var["taille_case"],
-                nbdiamand,
-                diamand,
-                "goldenrod3",
-            )  # centre le perso
-    esthetique.noir_lumiere()
+            if carte[y][x] == "R" and var["personnage"]:
+                if var["personnage"]: 
+                    for elem in var["forme_personnage"].values():
+                        copy_elem = deepcopy(elem)
+                        if elem[1] == "R":
+                            copy_elem[2] += var["dimension_fenetre"] // 2 
+                            copy_elem[4] += var["dimension_fenetre"] // 2
+                            copy_elem[3] += var["dimension_fenetre"] // 2
+                            copy_elem[5] += var["dimension_fenetre"] // 2
+
+                        elif elem[1] == "C":
+                            copy_elem[2] += var["dimension_fenetre"] // 2
+                            copy_elem[3] += var["dimension_fenetre"] // 2
+
+                        elif copy_elem[1] == "P":
+                            for i in range(len(copy_elem[2])):
+                                copy_elem[2][i] = (copy_elem[2][i][0] + var["dimension_fenetre"] // 2, copy_elem[2][i][1] + var["dimension_fenetre"] // 2)
+                        editeur_personnage.forme_possible[copy_elem[1]][1](*copy_elem[2:])
+            else:
+                dico[carte[y][x]](
+                    x + (var["nb_cases"] // 2 - var["pos_x"]),
+                    y + (var["nb_cases"] // 2 - var["pos_y"]),
+                    var["taille_case"],
+                    nbdiamand,
+                    diamand,    
+                    "goldenrod3",
+                )  # centre le perso
+    # esthetique.noir_lumiere()
 
 
 def fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand):

@@ -6,6 +6,7 @@ from upemtk import *
 from variable import var
 from time import time
 import os
+from pickle import load
 import argparse
 
 def menu(d, temps):
@@ -151,6 +152,11 @@ def main(cartes):
     diamand = int(diamand)
     fonction.initialiser_partie(carte)
     temps_pierre = time()
+
+    if var["personnage"]:
+        with open("personnage/{}".format(var["personnage"]), "rb") as f:
+            var["forme_personnage"] = load(f)
+            editeur_personnage.redimensionner_forme(var["forme_personnage"], var["taille_case"])
 
     while True:
         efface_tout()

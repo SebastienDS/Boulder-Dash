@@ -2,6 +2,7 @@ import upemtk
 import fonction
 import esthetique
 from variable import var
+from pickle import dump
 from tkinter.colorchooser import askcolor
 
 
@@ -76,12 +77,24 @@ def choix_nom_forme(historique):
     return fonction.my_input("Nom de la forme:", "str", str(len(historique) + 1))
 
 
+def redimensionner_forme(historique, multiplicateur):
+    for forme in historique:
+        if historique[forme][1] in {"C", "R"}:
+            for i in range(2, 2 + len(historique[forme][2: -3])):
+                historique[forme][i] *= multiplicateur
+
+        elif historique[forme][1] == "P":
+            for i in range(len(historique[forme][2])):
+                historique[forme][2][i] = (historique[forme][2][i][0] * multiplicateur, historique[forme][2][i][1] * multiplicateur)
+
+forme_possible = {  # cree_forme / dessine_forme / nombre_points_mini
+    "C": (cree_cercle, upemtk.cercle, 2),
+    "R": (cree_rect, upemtk.rectangle, 2),
+    "P": (cree_polygone, upemtk.polygone, 1),
+}  
+
+
 def main():
-    forme_possible = {  # cree_forme / dessine_forme / nombre_points_mini
-        "C": (cree_cercle, upemtk.cercle, 2),
-        "R": (cree_rect, upemtk.rectangle, 2),
-        "P": (cree_polygone, upemtk.polygone, 1),
-    }
     historique = {}
 
     zone_edit = (
@@ -103,6 +116,12 @@ def main():
 
             elif t == "space":
                 break
+        
+            elif t == "Escape":
+                redimensionner_forme(historique, 1/var["dimension_fenetre"])
+                with open("personnage/{}".format(fonction.my_input("Nom du personnage: ", "str")), "wb") as f:
+                    dump(historique, f)
+                break
 
         elif type_ev == "Quitte":
             return -1
@@ -111,7 +130,7 @@ def main():
             coordonnee_souris_x = upemtk.clic_x(ev)
             coordonnee_souris_y = upemtk.clic_y(ev)
 
-        elif type_ev == "ClicGauche":
+        if type_ev == "ClicGauche":
             x, y = upemtk.clic_x(ev), upemtk.clic_y(ev)
             if (
                 forme_active != ""
@@ -130,8 +149,6 @@ def main():
             )  # cree la forme dans l'historique a partir des clics
             forme_active = ""
             del liste_clic[:]
-
-            print(historique[len(historique)])
 
         upemtk.efface_tout()
         upemtk.rectangle(
