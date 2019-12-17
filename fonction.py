@@ -119,7 +119,7 @@ def affichage(carte, nbdiamand, diamand):
                     diamand,    
                     "goldenrod3",
                 )  # centre le perso
-    # esthetique.noir_lumiere()
+    esthetique.noir_lumiere()
 
 
 def fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand):
