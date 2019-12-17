@@ -50,7 +50,7 @@ def affiche_croix(x, y, taille):
 
 def choix_couleur_remplissage_epaisseur(historique):
     """recupere les valeurs de la derniere forme afin de les mettre par defaut dans l'input"""
-    if not len(historique):
+    if not len(historique) or not historique[len(historique)]:
         return "white", "", "1"
     return (
         historique[len(historique)][-3],
@@ -114,14 +114,28 @@ def main():
             if t.upper() in forme_possible and not forme_active:
                 forme_active = t.upper()
 
+            elif t == "BackSpace":
+                del historique[len(historique)]
+
+            elif t == "Return":
+                print(historique)
+                nom_forme_a_suppr = fonction.my_input("nom de la forme\n    a supprimer", "str")
+                for cle, valeur in historique.items():
+                    if valeur and valeur[0] == nom_forme_a_suppr:
+                        historique[cle] = None
+                        break
+
             elif t == "space":
                 break
         
             elif t == "Escape":
+                for i in range(1, len(historique) + 1):
+                    if not historique[i]:
+                        del historique[i]
+                print(historique)
                 redimensionner_forme(historique, 1/var["dimension_fenetre"])
                 with open("personnage/{}".format(fonction.my_input("Nom du personnage: ", "str")), "wb") as f:
                     dump(historique, f)
-                break
 
         elif type_ev == "Quitte":
             return -1
@@ -157,7 +171,8 @@ def main():
 
         # affiche les formes dans l'historique
         for elem in historique.values():
-            forme_possible[elem[1]][1](*elem[2:])
+            if elem:
+                forme_possible[elem[1]][1](*elem[2:])
 
         # affiche une croix sur les clics afin de conserver visuellement leur position
         for elem in liste_clic:
