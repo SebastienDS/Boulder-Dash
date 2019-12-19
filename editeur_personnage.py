@@ -115,7 +115,8 @@ def main():
                 forme_active = t.upper()
 
             elif t == "BackSpace":
-                del historique[len(historique)]
+                if len(historique):
+                    del historique[len(historique)]
 
             elif t == "Return":
                 print(historique)
