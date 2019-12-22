@@ -6,4 +6,3 @@ TO DO:
 		X -Echap = temps ne secoule pas
 		-DOCSTRING +  commenter
 		-Lancer différente map
-		

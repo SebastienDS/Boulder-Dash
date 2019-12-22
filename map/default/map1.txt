@@ -8,7 +8,7 @@ WGG.PGGGGGGGGW
 WGGG.GG.GGGGEW
 WWWWWWWWWWWWWW
 pseudoYEAH         = 00017300
-personne = 00000000
-personne = 00000000
+pseudo  =  00017300
+pseudo  =  00017200
 00000000
 default/map1.txt

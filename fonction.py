@@ -735,6 +735,8 @@ def test_meilleurscore(nommap, score, tempsrestant):
     with open("map/" + nommap, "r") as f1:
         contenu = f1.read()
     contenu = contenu.split("\n")
+    while contenu[-1] == "":
+            contenu.pop()
     ted = contenu.pop(0)
     nommap = contenu.pop()
     inutile = contenu.pop()  # score de début de partie("00000000")
