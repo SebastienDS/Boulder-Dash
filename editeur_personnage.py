@@ -116,6 +116,10 @@ def main():
     while True:
         ev = upemtk.donne_evenement()
         type_ev = upemtk.type_evenement(ev)
+        
+        if type_ev == "Quitte":
+            return -1
+
         if type_ev == "Touche":
             t = upemtk.touche(ev)
             if t.upper() in forme_possible and not forme_active:
@@ -144,9 +148,6 @@ def main():
                 redimensionner_forme(historique, 1/var["dimension_fenetre"])
                 with open("personnage/{}".format(fonction.my_input("Nom du personnage: ", "str")), "wb") as f:
                     dump(historique, f)
-
-        elif type_ev == "Quitte":
-            return -1
 
         elif type_ev == "Deplacement":
             coordonnee_souris_x = upemtk.clic_x(ev)

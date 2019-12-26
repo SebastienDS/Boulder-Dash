@@ -710,9 +710,13 @@ def menu_echap(temps):
             5,
             "Impact",
         )
+
         upemtk.mise_a_jour()
         ev = upemtk.donne_evenement()
         type_ev = upemtk.type_evenement(ev)
+        if type_ev == "Quitte":
+            return -1, temps + time() - d
+            
         if type_ev == "Touche":
             t = upemtk.touche(ev)
             if t == "Escape":

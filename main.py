@@ -181,6 +181,8 @@ def main(cartes):
             t = touche(ev)
             if t == "Escape":       # ALLUME UN MENU pour sauvegarder recommencer ou quitter si l'utilisateur appui sur echap
                 suite, tempscommencement = fonction.menu_echap(tempscommencement)
+                if suite == -1:
+                    return -1, nommap     
                 if suite == 6:
                     fonction.save_map_en_cours(carte, diamand - nbdiamand, score, tempsrestant, nommap)
                     return 0, nommap
@@ -194,11 +196,13 @@ def main(cartes):
             nbdiamand, debug, tempstotal, score = fonction.debug(carte, nbdiamand, debug, tempstotal, score)
         else:
             nbdiamand, tempstotal, score = fonction.deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal, score)
+        
         if var["porte"] == 1:
             fonction.enleve_porte(carte, ev, nbdiamand, diamand)
         mise_a_jour()
         if mode != 0:
             return mode, nommap
+        
         if fonction.win(nbdiamand, diamand, tempsrestant, cartes, score, nommap) or fonction.loose(carte, tempsrestant):
             while mode == 0:
                 coordretry = fonction.encadrement(

@@ -1,6 +1,6 @@
 import upemtk
 from variable import var
-from fonction import dico, my_input
+from fonction import dico, my_input, encadrement, test_clic
 import esthetique
 import os
 from copy import deepcopy
@@ -127,31 +127,66 @@ def main():
         affiche_map(carte)
         affiche_tools(tools)
 
+        quitter = encadrement(
+            "Quitter",
+            var["dimension_fenetre"] * 2 / 3,
+            2,
+            "White",
+            "white",
+            15,
+            1,
+            1,
+            "Impact",
+        )
+        
+        sauvegarder = encadrement(
+            "Sauvegarder",
+            var["dimension_fenetre"] / 3,
+            2,
+            "White",
+            "white",
+            15,
+            1,
+            1,
+            "Impact",
+        )
+
         upemtk.mise_a_jour()
-        ev = upemtk.attente_clic_ou_touche()
+        ev = upemtk.donne_evenement()
+        type_ev = upemtk.type_evenement(ev)
 
-        if ev[2] == "ClicGauche":
-            x = ev[0] // var["taille_case"]
-            y = ev[1] // var["taille_case"]
+        if type_ev == "Quitte":
+            return -1
 
-            if x < var["w_map"] and y < var["h_map"]:
-                carte[y][x] = element
-            elif ev[1] // var["bandeau"] == 6:          
-                element = tools[ev[0] // var["bandeau"]]
-
-        elif ev[2] == "Touche":
-            if ev[1].upper() in dico:
-                element = ev[1].upper()
-            elif ev[1].lower() == "s":
+        if type_ev == "ClicGauche":
+            x_, y_ = (upemtk.clic_x(ev), upemtk.clic_y(ev))
+            if test_clic((x_, y_), quitter):
+                return 0
+            if test_clic((x_, y_), sauvegarder):
                 save(carte)
-            elif ev[1].lower() == "t":
+            else:
+                x = x_ // var["taille_case"]
+                y = y_ // var["taille_case"]
+
+                if x < var["w_map"] and y < var["h_map"]:
+                    carte[y][x] = element
+                elif y_ // var["bandeau"] == 6:          
+                    element = tools[x_ // var["bandeau"]]
+
+        elif type_ev == "Touche":
+            t = upemtk.touche(ev)
+            if t.upper() in dico:
+                element = t.upper()
+            elif t.lower() == "s":
+                save(carte)
+            elif t.lower() == "t":
                 #touche pour les test
                 pass
-            elif ev[1] == "Escape":
+            elif type_ev == "Escape":
                 break
 
-        elif ev[2] == "ClicDroit":
-            carte[ev[1] // var["taille_case"]][ev[0] // var["taille_case"]] = "."
+        elif type_ev == "ClicDroit":
+            carte[upemtk.clic_y(ev) // var["taille_case"]][upemtk.clic_x(ev) // var["taille_case"]] = "."
 
     return 0
 
