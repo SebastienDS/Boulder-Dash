@@ -73,7 +73,7 @@ def choix_couleur(historique):
         remplissage = askcolor()[1]
 
     epaisseur = fonction.my_input("Epaisseur", "int", epaisseur_)
-    
+
     return couleur, remplissage, epaisseur
 
 
@@ -86,19 +86,22 @@ def redimensionner_forme(historique, multiplicateur):
     """redimensionne les formes afin de pouvoir les ouvrir dans de differente taille"""
     for forme in historique:
         if historique[forme][1] in {"C", "R"}:
-            for i in range(2, 2 + len(historique[forme][2: -3])):
+            for i in range(2, 2 + len(historique[forme][2:-3])):
                 historique[forme][i] *= multiplicateur
 
         elif historique[forme][1] == "P":
             for i in range(len(historique[forme][2])):
-                historique[forme][2][i] = (historique[forme][2][i][0] * multiplicateur, historique[forme][2][i][1] * multiplicateur)
+                historique[forme][2][i] = (
+                    historique[forme][2][i][0] * multiplicateur,
+                    historique[forme][2][i][1] * multiplicateur,
+                )
 
 
 forme_possible = {  # cree_forme / dessine_forme / nombre_points_mini
     "C": (cree_cercle, upemtk.cercle, 2),
     "R": (cree_rect, upemtk.rectangle, 2),
     "P": (cree_polygone, upemtk.polygone, 1),
-}  
+}
 
 
 def main():
@@ -116,7 +119,7 @@ def main():
     while True:
         ev = upemtk.donne_evenement()
         type_ev = upemtk.type_evenement(ev)
-        
+
         if type_ev == "Quitte":
             return -1
 
@@ -131,7 +134,9 @@ def main():
 
             elif t == "Return":
                 print(historique)
-                nom_forme_a_suppr = fonction.my_input("nom de la forme\n    a supprimer", "str")
+                nom_forme_a_suppr = fonction.my_input(
+                    "nom de la forme\n    a supprimer", "str"
+                )
                 for cle, valeur in historique.items():
                     if valeur and valeur[0] == nom_forme_a_suppr:
                         historique[cle] = None
@@ -139,14 +144,19 @@ def main():
 
             elif t == "Escape":
                 break
-        
+
             elif t.lower() == "s":
                 for i in range(1, len(historique) + 1):
                     if not historique[i]:
                         del historique[i]
                 print(historique)
-                redimensionner_forme(historique, 1/var["dimension_fenetre"])
-                with open("personnage/{}".format(fonction.my_input("Nom du personnage: ", "str")), "wb") as f:
+                redimensionner_forme(historique, 1 / var["dimension_fenetre"])
+                with open(
+                    "personnage/{}".format(
+                        fonction.my_input("Nom du personnage: ", "str")
+                    ),
+                    "wb",
+                ) as f:
                     dump(historique, f)
 
         elif type_ev == "Deplacement":

@@ -6,7 +6,6 @@ import os
 from copy import deepcopy
 
 
-
 def affiche_map(carte):
     """affiche la map en cours de creation"""
     esthetique.fond("white")
@@ -61,7 +60,18 @@ def save(carte):
         save_map(copy_carte, file_name, temps, diamand)
     else:
         reponse = my_input("Nom déjà utilisé\n      Ecraser ?", "str")
-        if reponse.lower() in {"oui", "y", "o", "yes", "ye", "yeah", "ui", "certainement", "absolument", "bien sur"}:
+        if reponse.lower() in {
+            "oui",
+            "y",
+            "o",
+            "yes",
+            "ye",
+            "yeah",
+            "ui",
+            "certainement",
+            "absolument",
+            "bien sur",
+        }:
             save_map(copy_carte, file_name, temps, diamand)
         else:
             my_input("Map non enregistrée", "str")
@@ -77,7 +87,7 @@ def test_1_entree_1_sortie(carte):
                 entree += 1
             elif carte[j][i] == "E":
                 sortie += 1
-    
+
     if entree != 1 and sortie != 1:
         return "   nombre d'entree\n            et de\n    sortie incorrect"
     elif entree != 1:
@@ -85,7 +95,7 @@ def test_1_entree_1_sortie(carte):
     elif sortie != 1:
         return "nombre de sortie\n      incorrect"
 
-    
+
 def test_mur_autour(carte):
     """test si la map est entouree de mur"""
     if set(carte[0]) != {"W"}:
@@ -112,13 +122,15 @@ def ajout_mur_autour(carte):
 
 
 def main():
-    tools = ["G", "P", "W", "D", "R", "E"]  #block disponible dans la barre d'outil
+    tools = ["G", "P", "W", "D", "R", "E"]  # block disponible dans la barre d'outil
 
     esthetique.fond("black")
     var["w_map"] = my_input("Nombre de colonnes:", "int")
     var["h_map"] = my_input("Nombre de lignes:", "int")
 
-    var["taille_case"] = int(var["dimension_fenetre"] / max([var["w_map"], var["h_map"]]))  #fait en sorte que la map reste sur l'ecran
+    var["taille_case"] = int(
+        var["dimension_fenetre"] / max([var["w_map"], var["h_map"]])
+    )  # fait en sorte que la map reste sur l'ecran
     carte = [["." for i in range(var["w_map"])] for i in range(var["h_map"])]
     element = "."
 
@@ -138,7 +150,7 @@ def main():
             1,
             "Impact",
         )
-        
+
         sauvegarder = encadrement(
             "Sauvegarder",
             var["dimension_fenetre"] / 3,
@@ -169,7 +181,7 @@ def main():
 
                 if x < var["w_map"] and y < var["h_map"]:
                     carte[y][x] = element
-                elif y_ // var["bandeau"] == 6:          
+                elif y_ // var["bandeau"] == 6:
                     element = tools[x_ // var["bandeau"]]
 
         elif type_ev == "Touche":
@@ -179,15 +191,18 @@ def main():
             elif t.lower() == "s":
                 save(carte)
             elif t.lower() == "t":
-                #touche pour les test
+                # touche pour les test
                 pass
             elif t == "Escape":
                 break
 
         elif type_ev == "ClicDroit":
-            carte[upemtk.clic_y(ev) // var["taille_case"]][upemtk.clic_x(ev) // var["taille_case"]] = "."
+            carte[upemtk.clic_y(ev) // var["taille_case"]][
+                upemtk.clic_x(ev) // var["taille_case"]
+            ] = "."
 
     return 0
+
 
 if __name__ == "__main__":
     print("Programme principal: main.py")
