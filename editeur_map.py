@@ -44,6 +44,11 @@ def save_map(carte, file_name, temps, diamand):
 
 def save(carte):
     """test si la map peut etre cree"""
+    res = test_1_entree_1_sortie(carte)
+    if res:
+        my_input(res, "str")
+        return
+
     file_name = my_input("Nom de la map:", "str")
     temps = my_input("temps limite:", "int")
     diamand = my_input("diamand requis:", "int")
@@ -52,10 +57,29 @@ def save(carte):
         save_map(carte, file_name, temps, diamand)
     else:
         reponse = my_input("Nom déjà utilisé\n      Ecraser ?", "str")
-        if reponse.lower() in {"oui", "y", "o", "yes", "ye", "ui", "certainement", "absolument"}:
+        if reponse.lower() in {"oui", "y", "o", "yes", "ye", "yeah", "ui", "certainement", "absolument", "bien sur"}:
             save_map(carte, file_name, temps, diamand)
         else:
             my_input("Map non enregistrée", "str")
+
+
+def test_1_entree_1_sortie(carte):
+    """test si la map contient bien 1 unique entree et sortie"""
+    entree = 0
+    sortie = 0
+    for j in range(len(carte)):
+        for i in range(len(carte[0])):
+            if carte[j][i] == "R":
+                entree += 1
+            elif carte[j][i] == "E":
+                sortie += 1
+    
+    if entree != 1 and sortie != 1:
+        return "   nombre d'entree\n            et de\n    sortie incorrect"
+    elif entree != 1:
+        return "nombre d'entree\n      incorrect"
+    elif sortie != 1:
+        return "nombre de sortie\n      incorrect"
 
 
 def main():

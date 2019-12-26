@@ -225,7 +225,6 @@ if __name__ == "__main__":
         "Made by Uniiiiiifffffay corporation with the collaboration of Natsouuuuuu corporation!!! All right reserved!"
     )
     menu1 = 0
-    choix = 0
     temps = 0
     
     parser = argparse.ArgumentParser()
@@ -240,6 +239,7 @@ if __name__ == "__main__":
     d = time()
     while True:
         while menu1 == 0:
+            choix = 0
             menu1, temps = menu(d, temps)
         if menu1 == 1:
             choix = menu_map(d)
@@ -247,10 +247,8 @@ if __name__ == "__main__":
             choix = "map_sauvegarde.txt"
         while menu1 == 3:
             menu1 = editeur_map.main()
-            choix = 0
         while menu1 == 4:
             menu1 = editeur_personnage.main()
-            choix = 0
         if choix == -1 or menu1 == -1:
             break
         x = 9
