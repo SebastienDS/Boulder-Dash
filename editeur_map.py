@@ -89,14 +89,13 @@ def main():
         elif ev[2] == "Touche":
             if ev[1].upper() in dico:
                 element = ev[1].upper()
-            elif ev[1] == "Escape":
+            elif ev[1].lower() == "s":
                 save(carte)
-            elif ev[1] == "space":
+            elif ev[1] == "Escape":
                 break
 
         elif ev[2] == "ClicDroit":
             carte[ev[1] // var["taille_case"]][ev[0] // var["taille_case"]] = "."
 
-    upemtk.attente_clic()
     return 0
 

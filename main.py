@@ -247,8 +247,10 @@ if __name__ == "__main__":
             choix = "map_sauvegarde.txt"
         while menu1 == 3:
             menu1 = editeur_map.main()
+            choix = 0
         while menu1 == 4:
             menu1 = editeur_personnage.main()
+            choix = 0
         if choix == -1 or menu1 == -1:
             break
         x = 9

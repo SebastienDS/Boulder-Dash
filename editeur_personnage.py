@@ -126,10 +126,10 @@ def main():
                         historique[cle] = None
                         break
 
-            elif t == "space":
+            elif t == "Escape":
                 break
         
-            elif t == "Escape":
+            elif t.lower() == "s":
                 for i in range(1, len(historique) + 1):
                     if not historique[i]:
                         del historique[i]
@@ -201,7 +201,6 @@ def main():
         affiche_croix(coordonnee_souris_x, coordonnee_souris_y, 20)
         upemtk.mise_a_jour()
 
-    upemtk.attente_clic()
     return 0
 
 

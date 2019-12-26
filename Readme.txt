@@ -26,11 +26,11 @@ Fonctionnalité:
         - choix de la taille de la map
         - bloc disponible cliquable + touche permettant de poser les elements de la map
         - suppression d'element avec le clique droit
-        - touche "echap" permet la sauvegarde de la map:
+        - touche "s" permet la sauvegarde de la map:
             - nom de la map
             - temps limite
             - diamant requis
-        - touche "espace" pour quitter
+        - touche "echap" pour quitter
 
     - editeur de personnage:
         - permet de creer son propre personnage
@@ -40,11 +40,10 @@ Fonctionnalité:
                 - nom perso pour la figure
                 - choix des couleurs, epaisseur, remplissage
                     - pour couleurs et remplissage: "+" permet d'ouvrir la palette des couleurs
-        - touche "espace" pour quitter
-
-        Bientot disponible: 
-            - sauvegarde de l'historique pour reouvrir en jeu le personnage
-            - suppressions d'une figure a partir de son nom
+        - touche "echap" pour quitter
+        - sauvegarde de l'historique pour reouvrir en jeu le personnage avec la touche "s"
+        - suppressions d'une figure a partir de son nom avec la touche "enter"
+        - suppressions de la derniere figure avec la touche "retour (backspace)"
     
     - EN JEU:
         - deplacement: fleche directionnelle
