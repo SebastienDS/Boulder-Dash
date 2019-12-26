@@ -154,7 +154,6 @@ def main():
         upemtk.mise_a_jour()
         ev = upemtk.donne_evenement()
         type_ev = upemtk.type_evenement(ev)
-
         if type_ev == "Quitte":
             return -1
 
@@ -182,7 +181,7 @@ def main():
             elif t.lower() == "t":
                 #touche pour les test
                 pass
-            elif type_ev == "Escape":
+            elif t == "Escape":
                 break
 
         elif type_ev == "ClicDroit":

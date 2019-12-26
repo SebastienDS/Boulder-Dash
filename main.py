@@ -220,6 +220,7 @@ def main(cartes):
                     "Impact"
                 )
                 a = attente_clic()
+
                 mode = fonction.menu_or_retry(a, coordretry, coordmenu)
             return mode, nommap
 
