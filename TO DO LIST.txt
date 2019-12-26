@@ -1,8 +1,9 @@
 TO DO:
 	IMPORTANT:
-		X- MODIFIER AFIN QUE LE RETRY RELANCE MAP COMPLETE EN CAS DE MAPSAUVEGARDER
-		X-FAIRE EN SORTE QUE LA PERSONNE PUISSE ENREGISTRER SON SCORE
 		-README.txt
-		X -Echap = temps ne secoule pas
 		-DOCSTRING +  commenter
-		-Lancer différente map
+
+		Mettre des bouton retour partout
+		Faire un donne événement dans les menu de victoire pour fermer la fenetre avec la croix
+		Finir ton éditeur de perso
+		choix du personnage
