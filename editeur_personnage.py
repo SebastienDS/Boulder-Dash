@@ -44,6 +44,7 @@ def cree_polygone(historique, points):
 
 
 def affiche_croix(x, y, taille):
+    """affiche une croix pour le curseur et pour les visualiser les points lors de la creation d'une forme"""
     upemtk.ligne(x - taille, y, x + taille, y, couleur="red")
     upemtk.ligne(x, y - taille, x, y + taille, couleur="red")
 
@@ -60,24 +61,29 @@ def choix_couleur_remplissage_epaisseur(historique):
 
 
 def choix_couleur(historique):
+    """demande la couleur, le remplissage ainsi que lepaisseur"""
     couleur_, remplissage_, epaisseur_ = choix_couleur_remplissage_epaisseur(historique)
 
     couleur = fonction.my_input("Couleur:", "str", couleur_)
     if couleur == "+":
         couleur = askcolor()[1]
-    epaisseur = fonction.my_input("Epaisseur", "int", epaisseur_)
+
     remplissage = fonction.my_input("Remplissage:", "str", remplissage_)
     if remplissage == "+":
         remplissage = askcolor()[1]
+
+    epaisseur = fonction.my_input("Epaisseur", "int", epaisseur_)
     
     return couleur, remplissage, epaisseur
 
 
 def choix_nom_forme(historique):
+    """demande le nom de la forme"""
     return fonction.my_input("Nom de la forme:", "str", str(len(historique) + 1))
 
 
 def redimensionner_forme(historique, multiplicateur):
+    """redimensionne les formes afin de pouvoir les ouvrir dans de differente taille"""
     for forme in historique:
         if historique[forme][1] in {"C", "R"}:
             for i in range(2, 2 + len(historique[forme][2: -3])):
@@ -86,6 +92,7 @@ def redimensionner_forme(historique, multiplicateur):
         elif historique[forme][1] == "P":
             for i in range(len(historique[forme][2])):
                 historique[forme][2][i] = (historique[forme][2][i][0] * multiplicateur, historique[forme][2][i][1] * multiplicateur)
+
 
 forme_possible = {  # cree_forme / dessine_forme / nombre_points_mini
     "C": (cree_cercle, upemtk.cercle, 2),
@@ -205,4 +212,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    print("Programme principal: main.py")

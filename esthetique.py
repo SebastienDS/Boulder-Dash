@@ -1450,3 +1450,7 @@ def affiche_score(L):
             taille = 24,
             couleur= "white"
         )
+
+
+if __name__ == "__main__":
+    print("Programme principal: main.py")

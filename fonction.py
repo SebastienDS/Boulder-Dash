@@ -773,3 +773,6 @@ def test_ouverture_custom_map():
         my_input("La map n'existe pas", "str")
         return
     return nom + ".txt"
+
+if __name__ == "__main__":
+    print("Programme principal: main.py")

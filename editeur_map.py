@@ -3,6 +3,7 @@ from variable import var
 from fonction import dico, my_input
 import esthetique
 import os
+from copy import deepcopy
 
 
 
@@ -31,8 +32,8 @@ def save_map(carte, file_name, temps, diamand):
     """sauvegarde la map cree avec le bon format"""
     with open("map/{}.txt".format(file_name), "w") as f:
         f.write("{}s {}d\n".format(temps, diamand))
-        for j in range(var["h_map"]):
-            for i in range(var["w_map"]):
+        for j in range(len(carte)):
+            for i in range(len(carte[0])):
                 f.write(carte[j][i])
             f.write("\n")
         for i in range(3):
@@ -49,16 +50,22 @@ def save(carte):
         my_input(res, "str")
         return
 
+    if not test_mur_autour(carte):
+        copy_carte = ajout_mur_autour(carte)
+
+    for elem in copy_carte:
+        print(elem)
+
     file_name = my_input("Nom de la map:", "str")
     temps = my_input("temps limite:", "int")
     diamand = my_input("diamand requis:", "int")
 
     if not os.path.isfile("map/{}.txt".format(file_name)):
-        save_map(carte, file_name, temps, diamand)
+        save_map(copy_carte, file_name, temps, diamand)
     else:
         reponse = my_input("Nom déjà utilisé\n      Ecraser ?", "str")
         if reponse.lower() in {"oui", "y", "o", "yes", "ye", "yeah", "ui", "certainement", "absolument", "bien sur"}:
-            save_map(carte, file_name, temps, diamand)
+            save_map(copy_carte, file_name, temps, diamand)
         else:
             my_input("Map non enregistrée", "str")
 
@@ -80,6 +87,31 @@ def test_1_entree_1_sortie(carte):
         return "nombre d'entree\n      incorrect"
     elif sortie != 1:
         return "nombre de sortie\n      incorrect"
+
+    
+def test_mur_autour(carte):
+    """test si la map est entouree de mur"""
+    if set(carte[0]) != {"W"}:
+        return False
+    if set(carte[-1]) != {"W"}:
+        return False
+    for j in range(len(carte)):
+        if carte[j][0] != "W":
+            return False
+        if carte[j][-1] != "W":
+            return False
+    return True
+
+
+def ajout_mur_autour(carte):
+    """ajoute une ligne de mur autour de la carte"""
+    copy_carte = deepcopy(carte)
+    for j in range(len(copy_carte)):
+        copy_carte[j].append("W")
+        copy_carte[j].insert(0, "W")
+    copy_carte.append(["W" for _ in range(len(copy_carte[0]))])
+    copy_carte.insert(0, ["W" for _ in range(len(copy_carte[0]))])
+    return copy_carte
 
 
 def main():
@@ -115,6 +147,9 @@ def main():
                 element = ev[1].upper()
             elif ev[1].lower() == "s":
                 save(carte)
+            elif ev[1].lower() == "t":
+                #touche pour les test
+                pass
             elif ev[1] == "Escape":
                 break
 
@@ -123,3 +158,5 @@ def main():
 
     return 0
 
+if __name__ == "__main__":
+    print("Programme principal: main.py")
