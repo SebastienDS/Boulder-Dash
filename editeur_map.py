@@ -53,9 +53,6 @@ def save(carte):
     if not test_mur_autour(carte):
         copy_carte = ajout_mur_autour(carte)
 
-    for elem in copy_carte:
-        print(elem)
-
     file_name = my_input("Nom de la map:", "str")
     temps = my_input("temps limite:", "int")
     diamand = my_input("diamand requis:", "int")
