@@ -1136,7 +1136,7 @@ def lumiere(longueur):
     cercle(
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
-        3 * var["taille_case"],
+        50 * var["taille_case"],
         couleur="goldenrod4",
         remplissage="goldenrod4",
     )

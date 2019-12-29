@@ -39,6 +39,7 @@ def creer_map(nomdufichier):
         d = ted[1][:-1]
         while contenu[-1] == "":
             contenu.pop()
+        tempslumiere = contenu.pop()
         nommap = contenu.pop()
         score4 = (
             contenu.pop()
@@ -50,7 +51,7 @@ def creer_map(nomdufichier):
             contenu[i] = list(
                 contenu[i]
             )  # transforme la chaine de caractère en une list('abc'=['a','b','c'])
-    return contenu, t, d, score1, score2, score3, score4, nommap
+    return contenu, t, d, score1, score2, score3, score4, nommap, time() - int(float(tempslumiere))
 
 
 def save_map_en_cours(
@@ -59,8 +60,9 @@ def save_map_en_cours(
     score,
     temps_restant,
     nommap,
+    tempslumiere,
     nom_sauvegarde="map_sauvegarde",
-    aleatoire=False,
+    aleatoire=False
 ):
     """sauvegarde la map"""
     with open("map/{}.txt".format(nom_sauvegarde), "w") as f:
@@ -76,6 +78,7 @@ def save_map_en_cours(
                 f.write("personne = 00000000\n")
         f.write("{}\n".format(score))
         f.write("{}\n".format(nommap))
+        f.write("{}\n".format(tempslumiere))
 
 
 def timer(tempstotal, tempscommencement):
@@ -675,7 +678,7 @@ def affichageV2(carte, nbdiamand, diamand, taille, x_, y_, nbrcase):
     )
 
 
-def menu_echap(temps):
+def menu_echap(temps, tempslumiere):
     """ affiche un menu si jamais l'utilisateur à appuyer sur echap et renvoie un des différents choix disponible(retry, continue, sauvegarder, quitter le jeu)"""
     d = time()
     while True:
@@ -741,22 +744,22 @@ def menu_echap(temps):
         ev = upemtk.donne_evenement()
         type_ev = upemtk.type_evenement(ev)
         if type_ev == "Quitte":
-            return -1, temps + time() - d
+            return -1, temps + time() - d, tempslumiere + time() - d
 
         if type_ev == "Touche":
             t = upemtk.touche(ev)
             if t == "Escape":
-                return 5, temps + time() - d
+                return 5, temps + time() - d, tempslumiere + time() - d
         if type_ev == "ClicGauche":
             coords = [upemtk.clic_x(ev), upemtk.clic_y(ev)]
             if test_clic(coords, continuer):
-                return 5, temps + time() - d
+                return 5, temps + time() - d, tempslumiere + time() - d
             if test_clic(coords, sauvegarder):
-                return 6, temps + time() - d
+                return 6, temps + time() - d, tempslumiere + time() - d
             if test_clic(coords, recommencer):
-                return 9, temps + time() - d
+                return 9, temps + time() - d, tempslumiere + time() - d
             if test_clic(coords, quitter):
-                return 7, temps + time() - d
+                return 7, temps + time() - d, tempslumiere + time() - d
 
 
 def test_meilleurscore(nommap, score, tempsrestant):

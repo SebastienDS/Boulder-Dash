@@ -26,3 +26,4 @@ personne = 00000000
 personne = 00000000
 00000000
 map_aleatoire.txt
+0
