@@ -38,7 +38,8 @@ def save_map(carte, file_name, temps, diamand):
         for i in range(3):
             f.write("personne = 00000000\n")
         f.write("00000000\n")
-        f.write("{}.txt".format(file_name))
+        f.write("{}.txt\n".format(file_name))
+        f.write("0")
     my_input("Map sauvegardée", "str")
 
 

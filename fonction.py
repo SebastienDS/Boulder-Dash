@@ -580,6 +580,7 @@ def creation_map_aleatoire(x=40, y=22):
         "00000000",
         100,
         "map_aleatoire.txt",
+        0,
         "map_aleatoire",
         True,
     )
