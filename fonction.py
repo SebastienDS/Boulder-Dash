@@ -549,7 +549,7 @@ def creation_map_aleatoire(x=40, y=22):
 
     for j in range(1, y - 1):
         for i in range(1, x - 1):
-            nb_random = randint(0, 1050)
+            nb_random = randint(0, 1025)
             if nb_random < 650:
                 carte[j][i] = "G"
             elif nb_random < 750:
@@ -559,7 +559,7 @@ def creation_map_aleatoire(x=40, y=22):
             elif nb_random < 900:
                 carte[j][i] = "D"
                 nb_diam += 1
-            elif nb_random <= 950:
+            elif nb_random <= 925:
                 carte[j][i] = "L"
 
     coord_entree = (randint(1, x - 2), randint(1, y - 2))
