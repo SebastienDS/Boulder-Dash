@@ -17,3 +17,4 @@ D = diamant
 C = diamant en eboulement
 G = terre
 W = mur
+L = charbon

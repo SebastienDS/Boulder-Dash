@@ -20,7 +20,7 @@ dico = {
     "K": esthetique.pierre_eboulement,
     "C": esthetique.diamand_eboulement,
     "F": esthetique.mur,
-    "L": esthetique.charbon
+    "L": esthetique.charbon,
 }
 
 
@@ -127,10 +127,12 @@ def affichage(carte, nbdiamand, diamand, tempslumiere):
                     diamand,
                     "goldenrod3",
                 )  # centre le perso
-    if 400 + (time() - tempslumiere) * 5 < 350 :
-        esthetique.noir_lumiere(350)
-    else:    
-        esthetique.noir_lumiere(400 + (time() - tempslumiere) * 5)
+
+    if not var["lumiere"]:
+        if 400 + (time() - tempslumiere) * 5 < 350:
+            esthetique.noir_lumiere(350)
+        else:
+            esthetique.noir_lumiere(400 + (time() - tempslumiere) * 5)
 
 
 def fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand):
@@ -215,7 +217,7 @@ def deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal, score, tempslumier
                     nbdiamand + 1,
                     int(tempstotal) + 10,
                     (8 - len((str(int(score) + 350)))) * "0" + (str(int(score) + 350)),
-                    tempslumiere
+                    tempslumiere,
                 )
             if test_deplacement(carte, t, "L"):
                 deplace(carte, t)
@@ -365,7 +367,7 @@ def debug(carte, nbdiamand, debug, tempstotal, score, tempslumiere):
                 debug,
                 int(tempstotal) + 10,
                 (8 - (len(str(int(score) + 350)))) * "0" + (str(int(score) + 350)),
-                tempslumiere
+                tempslumiere,
             )
         if test_deplacement(carte, x, "L"):
             deplace(carte, x)
@@ -805,4 +807,3 @@ def test_ouverture_custom_map():
 
 if __name__ == "__main__":
     print("Programme principal: main.py")
-

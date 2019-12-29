@@ -3,7 +3,9 @@ TO DO:
 		-README.txt
 		-DOCSTRING +  commenter
 
-		Mettre des bouton retour partout
-		Faire un donne événement dans les menu de victoire pour fermer la fenetre avec la croix
+		/ Mettre des bouton retour partout  EDITEUR PERSO MANQUANT
+		NON  Faire un donne événement dans les menu de victoire pour fermer la fenetre avec la croix
 		Finir ton éditeur de perso
-		choix du personnage
+		X  choix du personnage
+
+		controler le nombre de diams dans l'editeur 
