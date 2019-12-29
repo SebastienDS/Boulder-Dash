@@ -310,10 +310,18 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-m", "--map", help="ouvre la map choisi ")
+    parser.add_argument("-p", "--personnage", help="permet de changer le personnage en jeu")
+    parser.add_argument("-l", "--lumiere", help="enleve la restriction de lumiere", action="store_true")
+    
     args = parser.parse_args()
+    
     if args.map and os.path.isfile(os.path.join("map", args.map)):
         menu1 = 42
         choix = args.map
+    if args.personnage and os.path.isfile(os.path.join("personnage", args.personnage)):
+        var["personnage"] = args.personnage
+    if args.lumiere:
+        var["lumiere"] = True
 
     cree_fenetre(var["dimension_fenetre"], var["dimension_fenetre"] + var["bandeau"])
 

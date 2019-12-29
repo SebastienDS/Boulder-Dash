@@ -4,7 +4,8 @@ var = {
 	"bandeau": 100,
 	"debug": "d",
     "porte": 1,
-	"personnage": None		#mettre None ou False pour avoir kirby
+	"lumiere": False,
+	"personnage": None,		#mettre None ou False pour avoir kirby
 }
 
 var["taille_case"] = var["dimension_fenetre"] // var["nb_cases"]

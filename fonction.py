@@ -85,6 +85,7 @@ def affichage(carte, nbdiamand, diamand):
     """Affiche la carte"""
     esthetique.fond("black")
     esthetique.lumiere()
+
     if var["porte"] == 0:
         esthetique.lumiere_escalier()
     carte[2][0] = "F"
@@ -123,7 +124,8 @@ def affichage(carte, nbdiamand, diamand):
                     diamand,
                     "goldenrod3",
                 )  # centre le perso
-    esthetique.noir_lumiere()
+    if not var["lumiere"]:
+        esthetique.noir_lumiere()
 
 
 def fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand):
