@@ -85,7 +85,10 @@ def timer(tempstotal, tempscommencement):
 def affichage(carte, nbdiamand, diamand, tempslumiere):
     """Affiche la carte"""
     esthetique.fond("black")
-    esthetique.lumiere(time() - tempslumiere)
+    if time() - tempslumiere < 0:
+        esthetique.lumiere(0)
+    else:
+        esthetique.lumiere(time() - tempslumiere)
     if var["porte"] == 0:
         esthetique.lumiere_escalier()
     carte[2][0] = "F"
@@ -124,7 +127,10 @@ def affichage(carte, nbdiamand, diamand, tempslumiere):
                     diamand,
                     "goldenrod3",
                 )  # centre le perso
-    esthetique.noir_lumiere(400 + (time() - tempslumiere) * 5)
+    if 400 + (time() - tempslumiere) * 5 < 350 :
+        esthetique.noir_lumiere(350)
+    else:    
+        esthetique.noir_lumiere(400 + (time() - tempslumiere) * 5)
 
 
 def fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand):
@@ -543,7 +549,7 @@ def creation_map_aleatoire(x=40, y=22):
 
     for j in range(1, y - 1):
         for i in range(1, x - 1):
-            nb_random = randint(0, 1000)
+            nb_random = randint(0, 1050)
             if nb_random < 650:
                 carte[j][i] = "G"
             elif nb_random < 750:
@@ -553,6 +559,8 @@ def creation_map_aleatoire(x=40, y=22):
             elif nb_random < 900:
                 carte[j][i] = "D"
                 nb_diam += 1
+            elif nb_random <= 950:
+                carte[j][i] = "L"
 
     coord_entree = (randint(1, x - 2), randint(1, y - 2))
     coord_sortie = (randint(1, x - 2), randint(1, y - 2))
@@ -716,7 +724,7 @@ def menu_echap(temps):
             "Impact",
         )
         quitter = encadrement(
-            "QUITTER LE JEU",
+            "RETOURNER AU MENU",
             var["dimension_fenetre"] // 2,
             4 * var["dimension_fenetre"] // 5,
             "White",

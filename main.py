@@ -12,6 +12,21 @@ import argparse
 
 def menu(d, temps):
     esthetique.fond("black")
+    if time() - d >= 1:
+        temps += 0.1
+        d = time()
+        if temps < 4:
+            esthetique.rockford(1 + temps, 6, 100, 0, 1, "black")
+            esthetique.diamand(5.5, 6, 100, 0, 1, "black")
+        if temps >= 4 and temps < 15.4 / 3:
+            esthetique.pierre_eboulement(5, 2 + (temps - 4) * 3, 100)
+            esthetique.rockford(5, 6, 100, 1, 1, "black")
+        if temps >= 15.4 / 3:
+            esthetique.pierre_eboulement(5, 5.4, 100)
+            esthetique.rockford_dead(5, 6, 100, 1, 1, "black")
+        if temps >= 6:
+            temps = 0
+
     fonction.encadrement(
         "BOULDER DASH",
         var["dimension_fenetre"] // 2,
@@ -81,22 +96,6 @@ def menu(d, temps):
             return 4, temps
     elif type_ev == "Quitte":
         return -1, temps
-
-    if time() - d >= 1:
-        temps += 0.1
-        d = time()
-        if temps < 4:
-            esthetique.rockford(1 + temps, 6, 100, 0, 1, "black")
-            esthetique.diamand(5.5, 6, 100, 0, 1, "black")
-        if temps >= 4 and temps < 15.4 / 3:
-            esthetique.pierre_eboulement(5, 2 + (temps - 4) * 3, 100)
-            esthetique.rockford(5, 6, 100, 1, 1, "black")
-        if temps >= 15.4 / 3:
-            esthetique.pierre_eboulement(5, 5.4, 100)
-            esthetique.rockford_dead(5, 6, 100, 1, 1, "black")
-        if temps >= 6:
-            temps = 0
-
     mise_a_jour()
     return 0, temps
 
