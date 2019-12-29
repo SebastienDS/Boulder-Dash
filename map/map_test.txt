@@ -13,3 +13,4 @@ personne = 00000000
 personne = 00000000
 00000000
 map_test.txt
+0

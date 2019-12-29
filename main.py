@@ -134,6 +134,7 @@ def menu_map(d):
                 var["score3"],
                 score,
                 nommap,
+                tempslumiere
             ) = fonction.creer_map(cartes)
             fonction.initialiser_partie(cartes1)
             fonction.affichageV2(cartes1, 0, 1, 50, 0, -2, 8)
@@ -151,6 +152,17 @@ def menu_map(d):
             5,
             "Impact",
         )
+        retour = fonction.encadrement(
+                "Retour au Menu",
+                var["dimension_fenetre"] // 5,
+                var["dimension_fenetre"] + 30,
+                "red",
+                "red",
+                24,
+                5,
+                5,
+                "Impact",
+            )
         mise_a_jour()
         ev = donne_evenement()
         if type_evenement(ev) == "Quitte":
@@ -172,6 +184,8 @@ def menu_map(d):
                         return nom
                 else:
                     return cartes
+            if fonction.test_clic(coords, retour):
+                return 0
 
 
 def main(cartes):
@@ -201,6 +215,7 @@ def main(cartes):
         var["score3"],
         score,
         nommap,
+        tempslumiere
     ) = fonction.creer_map(cartes)
 
     diamand = int(diamand)
@@ -240,12 +255,12 @@ def main(cartes):
             if (
                 t == "Escape"
             ):  # ALLUME UN MENU pour sauvegarder recommencer ou quitter si l'utilisateur appui sur echap
-                suite, tempscommencement = fonction.menu_echap(tempscommencement)
+                suite, tempscommencement, tempslumiere = fonction.menu_echap(tempscommencement, tempslumiere)
                 if suite == -1:
                     return -1, nommap
                 if suite == 6:
                     fonction.save_map_en_cours(
-                        carte, diamand - nbdiamand, score, tempsrestant, nommap
+                        carte, diamand - nbdiamand, score, tempsrestant, nommap, time() - tempslumiere
                     )
                     return 0, nommap
                 if suite == 7:
