@@ -3,6 +3,32 @@ from variable import *
 from time import time
 import fonction
 
+def charbon(x, y, taille_case, *args):
+    rectangle(
+        x * taille_case,
+        y * taille_case,
+        x * taille_case + taille_case - 1,
+        y * taille_case + taille_case - 1,
+        couleur = "black",
+        remplissage = "gray60"
+    )
+    polygone(
+        [(x * taille_case + taille_case // 4,
+        y * taille_case + taille_case // 3),
+        (x * taille_case + taille_case // 2,
+        y * taille_case + taille_case // 6),
+        (x * taille_case + 3 * taille_case // 5,
+        y * taille_case + taille_case // 4),
+        (x * taille_case + 4 * taille_case // 5,
+        y * taille_case + 3 * taille_case // 5),
+        (x * taille_case + taille_case // 3,
+        y * taille_case + 4 * taille_case // 5),        
+        (x * taille_case + taille_case // 4,
+        y * taille_case + 7 * taille_case // 10)
+        ],
+        couleur = 'black',
+        remplissage = 'black'
+    )
 
 def terre(x, y, taille_case, *args):
     """Dessine la terre aux coordonnées x, y"""
@@ -11,8 +37,8 @@ def terre(x, y, taille_case, *args):
         y * taille_case,
         x * taille_case + taille_case - 1,
         y * taille_case + taille_case - 1,
-        couleur="sienna4",
-        remplissage="sienna4",
+        couleur = "sienna4",
+        remplissage = "sienna4",
     )
 
 
@@ -1096,7 +1122,7 @@ def coffre():
     )
 
 
-def lumiere():
+def lumiere(longueur):
     """Lumière du perso"""
     cercle(
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
@@ -1109,7 +1135,7 @@ def lumiere():
     cercle(
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
-        var["taille_case"],
+        var["taille_case"] - 3 * longueur // 4,
         couleur="goldenrod3",
         remplissage="goldenrod3",
     )
@@ -1130,13 +1156,13 @@ def lumiere_escalier():
     )
 
 
-def noir_lumiere():
+def noir_lumiere(epaisseurd):
     """Affiche un cercle dont l'intérieur est le jeu, l'extérieur est noir pour un effet de lumière"""
     cercle(
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
         var["dimension_fenetre"] // 2 + var["taille_case"] // 2,
         var["taille_case"] * 6,
-        epaisseur=400,
+        epaisseur = epaisseurd,
     )
 
 

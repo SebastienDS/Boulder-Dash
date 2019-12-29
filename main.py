@@ -178,6 +178,7 @@ def menu_map(d):
 def main(cartes):
     """Lance le jeu"""
     tempscommencement = time()
+    tempslumiere = time()
     ev1 = donne_evenement()
     debug = -1
     mode = 0
@@ -226,7 +227,7 @@ def main(cartes):
             time() - temps_pierre > 0.15
         ):  # transforme des pierre qui peuvent tomber en des pierres qui vont tomber
             fonction.test_si_pierre_va_tomber(carte)
-        fonction.affichage(carte, nbdiamand, diamand)
+        fonction.affichage(carte, nbdiamand, diamand, tempslumiere)
         tempsrestant = fonction.timer(tempstotal, tempscommencement)
         fonction.fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand)
         ev = donne_evenement()
@@ -255,12 +256,12 @@ def main(cartes):
             elif t == "d":
                 debug *= -1
         if debug == 1:
-            nbdiamand, debug, tempstotal, score = fonction.debug(
-                carte, nbdiamand, debug, tempstotal, score
+            nbdiamand, debug, tempstotal, score, tempslumiere = fonction.debug(
+                carte, nbdiamand, debug, tempstotal, score, tempslumiere
             )
         else:
-            nbdiamand, tempstotal, score = fonction.deplacer_perso(
-                carte, nbdiamand, ev, diamand, tempstotal, score
+            nbdiamand, tempstotal, score, tempslumiere = fonction.deplacer_perso(
+                carte, nbdiamand, ev, diamand, tempstotal, score, tempslumiere
             )
 
         if var["porte"] == 1:

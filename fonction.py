@@ -20,6 +20,7 @@ dico = {
     "K": esthetique.pierre_eboulement,
     "C": esthetique.diamand_eboulement,
     "F": esthetique.mur,
+    "L": esthetique.charbon
 }
 
 
@@ -81,10 +82,10 @@ def timer(tempstotal, tempscommencement):
     return int(tempstotal) - (int(time() - tempscommencement))
 
 
-def affichage(carte, nbdiamand, diamand):
+def affichage(carte, nbdiamand, diamand, tempslumiere):
     """Affiche la carte"""
     esthetique.fond("black")
-    esthetique.lumiere()
+    esthetique.lumiere(time() - tempslumiere)
     if var["porte"] == 0:
         esthetique.lumiere_escalier()
     carte[2][0] = "F"
@@ -123,7 +124,7 @@ def affichage(carte, nbdiamand, diamand):
                     diamand,
                     "goldenrod3",
                 )  # centre le perso
-    esthetique.noir_lumiere()
+    esthetique.noir_lumiere(400 + (time() - tempslumiere) * 5)
 
 
 def fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand):
@@ -196,7 +197,7 @@ def deplace(carte, t):
     var["pos_y"] += _touche[t][1]
 
 
-def deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal, score):
+def deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal, score, tempslumiere):
     """Test si le perso peut se deplacer, si oui, deplace le perso sur la carte en fonction de la touche utilisé"""
     type_ev = upemtk.type_evenement(ev)
     if type_ev == "Touche":
@@ -208,18 +209,22 @@ def deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal, score):
                     nbdiamand + 1,
                     int(tempstotal) + 10,
                     (8 - len((str(int(score) + 350)))) * "0" + (str(int(score) + 350)),
+                    tempslumiere
                 )
+            if test_deplacement(carte, t, "L"):
+                deplace(carte, t)
+                return nbdiamand, tempstotal, score, tempslumiere + 10
             elif test_deplacement(carte, t, {"G", ".", "F"}):
                 deplace(carte, t)
-                return nbdiamand, tempstotal, score
+                return nbdiamand, tempstotal, score, tempslumiere
             if (
                 nbdiamand >= diamand
                 and test_deplacement(carte, t, "E")
                 and var["porte"] == 0
             ):
                 deplace(carte, t)
-                return nbdiamand, tempstotal, score
-    return nbdiamand, tempstotal, score
+                return nbdiamand, tempstotal, score, tempslumiere
+    return nbdiamand, tempstotal, score, tempslumiere
 
 
 def tomber_pierre_laterale(carte):
@@ -342,7 +347,7 @@ def initialiser_partie(carte):
     var["taille_case"] = var["dimension_fenetre"] // var["nb_cases"]
 
 
-def debug(carte, nbdiamand, debug, tempstotal, score):
+def debug(carte, nbdiamand, debug, tempstotal, score, tempslumiere):
     """Perso joue aléatoirement"""
     choix = ["Up", "Down", "Left", "Right"]
     while True:
@@ -354,13 +359,17 @@ def debug(carte, nbdiamand, debug, tempstotal, score):
                 debug,
                 int(tempstotal) + 10,
                 (8 - (len(str(int(score) + 350)))) * "0" + (str(int(score) + 350)),
+                tempslumiere
             )
+        if test_deplacement(carte, x, "L"):
+            deplace(carte, x)
+            return nbdiamand, debug, tempstotal, score, tempslumiere + 10
         elif test_deplacement(carte, x, {"G", "."}):
             deplace(carte, x)
-            return nbdiamand, debug, tempstotal, score
+            return nbdiamand, debug, tempstotal, score, tempslumiere
         elif test_deplacement(carte, x, "E") and var["porte"] == 0:
             deplace(carte, x)
-            return nbdiamand, debug, tempstotal, score
+            return nbdiamand, debug, tempstotal, score, tempslumiere
         elif (
             x == "Right"
             and carte[var["pos_y"]][var["pos_x"] + 1] == "P"
@@ -368,7 +377,7 @@ def debug(carte, nbdiamand, debug, tempstotal, score):
         ):
             pousser_pierre(carte, x)
             deplace(carte, x)
-            return nbdiamand, debug, tempstotal, score
+            return nbdiamand, debug, tempstotal, score, tempslumiere
         elif (
             x == "Left"
             and carte[var["pos_y"]][var["pos_x"] - 1] == "P"
@@ -376,12 +385,12 @@ def debug(carte, nbdiamand, debug, tempstotal, score):
         ):
             pousser_pierre(carte, x)
             deplace(carte, x)
-            return nbdiamand, debug, tempstotal, score
+            return nbdiamand, debug, tempstotal, score, tempslumiere
         choix.remove(x)
         if choix == []:
             debug = -1
-            return nbdiamand, debug, tempstotal, score
-    return nbdiamand, debug, tempstotal, score
+            return nbdiamand, debug, tempstotal, score, tempslumiere
+    return nbdiamand, debug, tempstotal, score, tempslumiere
 
 
 def encadrement(
@@ -788,3 +797,4 @@ def test_ouverture_custom_map():
 
 if __name__ == "__main__":
     print("Programme principal: main.py")
+
