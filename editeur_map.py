@@ -28,7 +28,27 @@ def affiche_tools(tools):
 
 
 def save_map(carte, file_name, temps, diamand):
-    """sauvegarde la map cree avec le bon format"""
+    """sauvegarde la map cree avec le bon format 
+    >>> carte = [
+    ...     ["W", "W", "W", "W"], 
+    ...     ["W", "R", "E", "W"], 
+    ...     ["W", "D", ".", "W"], 
+    ...     ["W", "W", "W", "W"]]
+    >>> save_map(carte, "test", 100, 1)
+    >>> with open("map/test.txt") as f: 
+    ...     print(f.read())
+    100s 1d
+    WWWW
+    WREW
+    WD.W
+    WWWW
+    personne = 00000000
+    personne = 00000000
+    personne = 00000000
+    00000000
+    test.txt
+    0
+    """
     with open("map/{}.txt".format(file_name), "w") as f:
         f.write("{}s {}d\n".format(temps, diamand))
         for j in range(len(carte)):
@@ -40,7 +60,6 @@ def save_map(carte, file_name, temps, diamand):
         f.write("00000000\n")
         f.write("{}.txt\n".format(file_name))
         f.write("0")
-    my_input("Map sauvegardée", "str")
 
 
 def save(carte):
@@ -52,17 +71,20 @@ def save(carte):
 
     if not test_mur_autour(carte):
         copy_carte = ajout_mur_autour(carte)
+    else:
+        copy_carte = deepcopy(carte)
 
     file_name = my_input("Nom de la map:", "str")
     temps = my_input("temps limite:", "int")
     diamand = my_input("diamant requis:", "int")
 
-    if not test_nombre_diams_requis(carte, diamand):
+    if not test_nombre_diams_requis(copy_carte, diamand):
         my_input("nombre de diamant\n requis trop grand", "str")
         return
 
     if not os.path.isfile("map/{}.txt".format(file_name)):
         save_map(copy_carte, file_name, temps, diamand)
+        my_input("Map sauvegardée", "str")
     else:
         reponse = my_input("Nom déjà utilisé\n      Ecraser ?", "str")
         if reponse.lower() in {
@@ -78,6 +100,7 @@ def save(carte):
             "bien sur",
         }:
             save_map(copy_carte, file_name, temps, diamand)
+            my_input("Map sauvegardée", "str")
         else:
             my_input("Map non enregistrée", "str")
 
@@ -86,6 +109,8 @@ def test_nombre_diams_requis(carte, diamant):
     """test si la map contient suffisamment de diamant
     >>> test_nombre_diams_requis([["D", "D", "E"], ["a", "a", "d"], "e", "f", "g"], 2)
     True
+    >>> test_nombre_diams_requis([["D", "D", "E"], ["a", "a", "d"], "e", "f", "g"], 1)
+    True
     >>> test_nombre_diams_requis([["D", "D", "E"], ["a", "a", "d"], "e", "f", "g"], 3)
     False
     """
@@ -93,7 +118,40 @@ def test_nombre_diams_requis(carte, diamant):
 
 
 def test_1_entree_1_sortie(carte):
-    """test si la map contient bien 1 unique entree et sortie"""
+    """test si la map contient bien 1 unique entree et sortie
+    >>> carte = [
+    ...     ["W", "W", "W", "W"], 
+    ...     ["W", "R", "E", "W"], 
+    ...     ["W", "D", ".", "W"], 
+    ...     ["W", "W", "W", "W"]]
+    >>> print(test_1_entree_1_sortie(carte))
+    None
+    >>> print(test_1_entree_1_sortie([
+    ...     ["W", "W", "W", "W"], 
+    ...     ["W", "R", "E", "W"], 
+    ...     ["W", "D", ".", "W"],
+    ...     ["W", "R", ".", "W"], 
+    ...     ["W", "W", "W", "W"]]))
+    nombre d'entree
+          incorrect
+    >>> print(test_1_entree_1_sortie([
+    ...     ["W", "W", "W", "W"], 
+    ...     ["W", "R", "E", "W"], 
+    ...     ["W", "D", ".", "W"],
+    ...     ["W", "E", ".", "W"], 
+    ...     ["W", "W", "W", "W"]]))
+    nombre de sortie
+          incorrect
+    >>> print(test_1_entree_1_sortie([
+    ...     ["W", "W", "W", "W"], 
+    ...     ["W", "R", "E", "W"], 
+    ...     ["W", "D", ".", "W"],
+    ...     ["W", "E", "R", "W"], 
+    ...     ["W", "W", "W", "W"]]))
+       nombre d'entree
+                et de
+        sortie incorrect
+    """
     entree = 0
     sortie = 0
     for j in range(len(carte)):
@@ -112,7 +170,24 @@ def test_1_entree_1_sortie(carte):
 
 
 def test_mur_autour(carte):
-    """test si la map est entouree de mur"""
+    """test si la map est entouree de mur
+    >>> test_mur_autour([
+    ...     ["W", "W", "W", "W"], 
+    ...     ["W", "R", "E", "W"], 
+    ...     ["W", "D", ".", "W"], 
+    ...     ["W", "W", "W", "W"]])
+    True
+    >>> test_mur_autour([
+    ...     ["W", ".", "W", "W"], 
+    ...     ["W", "R", "E", "W"], 
+    ...     ["W", "D", ".", "W"], 
+    ...     ["W", "W", "W", "W"]])
+    False
+    >>> test_mur_autour([ 
+    ...     ["R", "E"], 
+    ...     ["D", "."]])
+    False
+    """
     if set(carte[0]) != {"W"}:
         return False
     if set(carte[-1]) != {"W"}:
@@ -126,7 +201,16 @@ def test_mur_autour(carte):
 
 
 def ajout_mur_autour(carte):
-    """ajoute une ligne de mur autour de la carte"""
+    """ajoute une ligne de mur autour de la carte
+    >>> ajout_mur_autour([
+    ...     ["W", ".", "W", "W"], 
+    ...     ["W", "R", "E", "W"], 
+    ...     ["W", "D", ".", "W"], 
+    ...     ["W", "W", "W", "W"]])
+    [['W', 'W', 'W', 'W', 'W', 'W'], ['W', 'W', '.', 'W', 'W', 'W'], ['W', 'W', 'R', 'E', 'W', 'W'], ['W', 'W', 'D', '.', 'W', 'W'], ['W', 'W', 'W', 'W', 'W', 'W'], ['W', 'W', 'W', 'W', 'W', 'W']]
+    >>> ajout_mur_autour([["R", "E"], ["D", "."]])
+    [['W', 'W', 'W', 'W'], ['W', 'R', 'E', 'W'], ['W', 'D', '.', 'W'], ['W', 'W', 'W', 'W']]
+    """
     copy_carte = deepcopy(carte)
     for j in range(len(copy_carte)):
         copy_carte[j].append("W")

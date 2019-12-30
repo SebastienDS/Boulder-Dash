@@ -1,0 +1,11 @@
+100s 1d
+WWWW
+WREW
+WD.W
+WWWW
+personne = 00000000
+personne = 00000000
+personne = 00000000
+00000000
+test.txt
+0

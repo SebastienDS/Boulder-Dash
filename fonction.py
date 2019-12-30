@@ -147,7 +147,16 @@ def fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand):
 
 
 def tomber_de_pierre_ou_diamand(carte):
-    """Fais tomber les pierres"""
+    """Fais tomber les pierres
+    >>> carte = [
+    ...     ["W", "W", "W", "W"], 
+    ...     ["W", "R", "K", "W"], 
+    ...     ["W", "E", ".", "W"], 
+    ...     ["W", "W", "W", "W"]]
+    >>> tomber_de_pierre_ou_diamand(carte)
+    >>> print(carte)
+    [['W', 'W', 'W', 'W'], ['W', 'R', '.', 'W'], ['W', 'E', 'K', 'W'], ['W', 'W', 'W', 'W']]
+    """
     for y in range(len(carte) - 2, -1, -1):
         for x in range(len(carte[0]) - 1, -1, -1):
             if carte[y][x] == "K" and carte[y + 1][x] == ".":
@@ -157,7 +166,17 @@ def tomber_de_pierre_ou_diamand(carte):
 
 
 def test_si_pierre_va_tomber(carte):
-    """test si une pierre va tomber et la transforme en une pierre qui tombe si oui(pareil pour diams)"""
+    """test si une pierre va tomber et la transforme en une pierre qui tombe si oui(pareil pour diams)
+    >>> carte = [
+    ...     ["W", "W", "W", "W"], 
+    ...     ["W", "P", "D", "W"], 
+    ...     ["W", ".", ".", "W"],
+    ...     ["W", "E", "R", "W"], 
+    ...     ["W", "W", "W", "W"]]
+    >>> test_si_pierre_va_tomber(carte)
+    >>> print(carte)
+    [['W', 'W', 'W', 'W'], ['W', 'K', 'C', 'W'], ['W', '.', '.', 'W'], ['W', 'E', 'R', 'W'], ['W', 'W', 'W', 'W']]
+    """
     for y in range(len(carte) - 2, -1, -1):
         for x in range(len(carte[0]) - 1, -1, -1):
             if carte[y][x] == "P" and carte[y + 1][x] == ".":
@@ -167,7 +186,26 @@ def test_si_pierre_va_tomber(carte):
 
 
 def test_pierre_ou_diamand_eboulement(carte):
-    """test si une pierre est toujours en train de tomber et la transforme en pierre normal si non(pareil pour diams)"""
+    """test si une pierre est toujours en train de tomber et la transforme en pierre normal si non(pareil pour diams)
+    >>> carte = [
+    ...     ["W", "W", "W", "W"], 
+    ...     ["W", ".", ".", "W"], 
+    ...     ["W", "K", "C", "W"],
+    ...     ["W", "E", "R", "W"], 
+    ...     ["W", "W", "W", "W"]]
+    >>> test_pierre_ou_diamand_eboulement(carte)
+    >>> print(carte)
+    [['W', 'W', 'W', 'W'], ['W', '.', '.', 'W'], ['W', 'P', 'C', 'W'], ['W', 'E', 'R', 'W'], ['W', 'W', 'W', 'W']]
+    >>> carte = [
+    ...     ["W", "W", "W", "W"], 
+    ...     ["W", "R", ".", "W"], 
+    ...     ["W", "K", "C", "W"],
+    ...     ["W", "E", "W", "W"], 
+    ...     ["W", "W", "W", "W"]]
+    >>> test_pierre_ou_diamand_eboulement(carte)
+    >>> print(carte)
+    [['W', 'W', 'W', 'W'], ['W', 'R', '.', 'W'], ['W', 'P', 'D', 'W'], ['W', 'E', 'W', 'W'], ['W', 'W', 'W', 'W']]
+    """
     for y in range(len(carte) - 1):
         for x in range(len(carte[0])):
             if carte[y][x] == "K" and carte[y + 1][x] not in [".", "R"]:
@@ -177,7 +215,21 @@ def test_pierre_ou_diamand_eboulement(carte):
 
 
 def test_deplacement(carte, direction, liste):
-    """test si le deplacement est possible"""
+    """test si le deplacement est possible
+    >>> carte = [
+    ...     ["W", "W", "W", "W"], 
+    ...     ["W", "R", ".", "W"], 
+    ...     ["W", ".", ".", "W"],
+    ...     ["W", "E", "W", "W"], 
+    ...     ["W", "W", "W", "W"]]
+    >>> var["pos_x"] = 1
+    >>> var["pos_y"] = 1 
+    >>> choix = ["Up", "Down", "Left", "Right"]
+    >>> test_deplacement(carte, choix[3], {"G", ".", "D"})
+    True
+    >>> test_deplacement(carte, choix[0], {"G", ".", "D"})
+    False
+    """
     return (
         carte[var["pos_y"] + _touche[direction][1]][
             var["pos_x"] + _touche[direction][0]
@@ -201,7 +253,22 @@ def enleve_porte(carte, ev, nbdiamand, diamand):
 
 
 def deplace(carte, t):
-    """se deplace dans la direction voulu et met a jour les positions du joueur"""
+    """se deplace dans la direction voulu et met a jour les positions du joueur
+    >>> carte = [
+    ...     ["W", "W", "W", "W"], 
+    ...     ["W", "R", ".", "W"], 
+    ...     ["W", ".", ".", "W"],
+    ...     ["W", "E", "W", "W"], 
+    ...     ["W", "W", "W", "W"]]
+    >>> var["pos_x"] = 1
+    >>> var["pos_y"] = 1 
+    >>> choix = ["Up", "Down", "Left", "Right"]
+    >>> deplace(carte, choix[1])
+    >>> print(carte)
+    [['W', 'W', 'W', 'W'], ['W', '.', '.', 'W'], ['W', 'R', '.', 'W'], ['W', 'E', 'W', 'W'], ['W', 'W', 'W', 'W']]
+    >>> var["pos_y"] == 2
+    True
+    """
     carte[var["pos_y"] + _touche[t][1]][var["pos_x"] + _touche[t][0]] = "R"
     carte[var["pos_y"]][var["pos_x"]] = "."
     var["pos_x"] += _touche[t][0]
@@ -239,7 +306,32 @@ def deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal, score, tempslumier
 
 
 def tomber_pierre_laterale(carte):
-    """test si une pierre peut tomber sur les cotés et la bouge si oui"""
+    """test si une pierre peut tomber sur les cotés et la bouge si oui
+    >>> carte = [
+    ...     ["W", "W", "W", "W"], 
+    ...     ["W", "D", ".", "W"], 
+    ...     ["W", "P", ".", "W"],
+    ...     ["W", "E", "R", "W"], 
+    ...     ["W", "W", "W", "W"]]
+    >>> tomber_pierre_laterale(carte)
+    [['W', 'W', 'W', 'W'], ['W', '.', 'D', 'W'], ['W', 'P', '.', 'W'], ['W', 'E', 'R', 'W'], ['W', 'W', 'W', 'W']]
+    >>> carte = [
+    ...     ["W", "W", "W", "W"], 
+    ...     ["W", "P", ".", "W"], 
+    ...     ["W", "P", ".", "W"],
+    ...     ["W", "E", "R", "W"], 
+    ...     ["W", "W", "W", "W"]]
+    >>> tomber_pierre_laterale(carte)
+    [['W', 'W', 'W', 'W'], ['W', '.', 'P', 'W'], ['W', 'P', '.', 'W'], ['W', 'E', 'R', 'W'], ['W', 'W', 'W', 'W']]
+    >>> carte = [
+    ...     ["W", "W", "W", "W"], 
+    ...     ["W", "P", ".", "W"], 
+    ...     ["W", "P", "P", "W"],
+    ...     ["W", "E", "R", "W"], 
+    ...     ["W", "W", "W", "W"]]
+    >>> tomber_pierre_laterale(carte)
+    [['W', 'W', 'W', 'W'], ['W', 'P', '.', 'W'], ['W', 'P', 'P', 'W'], ['W', 'E', 'R', 'W'], ['W', 'W', 'W', 'W']]
+    """
     for y in range(len(carte) - 2, 0, -1):
         for x in range(len(carte[0]) - 2, 0, -1):
             if (
@@ -280,7 +372,21 @@ def test_pousser_pierre(carte, ev):
 
 
 def pousser_pierre(carte, t):
-    """Test si une pierre est poussable, si oui, la pousse"""
+    """Test si une pierre est poussable, si oui, la pousse
+    >>> carte = [
+    ...     ["W", "W", "W", "W", "W", "W", "W"], 
+    ...     ["W", ".", "P", "R", "P", ".", "W"], 
+    ...     ["W", ".", "P", "E", "P", ".", "W"],
+    ...     ["W", "W", "W", "W", "W", "W", "W"]]
+    >>> var["pos_x"] = 3
+    >>> var["pos_y"] = 1 
+    >>> choix = ["Up", "Down", "Left", "Right"]
+    >>> pousser_pierre(carte, choix[3])
+    >>> carte[var["pos_y"]][var["pos_x"] + 1] == "."
+    True
+    >>> carte[var["pos_y"]][var["pos_x"] + 2] == "P"
+    True
+    """
     (
         carte[var["pos_y"]][var["pos_x"] + _touche[t][0]],
         carte[var["pos_y"]][var["pos_x"] + 2 * _touche[t][0]],
@@ -345,7 +451,18 @@ def win(nbdiamand, diamand, tempsrestant, cartes, score, nommap):
 
 
 def initialiser_partie(carte):
-    """Initialise les parametres par defaut de la partie"""
+    """Initialise les parametres par defaut de la partie
+    >>> carte = [
+    ...     ["W", "W", "W", "W", "W", "W", "W"], 
+    ...     ["W", ".", "P", "R", "P", ".", "W"], 
+    ...     ["W", ".", "P", "E", "P", ".", "W"],
+    ...     ["W", "W", "W", "W", "W", "W", "W"]]
+    >>> initialiser_partie(carte)
+    >>> (var["pos_x"], var["pos_y"]) == (3, 1)
+    True
+    >>> (var["pos_sortie_x"], var["pos_sortie_y"]) == (3, 2)
+    True
+    """
     for y in range(len(carte)):
         for x in range(len(carte[y])):
             if carte[y][x] == "R":  # on recupere la position du perso
@@ -548,7 +665,7 @@ def my_input(msg, type_retour, reponse_defaut=""):
 
 
 def creation_map_aleatoire(x=40, y=22):
-    """renvoie une map aléatoire de taille(40 * 22(x * y))"""
+    """renvoie une map aléatoire de taille(40 * 22) (x * y)"""
     carte = [["W" for _ in range(x)] for _ in range(y)]
     nb_diam = 0
 
