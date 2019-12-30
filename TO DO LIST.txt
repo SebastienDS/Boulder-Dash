@@ -23,7 +23,3 @@ TO DO:
 				creer_map
 				save_map_en_cours dans fonction
 				creation_map_aleatoire
-				menu_or_retry
-				test_clic
-				test_suivant_menu
-				test_precedent

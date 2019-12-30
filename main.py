@@ -242,7 +242,7 @@ def main(cartes):
         ):  # transforme des pierre qui peuvent tomber en des pierres qui vont tomber
             fonction.test_si_pierre_va_tomber(carte)
         fonction.affichage(carte, nbdiamand, diamand, tempslumiere)
-        tempsrestant = fonction.timer(tempstotal, tempscommencement)
+        tempsrestant = fonction.timer(int(tempstotal), tempscommencement)
         fonction.fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand)
         ev = donne_evenement()
         type_ev = type_evenement(ev)

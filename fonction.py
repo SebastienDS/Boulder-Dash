@@ -25,7 +25,12 @@ dico = {
 
 
 def creer_map(nomdufichier):
-    """Transforme un fichier texte contenant une map en une matrice"""
+    """
+    Transforme un fichier texte contenant une map en une matrice
+
+    :param str nomdufichier: nom de la map a lire
+    :return: donnees extraites du fichier
+    """
     with open(
         "map/" + nomdufichier, "r"
     ) as fichier:  # ouvre le fichier contenant la carte
@@ -64,7 +69,17 @@ def save_map_en_cours(
     nom_sauvegarde="map_sauvegarde",
     aleatoire=False
 ):
-    """sauvegarde la map"""
+    """
+    sauvegarde la map
+
+    :param list carte: liste 2D contenant le jeu
+    :param int nb_diamand: nombre de diamant a sauvegarder dans le fichier
+    :param int temps_restant: temps restant de la partie
+    :param str nommap: nom de la map en cours de jeu a sauvegarder (permet de savoir de quelle map on vient lors d'un futur retry)
+    :param int tempslumiere: temps restant de lumiere
+    :param str nom_sauvegarde: nom du fichier
+    :param bool aleatoire: sauvegarde des scores par defaut si la map est aleatoire
+    """
     with open("map/{}.txt".format(nom_sauvegarde), "w") as f:
         f.write("{}s {}d\n".format(temps_restant, nb_diamand))
         for j in range(len(carte)):
@@ -82,11 +97,25 @@ def save_map_en_cours(
 
 
 def timer(tempstotal, tempscommencement):
-    return int(tempstotal) - (int(time() - tempscommencement))
+    """
+    temps restant de la partie
+    
+    :param int tempstotal: temps deja ecoule dans la partie 
+    :param int tempscommencement: temps depuis le debut de la partie
+    :return: temps restant de la partie
+    """
+    return tempstotal - (int(time() - tempscommencement))
 
 
 def affichage(carte, nbdiamand, diamand, tempslumiere):
-    """Affiche la carte"""
+    """
+    Affiche la carte
+    
+    :param list carte: liste 2D contenant le jeu
+    :param int nb_diamand: nombre de diamant deja recupere en jeu
+    :param int diamand: nombre de diamant requis avant de pouvoir gagner
+    :param int tempslumiere: temps restant de lumiere
+    """
     esthetique.fond("black")
     if time() - tempslumiere < 0:
         esthetique.lumiere(0)
@@ -139,7 +168,14 @@ def affichage(carte, nbdiamand, diamand, tempslumiere):
 
 
 def fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand):
-    """Affiche une banderolle avec le score le temps et le nombre de diamand restant"""
+    """
+    Affiche une banderolle avec le score le temps et le nombre de diamand restant
+    
+    :param str score: score de la partie
+    :param int tempsrestant: temps restant de la partie
+    :param int nb_diamand: nombre de diamant deja recupere en jeu
+    :param int diamand: nombre de diamant requis avant de pouvoir gagner
+    """
     nbdiamandrestant = diamand - nbdiamand
     if nbdiamandrestant < 0:
         nbdiamandrestant = 0
@@ -147,7 +183,11 @@ def fond_score_temps_diams(score, tempsrestant, nbdiamand, diamand):
 
 
 def tomber_de_pierre_ou_diamand(carte):
-    """Fais tomber les pierres
+    """
+    Fais tomber les pierres
+
+    :param list carte: liste 2D contenant le jeu
+
     >>> carte = [
     ...     ["W", "W", "W", "W"], 
     ...     ["W", "R", "K", "W"], 
@@ -166,7 +206,12 @@ def tomber_de_pierre_ou_diamand(carte):
 
 
 def test_si_pierre_va_tomber(carte):
-    """test si une pierre va tomber et la transforme en une pierre qui tombe si oui(pareil pour diams)
+    """
+    test si une pierre va tomber et la transforme en une pierre 
+    qui tombe si oui (pareil pour diams)
+    
+    :param list carte: liste 2D contenant le jeu
+    
     >>> carte = [
     ...     ["W", "W", "W", "W"], 
     ...     ["W", "P", "D", "W"], 
@@ -186,7 +231,12 @@ def test_si_pierre_va_tomber(carte):
 
 
 def test_pierre_ou_diamand_eboulement(carte):
-    """test si une pierre est toujours en train de tomber et la transforme en pierre normal si non(pareil pour diams)
+    """
+    test si une pierre est toujours en train de tomber 
+    et la transforme en pierre normal si non (pareil pour diams)
+    
+    :param list carte: liste 2D contenant le jeu
+    
     >>> carte = [
     ...     ["W", "W", "W", "W"], 
     ...     ["W", ".", ".", "W"], 
@@ -215,7 +265,14 @@ def test_pierre_ou_diamand_eboulement(carte):
 
 
 def test_deplacement(carte, direction, liste):
-    """test si le deplacement est possible
+    """
+    test si le deplacement est possible
+    
+    :param list carte: liste 2D contenant le jeu
+    :param str direction: ["Up", "Down", "Left", "Right")
+    :param list liste: contient les elements permettant le deplacement
+    :return: bool
+
     >>> carte = [
     ...     ["W", "W", "W", "W"], 
     ...     ["W", "R", ".", "W"], 
@@ -239,7 +296,14 @@ def test_deplacement(carte, direction, liste):
 
 
 def enleve_porte(carte, ev, nbdiamand, diamand):
-    """test si la porte a été ouverte"""
+    """
+    test si la porte a été ouverte
+    
+    :param list carte: liste 2D contenant le jeu
+    :param upemtk.Event ev: evenement recupere par upemtk.donne_evenement()
+    :param int nb_diamand: nombre de diamant deja recupere en jeu
+    :param int diamand: nombre de diamant requis avant de pouvoir gagner
+    """
     type_ev = upemtk.type_evenement(ev)
     if type_ev == "Touche":
         t = upemtk.touche(ev)
@@ -253,7 +317,12 @@ def enleve_porte(carte, ev, nbdiamand, diamand):
 
 
 def deplace(carte, t):
-    """se deplace dans la direction voulu et met a jour les positions du joueur
+    """
+    se deplace dans la direction voulu et met a jour les positions du joueur
+
+    :param list carte: liste 2D contenant le jeu
+    :param str t: ("Up", "Down", "Left", "Right")
+
     >>> carte = [
     ...     ["W", "W", "W", "W"], 
     ...     ["W", "R", ".", "W"], 
@@ -276,7 +345,19 @@ def deplace(carte, t):
 
 
 def deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal, score, tempslumiere):
-    """Test si le perso peut se deplacer, si oui, deplace le perso sur la carte en fonction de la touche utilisé"""
+    """
+    Test si le perso peut se deplacer, si oui, 
+    deplace le perso sur la carte en fonction de la touche utilisé
+    
+    :param list carte: liste 2D contenant le jeu
+    :param int nb_diamand: nombre de diamant deja recupere en jeu
+    :param upemtk.Event ev: evenement recupere par upemtk.donne_evenement()
+    :param int diamand: nombre de diamant requis avant de pouvoir gagner
+    :param int tempstotal: temps restant de la partie
+    :param str score: score de la partie
+    :param int tempslumiere: restant de lumiere restant
+    :return: nbdiamand, tempstotal, score, tempslumiere
+    """
     type_ev = upemtk.type_evenement(ev)
     if type_ev == "Touche":
         t = upemtk.touche(ev)
@@ -306,7 +387,12 @@ def deplacer_perso(carte, nbdiamand, ev, diamand, tempstotal, score, tempslumier
 
 
 def tomber_pierre_laterale(carte):
-    """test si une pierre peut tomber sur les cotés et la bouge si oui
+    """
+    test si une pierre peut tomber sur les cotés et la bouge si oui
+
+    :param list carte: liste 2D contenant le jeu
+    :return: carte
+
     >>> carte = [
     ...     ["W", "W", "W", "W"], 
     ...     ["W", "D", ".", "W"], 
@@ -331,6 +417,14 @@ def tomber_pierre_laterale(carte):
     ...     ["W", "W", "W", "W"]]
     >>> tomber_pierre_laterale(carte)
     [['W', 'W', 'W', 'W'], ['W', 'P', '.', 'W'], ['W', 'P', 'P', 'W'], ['W', 'E', 'R', 'W'], ['W', 'W', 'W', 'W']]
+    >>> carte = [
+    ...     ["W", "W", "W", "W"], 
+    ...     ["W", "P", ".", "W"], 
+    ...     ["W", "G", ".", "W"],
+    ...     ["W", "E", "R", "W"], 
+    ...     ["W", "W", "W", "W"]]
+    >>> tomber_pierre_laterale(carte)
+    [['W', 'W', 'W', 'W'], ['W', 'P', '.', 'W'], ['W', 'G', '.', 'W'], ['W', 'E', 'R', 'W'], ['W', 'W', 'W', 'W']]
     """
     for y in range(len(carte) - 2, 0, -1):
         for x in range(len(carte[0]) - 2, 0, -1):
@@ -352,7 +446,13 @@ def tomber_pierre_laterale(carte):
 
 
 def test_pousser_pierre(carte, ev):
-    """test si une pierre peut etre poussé et return true or false selon le résultat"""
+    """
+    test si une pierre peut etre poussé et return true or false selon le résultat
+    
+    :param list carte: liste 2D contenant le jeu
+    :param upemtk.Event ev: evenement recupere par upemtk.donne_evenement()
+    :return: bool
+    """
     type_ev = upemtk.type_evenement(ev)
     if type_ev == "Touche":
         t = upemtk.touche(ev)
@@ -372,7 +472,12 @@ def test_pousser_pierre(carte, ev):
 
 
 def pousser_pierre(carte, t):
-    """Test si une pierre est poussable, si oui, la pousse
+    """
+    Test si une pierre est poussable, si oui, la pousse
+
+    :param list carte: liste 2D contenant le jeu
+    :param str t: ("Up", "Down", "Left", "Right")
+
     >>> carte = [
     ...     ["W", "W", "W", "W", "W", "W", "W"], 
     ...     ["W", ".", "P", "R", "P", ".", "W"], 
@@ -394,8 +499,13 @@ def pousser_pierre(carte, t):
 
 
 def loose(carte, tempsrestant):
-    """test si joueur s'est pris une pierre
+    """
+    test si joueur s'est pris une pierre 
     si oui met l'image de défaite et retourne True
+    
+    :param list carte: liste 2D contenant le jeu
+    :param int tempsrestant: temps restant de la partie en cours
+    :return: bool
     """
     if carte[var["pos_y"] - 1][var["pos_x"]] in ["K", "C"] or tempsrestant <= 0:
         upemtk.efface_tout()
@@ -414,8 +524,17 @@ def loose(carte, tempsrestant):
 
 
 def win(nbdiamand, diamand, tempsrestant, cartes, score, nommap):
-    """Regarde si l'utilisateur gagne
-    si oui, met l'image de victoire et retourne True"""
+    """
+    Regarde si l'utilisateur gagne si oui, met l'image de victoire et retourne True
+    
+    :param int nb_diamand: nombre de diamant deja recupere en jeu
+    :param int diamand: nombre de diamant requis avant de pouvoir gagner
+    :param int tempsrestant: temps restant de la partie en cours
+    :param cartes: 
+    :param str score: score de la partie
+    :param str nommap: nom de la map en cours de jeu
+    :return: bool     
+    """
     MS = 0
     if (
         var["pos_x"] == var["pos_sortie_x"]
@@ -442,7 +561,7 @@ def win(nbdiamand, diamand, tempsrestant, cartes, score, nommap):
         esthetique.coffre()
         esthetique.affiche_score_victoire(score)
         if MS == 0:
-            test_meilleurscore(nommap, score, tempsrestant)
+            test_meilleurscore(nommap, score)
             MS = 1
         if cartes == 6:
             del var["carte"]
@@ -451,7 +570,11 @@ def win(nbdiamand, diamand, tempsrestant, cartes, score, nommap):
 
 
 def initialiser_partie(carte):
-    """Initialise les parametres par defaut de la partie
+    """
+    Initialise les parametres par defaut de la partie
+
+    :param list carte: liste 2D contenant le jeu
+
     >>> carte = [
     ...     ["W", "W", "W", "W", "W", "W", "W"], 
     ...     ["W", ".", "P", "R", "P", ".", "W"], 
@@ -476,7 +599,17 @@ def initialiser_partie(carte):
 
 
 def debug(carte, nbdiamand, debug, tempstotal, score, tempslumiere):
-    """Perso joue aléatoirement"""
+    """
+    Perso joue aléatoirement
+    
+    :param list carte: liste 2D contenant le jeu
+    :param int nb_diamand: nombre de diamant deja recupere en jeu
+    :param int debut: test si le mode debut est activé (1, -1)
+    :param int tempstotal: temps restant de la partie
+    :param str score: score de la partie
+    ;param int tempslumiere: temps de lumiere restant
+    :return: nbdiamand, debut, tempstotal, score, tempslumiere
+    """
     choix = ["Up", "Down", "Left", "Right"]
     while True:
         x = choice(choix)
@@ -524,7 +657,19 @@ def debug(carte, nbdiamand, debug, tempstotal, score, tempslumiere):
 def encadrement(
     msg, x, y, couleurTXT, couleurCadre, Taille, Epaisseur, Espacement, polise
 ):
-    """ Ecrit et encadre un texte puis donne les coordonnées du cadre (pour clic)"""
+    """ 
+    Ecrit et encadre un texte puis donne les coordonnées du cadre (pour clic)
+    
+    :param str msg: message a encadrer
+    :param int x: coordonnee x du msg a positionner
+    :param int y: coordonnee y du msg a positionner
+    :param str couleurTXT: couleur du msg
+    :param str couleurCadre: couleur du cadre
+    :param int Taille: taille du msg
+    :param int Epaisseur: epaisseur du trait de lencadrement
+    :param int Espacement: epaissement entre le msg et l'encadrement
+    :return: [x_point_haut_gauche, y_point_haut_gauche, x_point_bas_droit, y_point_bas_droit]
+    """
     upemtk.texte(10000000, y, msg, couleur=couleurTXT, police=polise, taille=Taille)
     upemtk.longueur_texte(msg)
     x2 = x + upemtk.longueur_texte(msg) // 2 + Espacement
@@ -559,7 +704,13 @@ dico_texte = {
 
 
 def _input(msg, reponse_defaut):
-    """meme fonction que input mais cette fois si s'affiche à l'écran et non sur la console"""
+    """
+    meme fonction que input mais cette fois si 
+    s'affiche à l'écran et non sur la console
+    :param str msg: message decrivant linput sur la fenetre
+    :param str reponse_defaut: texte a afficher par defaut dans linput 
+    :return: saisie de lutilisateur au clavier (str)
+    """
     texte = reponse_defaut
     while True:
         ev = upemtk.donne_evenement()
@@ -593,7 +744,14 @@ def _input(msg, reponse_defaut):
 
 
 def my_input(msg, type_retour, reponse_defaut=""):
-    """affichage de l'input"""
+    """
+    affichage de l'input
+    
+    :param str msg: message decrivant linput sur la fenetre
+    :param str type_retour: ("int", "str")
+    :param str reponse_defaut: texte a afficher par defaut dans linput 
+    :return: texte saisie par lutilisateur respectant le type voulu
+    """
     upemtk.rectangle(
         var["dimension_fenetre"] // 2 - 180,
         var["dimension_fenetre"] // 2 - 100,
@@ -665,7 +823,12 @@ def my_input(msg, type_retour, reponse_defaut=""):
 
 
 def creation_map_aleatoire(x=40, y=22):
-    """renvoie une map aléatoire de taille(40 * 22) (x * y)"""
+    """
+    renvoie une map aléatoire de taille(40 * 22) (x * y)
+    
+    :param int x: longueur de la map aleatoire
+    :param int y: largeur de la map aleatoire
+    """
     carte = [["W" for _ in range(x)] for _ in range(y)]
     nb_diam = 0
 
@@ -704,8 +867,22 @@ def creation_map_aleatoire(x=40, y=22):
 
 
 def menu_or_retry(a, coordretry, coordmenu):
-    """Regarde si l'utilisateur à décidé de quitté ou de recommencer
-    et retourne donc sa réponse"""
+    """
+    Regarde si l'utilisateur à décidé de quitté ou de recommencer
+    et retourne donc sa réponse
+
+    :param tuple a: coordonnee du clic de la souris
+    :param list coordretry: coordonnees des points du bouton retry
+    :param list coordmenu: coordonees des points du bouton menu
+    :return: bool
+
+    >>> menu_or_retry((10, 10), [0, 0, 20, 20], [100, 100, 200, 200])
+    9
+    >>> menu_or_retry((110, 110), [0, 0, 20, 20], [100, 100, 200, 200])
+    7
+    >>> menu_or_retry((50, 50), [0, 0, 20, 20], [100, 100, 200, 200])
+    0
+    """
     if (
         a[0] < coordretry[2]
         and a[0] > coordretry[0]
@@ -724,7 +901,18 @@ def menu_or_retry(a, coordretry, coordmenu):
 
 
 def test_clic(coordsclic, coordscarre):
-    """test si l'utilisateur a cliqué dans le carré"""
+    """
+    test si l'utilisateur a cliqué dans le carré
+
+    :param tuple coordsclic: coordonnee du clic de la souris
+    :param list coordscarre: coordonnees des points du carre
+    :return: bool 
+
+    >>> test_clic((10, 10), [0, 0, 20, 20])
+    True
+    >>> test_clic((100, 100), [0, 0, 20, 20])
+    False
+    """
     if (
         coordsclic[0] < coordscarre[2]
         and coordsclic[0] > coordscarre[0]
@@ -736,7 +924,19 @@ def test_clic(coordsclic, coordscarre):
 
 
 def test_suivant_menu(coords, suivant):
-    """test si l'utilisateur a cliqué sur la flèche qui donne la map suivante dans le menu"""
+    """
+    test si l'utilisateur a cliqué sur la flèche qui
+    donne la map suivante dans le menu
+
+    :param tuple coords: coordonnee du clic de la souris
+    :param list suivant: coordonnees des points de la fleche suivant
+    :return: bool 
+    
+    >>> test_suivant_menu((575, 400), [(550, 250), (550, 300), (600, 275)])
+    0
+    >>> test_suivant_menu((575, 275), [(550, 250), (550, 300), (600, 275)])
+    1
+    """
     if (
         suivant[0][0] <= coords[0] <= suivant[2][0]
         and suivant[0][1] + (coords[0] - suivant[0][0]) * 0.5
@@ -748,7 +948,19 @@ def test_suivant_menu(coords, suivant):
 
 
 def test_precedent(coords, precedent):
-    """test si l'utilisateur a cliqué sur la flèche qui donne la map précédente dans le menu"""
+    """
+    test si l'utilisateur a cliqué sur la flèche 
+    qui donne la map précédente dans le menu
+
+    :param tuple coords: coordonnee du clic de la souris
+    :param list precedent: coordonnees des points de la fleche precedent
+    :return: bool 
+
+    >>> test_precedent((25, 500), [(50, 250), (50, 300), (0, 275)])
+    0
+    >>> test_precedent((25, 275), [(50, 250), (50, 300), (0, 275)])
+    1
+    """
     if (
         precedent[0][0] >= coords[0] >= precedent[2][0]
         and precedent[0][1] + (precedent[0][0] - coords[0]) * 0.5
@@ -760,7 +972,17 @@ def test_precedent(coords, precedent):
 
 
 def affichageV2(carte, nbdiamand, diamand, taille, x_, y_, nbrcase):
-    """Affiche la carte dans le menu des map"""
+    """
+    Affiche la carte dans le menu des map
+    
+    :param list carte: liste 2D contenant le jeu
+    :param int nb_diamand: 
+    :param int diamand: 
+    :param int taille: taille des cases
+    :param int x_: position de l'apercu de la map
+    :param int y_ position de l'apercu de la map
+    :param int nbrcase: nombre de case a afficher sur l'apercu
+    """
     esthetique.fond("black")
     for y in range(len(carte) - 1, -1, -1):  # y = ligne
         for x in range(len(carte[y]) - 1, -1, -1):  # x = colonne
@@ -797,7 +1019,15 @@ def affichageV2(carte, nbdiamand, diamand, taille, x_, y_, nbrcase):
 
 
 def menu_echap(temps, tempslumiere):
-    """ affiche un menu si jamais l'utilisateur à appuyer sur echap et renvoie un des différents choix disponible(retry, continue, sauvegarder, quitter le jeu)"""
+    """
+    affiche un menu si jamais l'utilisateur à appuyer sur echap et 
+    renvoie un des différents choix disponible
+        (retry, continue, sauvegarder, quitter le jeu)
+    
+    :param int temps: temps du jeu en debut de menu afin de le conserver
+    :param int tempslumiere: temps de lumiere restant
+    :return: code de retour, duree de la partie, temps de lumiere
+    """
     d = time()
     while True:
         esthetique.fond("black")
@@ -880,8 +1110,13 @@ def menu_echap(temps, tempslumiere):
                 return 7, temps + time() - d, tempslumiere + time() - d
 
 
-def test_meilleurscore(nommap, score, tempsrestant):
-    """test si le score de fin est l'un de ses meilleurs scores"""
+def test_meilleurscore(nommap, score):
+    """
+    test si le score de fin est l'un de ses meilleurs scores
+    
+    :param str nommap: nom de la map afin de changer son score
+    :param str score: score de la partie
+    """
     pseudo = ""
     with open("map/" + nommap, "r") as f1:
         contenu = f1.read()
@@ -889,6 +1124,7 @@ def test_meilleurscore(nommap, score, tempsrestant):
     while contenu[-1] == "":
         contenu.pop()
     ted = contenu.pop(0)
+    lumiere = contenu.pop()
     nommap = contenu.pop()
     inutile = contenu.pop()  # score de début de partie("00000000")
     score3 = contenu.pop() + "\n"
@@ -915,10 +1151,15 @@ def test_meilleurscore(nommap, score, tempsrestant):
         f1.write(score2)
         f1.write(score3)
         f1.write("00000000\n")
-        f1.write(nommap)
+        f1.write(nommap+"\n")
+        f1.write("0")
 
 
 def test_ouverture_custom_map():
+    """
+    test si louverture de la map custom est valide
+    return le nom si oui sinon return None
+    """
     nom = my_input("Custom map:", "str")
     if not os.path.isfile("map/{}.txt".format(nom)):
         my_input("La map n'existe pas", "str")
