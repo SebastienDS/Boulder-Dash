@@ -8,6 +8,6 @@ TO DO:
 		Finir ton éditeur de perso
 		X  choix du personnage
 
-		controler le nombre de diams dans l'editeur 
+		X  controler le nombre de diams dans l'editeur 
 		editeur de perso: ajouter cle + torche sur le clic
 			faire une torche et cle avec +x +y en parametre puis la decaller sur la position

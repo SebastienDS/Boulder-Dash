@@ -55,7 +55,11 @@ def save(carte):
 
     file_name = my_input("Nom de la map:", "str")
     temps = my_input("temps limite:", "int")
-    diamand = my_input("diamand requis:", "int")
+    diamand = my_input("diamant requis:", "int")
+
+    if not test_nombre_diams_requis(carte, diamand):
+        my_input("nombre de diamant\n requis trop grand", "str")
+        return
 
     if not os.path.isfile("map/{}.txt".format(file_name)):
         save_map(copy_carte, file_name, temps, diamand)
@@ -76,6 +80,16 @@ def save(carte):
             save_map(copy_carte, file_name, temps, diamand)
         else:
             my_input("Map non enregistrée", "str")
+
+
+def test_nombre_diams_requis(carte, diamant):
+    """test si la map contient suffisamment de diamant
+    >>> test_nombre_diams_requis([["D", "D", "E"], ["a", "a", "d"], "e", "f", "g"], 2)
+    True
+    >>> test_nombre_diams_requis([["D", "D", "E"], ["a", "a", "d"], "e", "f", "g"], 3)
+    False
+    """
+    return sum(map(lambda x: x.count("D"), carte)) >= diamant
 
 
 def test_1_entree_1_sortie(carte):
