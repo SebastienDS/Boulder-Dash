@@ -6,8 +6,34 @@ from pickle import dump
 from tkinter.colorchooser import askcolor
 
 
+def cree_torche(historique, points):
+    """
+    ajoute la torche dans l'historique
+    
+    :param dict historique: contient les formes du personnage deja cree
+    :param list points: contient le point placant la torche
+    """
+    historique[len(historique) + 1] = ["torche", "T", points[0][0], points[0][1], var["dimension_fenetre"]]
+
+
+def cree_cle(historique, points):
+    """
+    ajoute la cle dans l'historique
+    
+    :param dict historique: contient les formes du personnage deja cree
+    :param list points: contient le point placant la cle
+    """
+    historique[len(historique) + 1] = ["cle", "Y", points[0][0], points[0][1], var["dimension_fenetre"]]
+
+
 def cree_cercle(historique, points):
-    """ajoute le cercle dans l'historique"""
+    """
+    ajoute le cercle dans l'historique
+    
+    :param dict historique: contient les formes du personnage deja cree
+    :param list points: contient les points permettant de realisé un cercle 
+        (centre puis rayon)
+    """
     pos1, pos2 = points
     r = round(((pos2[0] - pos1[0]) ** 2 + (pos2[1] - pos1[1]) ** 2) ** 0.5, 3)
 
@@ -21,7 +47,13 @@ def cree_cercle(historique, points):
 
 
 def cree_rect(historique, points):
-    """ajoute le rectangle dans l'historique"""
+    """
+    ajoute le rectangle dans l'historique
+
+    :param dict historique: contient les formes du personnage deja cree
+    :param list points: contient les points permettant de realisé un rect
+        (point_haut_gauche puis point_bas_droite)
+    """
     pos1, pos2 = points
 
     historique[len(historique) + 1] = [
@@ -34,7 +66,13 @@ def cree_rect(historique, points):
 
 
 def cree_polygone(historique, points):
-    """ajoute le polygone dans l'historique"""
+    """
+    ajoute le polygone dans l'historique
+    
+    :param dict historique: contient les formes du personnage deja cree
+    :param list points: contient les points permettant de realisé un polygone
+        (nombre de points illimité)
+    """
     historique[len(historique) + 1] = [
         choix_nom_forme(historique),
         "P",
@@ -44,14 +82,33 @@ def cree_polygone(historique, points):
 
 
 def affiche_croix(x, y, taille):
-    """affiche une croix pour le curseur et pour les visualiser les points lors de la creation d'une forme"""
+    """
+    affiche une croix pour le curseur et pour les visualiser les points 
+    lors de la creation d'une forme
+    
+    :param int x: position x de la croix
+    :param int y: position y de la croix
+    :param int taille: taille de la croix
+    """
     upemtk.ligne(x - taille, y, x + taille, y, couleur="red")
     upemtk.ligne(x, y - taille, x, y + taille, couleur="red")
 
 
 def choix_couleur_remplissage_epaisseur(historique):
-    """recupere les valeurs de la derniere forme afin de les mettre par defaut dans l'input"""
-    if not len(historique) or not historique[len(historique)]:
+    """
+    recupere les valeurs de la derniere forme afin de les mettre 
+    par defaut dans l'input
+    
+    :param dict historique: contient les formes du personnage deja cree
+    :return: (couleur, remplissage, epaisseur)
+
+    >>> choix_couleur_remplissage_epaisseur({})
+    ('white', '', '1')
+    >>> historique = {1: ['cercle', 'C', 100, 200, 123.45, '#ff0080', '#ff0080', 1]}
+    >>> choix_couleur_remplissage_epaisseur(historique)
+    ('#ff0080', '#ff0080', '1')
+    """
+    if not len(historique) or not historique[len(historique)] or historique[len(historique)][1] in {"T", "Y"}:
         return "white", "", "1"
     return (
         historique[len(historique)][-3],
@@ -61,7 +118,11 @@ def choix_couleur_remplissage_epaisseur(historique):
 
 
 def choix_couleur(historique):
-    """demande la couleur, le remplissage ainsi que lepaisseur"""
+    """
+    demande la couleur, le remplissage ainsi que lepaisseur
+    
+    :param dict historique: contient les formes du personnage deja cree
+    """
     couleur_, remplissage_, epaisseur_ = choix_couleur_remplissage_epaisseur(historique)
 
     couleur = fonction.my_input("Couleur:", "str", couleur_)
@@ -78,12 +139,40 @@ def choix_couleur(historique):
 
 
 def choix_nom_forme(historique):
-    """demande le nom de la forme"""
+    """
+    demande le nom de la forme
+
+    :param dict historique: contient les formes du personnage deja cree
+    :return: str
+    """
     return fonction.my_input("Nom de la forme:", "str", str(len(historique) + 1))
 
 
 def redimensionner_forme(historique, multiplicateur):
-    """redimensionne les formes afin de pouvoir les ouvrir dans de differente taille"""
+    """
+    redimensionne les formes afin de pouvoir les ouvrir dans de differente taille
+    
+    
+    :param dict historique: contient les formes du personnage deja cree
+    :param int multiplicateur: permet d'agrandir ou de diminuer la taille des formes
+    
+    >>> historique = {
+    ...     1: ['cercle', 'C', 100, 200, 123.45, '#ff0080', '#ff0080', 1],
+    ...     2: ['2', 'R', 300, 350, 400, 500, 'red', '', 1],
+    ... }
+    >>> redimensionner_forme(historique, 2)
+    >>> historique
+    {1: ['cercle', 'C', 200, 400, 246.9, '#ff0080', '#ff0080', 1], \
+2: ['2', 'R', 600, 700, 800, 1000, 'red', '', 1]}
+    >>> redimensionner_forme(historique, 1/2)
+    >>> historique
+    {1: ['cercle', 'C', 100.0, 200.0, 123.45, '#ff0080', '#ff0080', 1], \
+2: ['2', 'R', 300.0, 350.0, 400.0, 500.0, 'red', '', 1]}
+    >>> redimensionner_forme(historique, 0.1)
+    >>> historique
+    {1: ['cercle', 'C', 10.0, 20.0, 12.345, '#ff0080', '#ff0080', 1], \
+2: ['2', 'R', 30.0, 35.0, 40.0, 50.0, 'red', '', 1]}
+    """
     for forme in historique:
         if historique[forme][1] in {"C", "R"}:
             for i in range(2, 2 + len(historique[forme][2:-3])):
@@ -95,12 +184,46 @@ def redimensionner_forme(historique, multiplicateur):
                     historique[forme][2][i][0] * multiplicateur,
                     historique[forme][2][i][1] * multiplicateur,
                 )
+        elif historique[forme][1] in {"T", "Y"}:
+            historique[forme][2] *= multiplicateur
+            historique[forme][3] *= multiplicateur
 
 
-forme_possible = {  # cree_forme / dessine_forme / nombre_points_mini
-    "C": (cree_cercle, upemtk.cercle, 2),
-    "R": (cree_rect, upemtk.rectangle, 2),
-    "P": (cree_polygone, upemtk.polygone, 1),
+def affiche_historique(historique, pos=None):
+    """
+    affiche l'historique dans le terminal
+
+    :param dict historique: contient les formes du personnage deja cree
+    :param int pos: cle de la forme souhaitant etre affiché
+
+    >>> historique = {
+    ...     1: ['cercle', 'C', 100, 200, 123.45, '#ff0080', '#ff0080', 1],
+    ...     2: ['2', 'R', 300, 350, 400, 500, 'red', '', 1],
+    ... }
+    >>> affiche_historique(historique)
+    <BLANKLINE>
+    <BLANKLINE>
+    ['cercle', 'C', 100, 200, 123.45, '#ff0080', '#ff0080', 1]
+    ['2', 'R', 300, 350, 400, 500, 'red', '', 1]
+    >>> affiche_historique(historique, 2)
+    ['2', 'R', 300, 350, 400, 500, 'red', '', 1]
+    >>> affiche_historique(historique, 1)
+    ['cercle', 'C', 100, 200, 123.45, '#ff0080', '#ff0080', 1]
+    """
+    if not pos:
+        print("\n")
+        for elem in historique.values():
+            print(elem)
+    else:
+        print(historique[pos])
+
+
+forme_possible = {  # cree_forme / dessine_forme / nombre_points_mini / nombre_points_maxi
+    "C": (cree_cercle, upemtk.cercle, 2, 2),
+    "R": (cree_rect, upemtk.rectangle, 2, 2),
+    "P": (cree_polygone, upemtk.polygone, 1, 999),
+    "T": (cree_torche, esthetique.torche, 1, 1),
+    "Y": (cree_cle, esthetique.cle, 1, 1)
 }
 
 
@@ -125,31 +248,36 @@ def main():
 
         if type_ev == "Touche":
             t = upemtk.touche(ev)
-            if t.upper() in forme_possible and not forme_active:
-                forme_active = t.upper()
+            t_upper = t.upper()
+
+            if t_upper in forme_possible and not forme_active and t_upper not in {"T", "Y"}:
+                forme_active = t_upper
+            elif t_upper in {"T", "Y"} and not forme_active and not any(map(lambda x: t_upper in x, historique.values())):
+                forme_active = t_upper
 
             elif t == "BackSpace":
                 if len(historique):
                     del historique[len(historique)]
+                    affiche_historique(historique)
 
             elif t == "Return":
-                print(historique)
                 nom_forme_a_suppr = fonction.my_input(
                     "nom de la forme\n    a supprimer", "str"
                 )
                 for cle, valeur in historique.items():
                     if valeur and valeur[0] == nom_forme_a_suppr:
                         historique[cle] = None
+                        affiche_historique(historique)
                         break
 
             elif t == "Escape":
                 break
 
-            elif t.lower() == "s":
+            elif t_upper == "S":
                 for i in range(1, len(historique) + 1):
                     if not historique[i]:
                         del historique[i]
-                print(historique)
+
                 redimensionner_forme(historique, 1 / var["dimension_fenetre"])
                 with open(
                     "personnage/{}".format(
@@ -158,6 +286,8 @@ def main():
                     "wb",
                 ) as f:
                     dump(historique, f)
+                return 0
+
 
         elif type_ev == "Deplacement":
             coordonnee_souris_x = upemtk.clic_x(ev)
@@ -167,7 +297,7 @@ def main():
             x, y = upemtk.clic_x(ev), upemtk.clic_y(ev)
             if (
                 forme_active != ""
-                and (len(liste_clic) < 2 or forme_active == "P")
+                and (len(liste_clic) < forme_possible[forme_active][3])
                 and (x <= zone_edit[0] and y <= zone_edit[1])
             ):
                 liste_clic.append((x, y))
@@ -182,6 +312,7 @@ def main():
             )  # cree la forme dans l'historique a partir des clics
             forme_active = ""
             del liste_clic[:]
+            affiche_historique(historique, len(historique))
 
         upemtk.efface_tout()
         upemtk.rectangle(

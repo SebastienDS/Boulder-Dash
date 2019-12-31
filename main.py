@@ -82,6 +82,7 @@ def menu(d, temps):
         5,
         "Impact",
     )
+    
     ev = donne_evenement()
     type_ev = type_evenement(ev)
     if type_ev == "ClicGauche":

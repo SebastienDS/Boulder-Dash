@@ -1707,5 +1707,155 @@ def affiche_score(L):
         )
 
 
+def cle(x, y, taille_case):
+    cercle(
+        x + taille_case // 14,
+        y + 3 * taille_case // 4 - taille_case // 8 - taille_case // 4,
+        taille_case // 15,
+        couleur="black",
+        remplissage="yellow",
+    )
+    cercle(
+        x + taille_case // 15,
+        y + 3 * taille_case // 4 - taille_case // 8 - taille_case // 4,
+        taille_case // 28,
+        couleur="black",
+        remplissage="black",
+    )
+    rectangle(
+        x + taille_case // 15,
+        y + 3 * taille_case // 4 - taille_case // 6 - taille_case // 4,
+        x + taille_case // 11,
+        y,
+        couleur="black",
+        remplissage="yellow",
+    )
+    rectangle(
+        x + taille_case // 15,
+        y,
+        x + taille_case // 8,
+        y + 2 * taille_case // 5 - taille_case // 4,
+        couleur="black",
+        remplissage="yellow",
+    )
+
+
+def torche(x, y, taille_case):
+    rectangle(
+        x + taille_case // 4 - taille_case // 12,
+        y + taille_case // 3,
+        x + taille_case // 5 + taille_case // 30,
+        y + 3 * taille_case // 4 - taille_case // 8,
+        couleur="black",
+        remplissage="sienna4",
+    )
+    cercle(
+        x + taille_case // 4 - taille_case // 20,
+        y + taille_case // 3,
+        taille_case // 9,
+        couleur="black",
+        remplissage="red",
+    )
+    rectangle(
+        x + taille_case // 4 - taille_case // 20 - taille_case // 9,
+        y + taille_case // 3,
+        x + taille_case // 4 - taille_case // 20 + taille_case // 9,
+        y + taille_case // 3 - taille_case // 9,
+        couleur="black",
+        remplissage="black",
+    )
+    polygone(
+        [
+            (
+                x + taille_case // 4 - taille_case // 20 - taille_case // 9,
+                y + taille_case // 3,
+            ),
+            (
+                x + taille_case // 4 - taille_case // 20 - taille_case // 9,
+                y + taille_case // 3 - taille_case // 9,
+            ),
+            (
+                x + taille_case // 4 - taille_case // 20 - taille_case // 18,
+                y + taille_case // 3 - taille_case // 18,
+            ),
+            (
+                x + taille_case // 4 - taille_case // 20,
+                y + taille_case // 3 - taille_case // 9,
+            ),
+            (
+                x + taille_case // 4 - taille_case // 20 + taille_case // 18,
+                y + taille_case // 3 - taille_case // 18,
+            ),
+            (
+                x + taille_case // 4 - taille_case // 20 + taille_case // 9,
+                y + taille_case // 3 - taille_case // 9,
+            ),
+            (
+                x + taille_case // 4 - taille_case // 20 + taille_case // 9,
+                y + taille_case // 3,
+            ),
+        ],
+        couleur="black",
+        remplissage="red",
+    )
+    ligne(
+        x + taille_case // 4 - taille_case // 20 - taille_case // 9 + 1,
+        y + taille_case // 3,
+        x + taille_case // 4 - taille_case // 20 + taille_case // 9 - 1,
+        y + taille_case // 3,
+        couleur="red",
+        epaisseur=1,
+    )
+    cercle(
+        x + taille_case // 4 - taille_case // 20,
+        y + taille_case // 3,
+        taille_case // 15,
+        couleur="black",
+        remplissage="orange",
+    )
+    polygone(
+        [
+            (
+                x + taille_case // 4 - taille_case // 20 - taille_case // 15,
+                y + taille_case // 3,
+            ),
+            (
+                x + taille_case // 4 - taille_case // 20 - taille_case // 15,
+                y + taille_case // 3 - taille_case // 15,
+            ),
+            (
+                x + taille_case // 4 - taille_case // 20 - taille_case // 30,
+                y + taille_case // 3 - taille_case // 30,
+            ),
+            (
+                x + taille_case // 4 - taille_case // 20,
+                y + taille_case // 3 - taille_case // 15,
+            ),
+            (
+                x + taille_case // 4 - taille_case // 20 + taille_case // 30,
+                y + taille_case // 3 - taille_case // 30,
+            ),
+            (
+                x + taille_case // 4 - taille_case // 20 + taille_case // 15,
+                y + taille_case // 3 - taille_case // 15,
+            ),
+            (
+                x + taille_case // 4 - taille_case // 20 + taille_case // 15,
+                y + taille_case // 3,
+            ),
+        ],
+        couleur="black",
+        remplissage="orange",
+    )
+    ligne(
+        x + taille_case // 4 - taille_case // 20 - taille_case // 15 + 1,
+        y + taille_case // 3,
+        x + taille_case // 4 - taille_case // 20 + taille_case // 15 - 1,
+        y + taille_case // 3,
+        couleur="orange",
+        epaisseur=1,
+    )
+
+
 if __name__ == "__main__":
     print("Programme principal: main.py")

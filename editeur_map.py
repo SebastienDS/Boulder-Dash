@@ -7,7 +7,11 @@ from copy import deepcopy
 
 
 def affiche_map(carte):
-    """affiche la map en cours de creation"""
+    """
+    affiche la map en cours de creation
+    
+    :param list carte: liste 2D contenant le jeu
+    """
     esthetique.fond("white")
     upemtk.rectangle(
         0,
@@ -22,13 +26,24 @@ def affiche_map(carte):
 
 
 def affiche_tools(tools):
-    """affiche la barre d'outil dans le bandeau en bas"""
+    """
+    affiche la barre d'outil dans le bandeau en bas
+
+    :param list tools: elements disponible a afficher dans la barre d'outil
+    """
     for i, elem in enumerate(tools):
         dico[elem](i, 6, var["bandeau"], 0, 0, "goldenrod3")
 
 
 def save_map(carte, file_name, temps, diamand):
-    """sauvegarde la map cree avec le bon format 
+    """
+    sauvegarde la map cree avec le bon format 
+
+    :param list carte: liste 2D contenant le jeu 
+    :param str file_name: nom de la map a sauvegarder
+    :param int temps: temps limite pour finir la map
+    :param int diamand: nombre de diamant requis avant de pouvoir finir
+
     >>> carte = [
     ...     ["W", "W", "W", "W"], 
     ...     ["W", "R", "E", "W"], 
@@ -63,7 +78,11 @@ def save_map(carte, file_name, temps, diamand):
 
 
 def save(carte):
-    """test si la map peut etre cree"""
+    """
+    test si la map peut etre cree
+    
+    :param list carte: liste 2D contenant le jeu 
+    """
     res = test_1_entree_1_sortie(carte)
     if res:
         my_input(res, "str")
@@ -106,7 +125,13 @@ def save(carte):
 
 
 def test_nombre_diams_requis(carte, diamant):
-    """test si la map contient suffisamment de diamant
+    """
+    test si la map contient suffisamment de diamant
+
+    :param list carte: liste 2D contenant le jeu 
+    :param int diamant: nombre de diamant requis saisie par lutilisateur
+    :return: bool
+
     >>> test_nombre_diams_requis([["D", "D", "E"], ["a", "a", "d"], "e", "f", "g"], 2)
     True
     >>> test_nombre_diams_requis([["D", "D", "E"], ["a", "a", "d"], "e", "f", "g"], 1)
@@ -118,7 +143,12 @@ def test_nombre_diams_requis(carte, diamant):
 
 
 def test_1_entree_1_sortie(carte):
-    """test si la map contient bien 1 unique entree et sortie
+    """
+    test si la map contient bien 1 unique entree et sortie
+
+    :param list carte: liste 2D contenant le jeu 
+    :return: None si la condition est verifié sinon le message d'erreur a afficher
+
     >>> carte = [
     ...     ["W", "W", "W", "W"], 
     ...     ["W", "R", "E", "W"], 
@@ -170,7 +200,12 @@ def test_1_entree_1_sortie(carte):
 
 
 def test_mur_autour(carte):
-    """test si la map est entouree de mur
+    """
+    test si la map est entouree de mur
+
+    :param list carte: liste 2D contenant le jeu 
+    :return: bool
+
     >>> test_mur_autour([
     ...     ["W", "W", "W", "W"], 
     ...     ["W", "R", "E", "W"], 
@@ -201,7 +236,11 @@ def test_mur_autour(carte):
 
 
 def ajout_mur_autour(carte):
-    """ajoute une ligne de mur autour de la carte
+    """
+    ajoute une ligne de mur autour de la carte
+
+    :param list carte: liste 2D contenant le jeu 
+    
     >>> ajout_mur_autour([
     ...     ["W", ".", "W", "W"], 
     ...     ["W", "R", "E", "W"], 

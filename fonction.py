@@ -30,6 +30,15 @@ def creer_map(nomdufichier):
 
     :param str nomdufichier: nom de la map a lire
     :return: donnees extraites du fichier
+
+    >>> var = creer_map("test.txt")
+    >>> t = time()
+    >>> t - 0.0001 < var[-1] < t + 0.0001     
+    True
+    >>> var[:-1]        
+    ([['W', 'W', 'W', 'W'], ['W', 'R', 'E', 'W'], ['W', 'D', '.', 'W'], ['W', 'W', 'W', 'W']], \
+'100', '1', 'personne = 00000000', 'personne = 00000000', 'personne = 00000000', \
+'00000000', 'test.txt')
     """
     with open(
         "map/" + nomdufichier, "r"
@@ -147,9 +156,23 @@ def affichage(carte, nbdiamand, diamand, tempslumiere):
                                     copy_elem[2][i][0] + var["dimension_fenetre"] // 2,
                                     copy_elem[2][i][1] + var["dimension_fenetre"] // 2,
                                 )
-                        editeur_personnage.forme_possible[copy_elem[1]][1](
-                            *copy_elem[2:]
-                        )
+                        elif copy_elem[1] in {"T", "Y"}:
+                            copy_elem[2] += var["dimension_fenetre"] // 2
+                            copy_elem[3] += var["dimension_fenetre"] // 2
+
+                        if copy_elem[1] not in {"T", "Y"}:
+                            editeur_personnage.forme_possible[copy_elem[1]][1](
+                                *copy_elem[2:]
+                            )
+                        elif copy_elem[1] == "T":
+                            editeur_personnage.forme_possible[copy_elem[1]][1](
+                                *copy_elem[2:-1], var["taille_case"]
+                            )
+                        elif copy_elem[1] == "Y" and nbdiamand >= diamand and var["porte"] == 1:
+                            editeur_personnage.forme_possible[copy_elem[1]][1](
+                                *copy_elem[2:-1], var["taille_case"]
+                            )
+
             else:
                 dico[carte[y][x]](
                     x + (var["nb_cases"] // 2 - var["pos_x"]),
