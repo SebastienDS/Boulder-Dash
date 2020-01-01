@@ -13,7 +13,13 @@ def cree_torche(historique, points):
     :param dict historique: contient les formes du personnage deja cree
     :param list points: contient le point placant la torche
     """
-    historique[len(historique) + 1] = ["torche", "T", points[0][0], points[0][1], var["dimension_fenetre"]]
+    historique[len(historique) + 1] = [
+        "torche",
+        "T",
+        points[0][0],
+        points[0][1],
+        var["dimension_fenetre"],
+    ]
 
 
 def cree_cle(historique, points):
@@ -23,7 +29,13 @@ def cree_cle(historique, points):
     :param dict historique: contient les formes du personnage deja cree
     :param list points: contient le point placant la cle
     """
-    historique[len(historique) + 1] = ["cle", "Y", points[0][0], points[0][1], var["dimension_fenetre"]]
+    historique[len(historique) + 1] = [
+        "cle",
+        "Y",
+        points[0][0],
+        points[0][1],
+        var["dimension_fenetre"],
+    ]
 
 
 def cree_cercle(historique, points):
@@ -108,7 +120,11 @@ def choix_couleur_remplissage_epaisseur(historique):
     >>> choix_couleur_remplissage_epaisseur(historique)
     ('#ff0080', '#ff0080', '1')
     """
-    if not len(historique) or not historique[len(historique)] or historique[len(historique)][1] in {"T", "Y"}:
+    if (
+        not len(historique)
+        or not historique[len(historique)]
+        or historique[len(historique)][1] in {"T", "Y"}
+    ):
         return "white", "", "1"
     return (
         historique[len(historique)][-3],
@@ -209,6 +225,9 @@ def affiche_historique(historique, pos=None):
     ['2', 'R', 300, 350, 400, 500, 'red', '', 1]
     >>> affiche_historique(historique, 1)
     ['cercle', 'C', 100, 200, 123.45, '#ff0080', '#ff0080', 1]
+    >>> affiche_historique({})
+    <BLANKLINE>
+    <BLANKLINE>
     """
     if not pos:
         print("\n")
@@ -218,12 +237,81 @@ def affiche_historique(historique, pos=None):
         print(historique[pos])
 
 
+def verif_1_cle_1_torche(historique):
+    """
+    verifie <ue le personnage contient bien 1 cle et 1 torche
+
+    :param dict historique: contient les formes du personnage deja cree
+    :return: None si la condition est verifié sinon le message d'erreur a afficher
+
+    >>> historique = {
+    ...     1: ['cercle', 'C', 100, 200, 120, '#ff0080', '#ff0080', 1],
+    ...     2: ['2', 'R', 300, 350, 400, 500, 'red', '', 1],
+    ... }
+    >>> print(verif_1_cle_1_torche(historique))
+       nombre de cle
+              et de
+        torche incorrect
+    >>> historique = {
+    ...     1: ['cle', 'Y', 200, 200, 600],
+    ...     2: ['2', 'R', 300, 350, 400, 500, 'red', '', 1],
+    ... }
+    >>> print(verif_1_cle_1_torche(historique))
+    nombre de torche
+           incorrect
+    >>> historique = {
+    ...     1: ['torche', 'T', 300, 200, 600],
+    ...     2: ['2', 'R', 300, 350, 400, 500, 'red', '', 1],
+    ... }
+    >>> print(verif_1_cle_1_torche(historique))
+    nombre de cle
+        incorrect
+    >>> historique = {
+    ...     1: ['torche', 'T', 300, 200, 600],
+    ...     2: ['cle', 'Y', 200, 200, 600],
+    ... }
+    >>> print(verif_1_cle_1_torche(historique))
+    None
+    """
+    cle = 0
+    torche = 0
+    for elem in historique.values():
+        if elem[1] == "T":
+            torche += 1
+        elif elem[1] == "Y":
+            cle += 1
+
+    if cle != 1 and torche != 1:
+        return "   nombre de cle\n          et de\n    torche incorrect"
+    elif cle != 1:
+        return "nombre de cle\n    incorrect"
+    elif torche != 1:
+        return "nombre de torche\n       incorrect"
+
+
+def sauvegarde_historique(historique):
+    """
+    sauvegarde l'historique dans un fichier
+
+    :param dict historique: contient les formes du personnage deja cree
+    """
+    for i in range(1, len(historique) + 1):
+        if not historique[i]:
+            del historique[i]
+
+    redimensionner_forme(historique, 1 / var["dimension_fenetre"])
+    with open(
+        "personnage/{}".format(fonction.my_input("Nom du personnage: ", "str")), "wb",
+    ) as f:
+        dump(historique, f)
+
+
 forme_possible = {  # cree_forme / dessine_forme / nombre_points_mini / nombre_points_maxi
     "C": (cree_cercle, upemtk.cercle, 2, 2),
     "R": (cree_rect, upemtk.rectangle, 2, 2),
     "P": (cree_polygone, upemtk.polygone, 1, 999),
     "T": (cree_torche, esthetique.torche, 1, 1),
-    "Y": (cree_cle, esthetique.cle, 1, 1)
+    "Y": (cree_cle, esthetique.cle, 1, 1),
 }
 
 
@@ -239,6 +327,18 @@ def main():
     liste_clic = []
     forme_active = ""
 
+    boutons = {
+        "C": ("cercle", 50, 655, "green", "black", 20, 1, 2, "Impact"),
+        "R": ("rectangle", 75, 610, "green", "black", 20, 1, 2, "Impact"),
+        "P": ("polygone", 152, 655, "green", "black", 20, 1, 2, "Impact"),
+        "Y": ("cle", 160, 610, "#ff0080", "black", 20, 1, 2, "Impact"),
+        "T": ("torche", 257, 655, "#ff0080", "black", 20, 1, 2, "Impact"),
+        "suppr (backspace)": ("supprimer (dernier)", 302, 610, "red", "black", 20, 1, 2, "Impact"),
+        "suppr (enter)": ("supprimer (nom)", 402, 655, "red", "black", 20, 1, 2, "Impact"),
+        "sauvegarder": ("sauvegarder", 500, 610, "black", "black", 20, 1, 2, "Impact"),
+        "quitter": ("quitter", 548, 655, "black", "black", 20, 1, 2, "Impact"),
+    }
+
     while True:
         ev = upemtk.donne_evenement()
         type_ev = upemtk.type_evenement(ev)
@@ -250,9 +350,17 @@ def main():
             t = upemtk.touche(ev)
             t_upper = t.upper()
 
-            if t_upper in forme_possible and not forme_active and t_upper not in {"T", "Y"}:
+            if (
+                t_upper in forme_possible
+                and not forme_active
+                and t_upper not in {"T", "Y"}
+            ):
                 forme_active = t_upper
-            elif t_upper in {"T", "Y"} and not forme_active and not any(map(lambda x: t_upper in x, historique.values())):
+            elif (
+                t_upper in {"T", "Y"}
+                and not forme_active
+                and not any(map(lambda x: t_upper in x, historique.values()))
+            ):
                 forme_active = t_upper
 
             elif t == "BackSpace":
@@ -271,23 +379,15 @@ def main():
                         break
 
             elif t == "Escape":
-                break
-
-            elif t_upper == "S":
-                for i in range(1, len(historique) + 1):
-                    if not historique[i]:
-                        del historique[i]
-
-                redimensionner_forme(historique, 1 / var["dimension_fenetre"])
-                with open(
-                    "personnage/{}".format(
-                        fonction.my_input("Nom du personnage: ", "str")
-                    ),
-                    "wb",
-                ) as f:
-                    dump(historique, f)
                 return 0
 
+            elif t_upper == "S":
+                res = verif_1_cle_1_torche(historique)
+                if res:
+                    fonction.my_input(res, "str")
+                else:
+                    sauvegarde_historique(historique)
+                    return 0
 
         elif type_ev == "Deplacement":
             coordonnee_souris_x = upemtk.clic_x(ev)
@@ -346,9 +446,52 @@ def main():
             remplissage="white",
         )
 
+        for cle, elem in boutons.items():
+
+            pos = fonction.encadrement(*boutons[cle])
+            if type_ev == "ClicGauche" and fonction.test_clic(
+                (coordonnee_souris_x, coordonnee_souris_y), pos
+            ):
+                if cle in forme_possible and cle not in {"T", "Y"}:
+                    del liste_clic[:]
+                    forme_active = cle
+                elif cle in forme_possible and not any(
+                    map(lambda x: cle in x, historique.values())
+                ):
+                    del liste_clic[:]
+                    forme_active = cle
+
+                elif cle == "sauvegarder":
+                    res = verif_1_cle_1_torche(historique)
+                    if res:
+                        fonction.my_input(res, "str")
+                    else:
+                        sauvegarde_historique(historique)
+                    return 0
+                elif cle == "quitter":
+                    return 0
+
+                elif cle == "suppr (backspace)":
+                    if len(historique):
+                        del historique[len(historique)]
+                    affiche_historique(historique)
+                elif cle == "suppr (enter)":
+                    nom_forme_a_suppr = fonction.my_input(
+                        "nom de la forme\n    a supprimer", "str"
+                    )
+                    for cle, valeur in historique.items():
+                        if valeur and valeur[0] == nom_forme_a_suppr:
+                            historique[cle] = None
+                            affiche_historique(historique)
+                            break
+
         # affiche la croix sur le curseur pour plus de precision du clic
         affiche_croix(coordonnee_souris_x, coordonnee_souris_y, 20)
         upemtk.mise_a_jour()
+
+        # fait de la place dans les evenements car le surplus d'evenemement est tres present et casse tout
+        if len(upemtk.__canevas.eventQueue) > 10:
+            del upemtk.__canevas.eventQueue[:-10]
 
     return 0
 

@@ -33,7 +33,7 @@ def creer_map(nomdufichier):
 
     >>> var = creer_map("test.txt")
     >>> t = time()
-    >>> t - 0.0001 < var[-1] < t + 0.0001     
+    >>> t - 0.001 < var[-1] < t + 0.001     
     True
     >>> var[:-1]        
     ([['W', 'W', 'W', 'W'], ['W', 'R', 'E', 'W'], ['W', 'D', '.', 'W'], ['W', 'W', 'W', 'W']], \
@@ -65,7 +65,17 @@ def creer_map(nomdufichier):
             contenu[i] = list(
                 contenu[i]
             )  # transforme la chaine de caractère en une list('abc'=['a','b','c'])
-    return contenu, t, d, score1, score2, score3, score4, nommap, time() - int(float(tempslumiere))
+    return (
+        contenu,
+        t,
+        d,
+        score1,
+        score2,
+        score3,
+        score4,
+        nommap,
+        time() - int(float(tempslumiere)),
+    )
 
 
 def save_map_en_cours(
@@ -76,7 +86,7 @@ def save_map_en_cours(
     nommap,
     tempslumiere,
     nom_sauvegarde="map_sauvegarde",
-    aleatoire=False
+    aleatoire=False,
 ):
     """
     sauvegarde la map
@@ -168,7 +178,11 @@ def affichage(carte, nbdiamand, diamand, tempslumiere):
                             editeur_personnage.forme_possible[copy_elem[1]][1](
                                 *copy_elem[2:-1], var["taille_case"]
                             )
-                        elif copy_elem[1] == "Y" and nbdiamand >= diamand and var["porte"] == 1:
+                        elif (
+                            copy_elem[1] == "Y"
+                            and nbdiamand >= diamand
+                            and var["porte"] == 1
+                        ):
                             editeur_personnage.forme_possible[copy_elem[1]][1](
                                 *copy_elem[2:-1], var["taille_case"]
                             )
@@ -691,6 +705,7 @@ def encadrement(
     :param int Taille: taille du msg
     :param int Epaisseur: epaisseur du trait de lencadrement
     :param int Espacement: epaissement entre le msg et l'encadrement
+    :param str polise: police du texte
     :return: [x_point_haut_gauche, y_point_haut_gauche, x_point_bas_droit, y_point_bas_droit]
     """
     upemtk.texte(10000000, y, msg, couleur=couleurTXT, police=polise, taille=Taille)
@@ -1174,7 +1189,7 @@ def test_meilleurscore(nommap, score):
         f1.write(score2)
         f1.write(score3)
         f1.write("00000000\n")
-        f1.write(nommap+"\n")
+        f1.write(nommap + "\n")
         f1.write("0")
 
 

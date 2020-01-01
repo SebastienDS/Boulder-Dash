@@ -1,11 +1,10 @@
 TO DO:
 	IMPORTANT:
 		-README.txt
-		-DOCSTRING +  commenter
+		-DOCSTRING + commenter
 
 		/ Mettre des bouton retour partout  EDITEUR PERSO MANQUANT
 		NON  Faire un donne événement dans les menu de victoire pour fermer la fenetre avec la croix
-		Finir éditeur de perso
 		X  choix du personnage
 
 		X  controler le nombre de diams dans l'editeur 
@@ -14,11 +13,24 @@ TO DO:
 
 
 
-		editeur de perso: ajouter cle + torche sur le clic
+		/ editeur de perso: ajouter cle + torche sur le clic
 			X faire une torche et cle avec +x +y en parametre puis la decaller sur la position
-			refaire esthetique torche et cle
+			
+				   
 
-			verifier 1 cle 1 torche pour pouvoir sauvegarder
+			X  verifier 1 cle 1 torche pour pouvoir sauvegarder
+
+			X boutons:
+				cercle
+				rectangle
+				polygone
+				cle
+				torche
+				suppr (backspace)
+				suppr (enter)
+				sauvegarder
+				quitter
+
 
 
 		DOCTEST A FAIRE:
@@ -27,6 +39,9 @@ TO DO:
 				creation_map_aleatoire
 				timer
 
+				vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+		>>>>>> refaire esthetique torche et cle <<<<<<
+				^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 
