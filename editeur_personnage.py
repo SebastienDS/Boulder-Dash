@@ -489,9 +489,9 @@ def main():
         affiche_croix(coordonnee_souris_x, coordonnee_souris_y, 20)
         upemtk.mise_a_jour()
 
-        # fait de la place dans les evenements car le surplus d'evenemement est tres present et casse tout
-        if len(upemtk.__canevas.eventQueue) > 10:
-            del upemtk.__canevas.eventQueue[:-10]
+        # fait de la place dans les evenements car le surplus d'evenemement est très présent et casse tout
+        # la lignes peut etre supprimé afin de bien apprécier le spectacle puis venir la remettre dans les secondes qui suivent ;)
+        del upemtk.__canevas.eventQueue[:-5]
 
     return 0
 
