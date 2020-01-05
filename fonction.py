@@ -1205,5 +1205,73 @@ def test_ouverture_custom_map():
     return nom + ".txt"
 
 
+def recup_pos_diamant_requis(carte, diamand):
+    """
+    recherche des positions vers les diamants
+    """
+    list_pos_diams = []
+    for j in range(len(carte)):
+        for i in range(len(carte[0])):
+            if carte[j][i] == "D":
+                list_pos_diams.append((i, j))     
+    return list_pos_diams[:diamand]
+
+
+direction = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+def recherche_parcours_vers_position(carte, depart, fin):
+    M = [[None for _ in range(len(carte[0]))] for _ in range(len(carte))]
+    return False
+
+
+def recherche_rec(M, depart, fin, d_ou_je_viens):
+    """
+    stocke au fur et a mesure les coordonnees d_ou_je_viens dans M 
+    afin de pouvoir revenir sur ces pas
+    
+    :param tuple depart: coordonnee actuel
+    :param tuple fin: coordonnee d'arrivee
+    :param tuple d_ou_je_viens: coordonnee d'ou je viens
+    """
+    x, y = depart
+    if M[y][x]:
+        return 
+    M[y][x] = d_ou_je_viens
+
+    if (x, y) == fin:
+        # AJOUTER LE CHEMIN DE RETOUR DANS VAR
+        return True
+    for pos in direction:
+        # va dans chaque direction et recursivement 
+
+        # test si la pos suivante est possible
+
+
+
+
+
+
+
+def recherche_parcours(carte, diamand):
+    """
+    recherche le parcours vers la sortie en passant par des diamants
+    """
+    pos_diamants = recup_pos_diamant_requis(carte, diamand)
+    print(pos_diamants, var["pos_x"], var["pos_y"], var["pos_sortie_x"], var["pos_sortie_y"])
+
+    trouve = recherche_parcours_vers_position(carte, (var["pos_x"], var["pos_y"]), pos_diamants[0])
+    if not trouve:
+        return False
+    for i in range(1, len(pos_diamants) - 1):
+        trouve = recherche_parcours_vers_position(carte, pos_diamants[i], pos_diamants[i + 1])
+        if not trouve:
+            return False
+    trouve = recherche_parcours_vers_position(carte, pos_diamants[i + 1], (var["pos_sortie_x"], var["pos_sortie_y"]))
+    if not trouve:
+        return False
+    
+
+
+
+
 if __name__ == "__main__":
     print("Programme principal: main.py")

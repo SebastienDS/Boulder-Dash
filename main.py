@@ -218,10 +218,13 @@ def main(cartes):
         nommap,
         tempslumiere,
     ) = fonction.creer_map(cartes)
-
+    
     diamand = int(diamand)
     fonction.initialiser_partie(carte)
-    temps_pierre = time()
+
+    trouve = fonction.recherche_parcours(carte, diamand)
+    if trouve:
+        print("CHEMIN TROUVE")
 
     if var["personnage"]:
         with open("personnage/{}".format(var["personnage"]), "rb") as f:
@@ -230,6 +233,7 @@ def main(cartes):
                 var["forme_personnage"], var["taille_case"]
             )
 
+    temps_pierre = time()
     while True:
         efface_tout()
         if time() - temps_pierre > 0.3:  # fait tomber pierre toute les ~ 0.3 sec
