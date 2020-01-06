@@ -1284,26 +1284,32 @@ def recup_solution(M, debut, fin):
 	return chemin[::-1]
 
 
-def recherche_parcours(carte, diamand):
+def recherche_parcours(carte, diamant):
 	"""
 	recherche le parcours vers la sortie en passant par des diamants
 	"""
 	var["chemin"] = []
-	pos_diamants = recup_pos_diamant_requis(carte, diamand)
-	trouve = recherche_parcours_vers_position(carte, (var["pos_x"], var["pos_y"]), pos_diamants[0])
-	if not trouve:
-		return False
-	for i in range(len(pos_diamants) - 1):
-		trouve = recherche_parcours_vers_position(carte, pos_diamants[i], pos_diamants[i + 1])
+	pos_diamants = recup_pos_diamant_requis(carte, diamant)
+	print(len(pos_diamants))
+	if pos_diamants:
+		trouve = recherche_parcours_vers_position(carte, (var["pos_x"], var["pos_y"]), pos_diamants[0])
 		if not trouve:
 			return False
-	trouve = recherche_parcours_vers_position(carte, pos_diamants[-1], (var["pos_sortie_x"], var["pos_sortie_y"]))
-	if not trouve:
-		return False
+		for i in range(len(pos_diamants) - 1):
+			trouve = recherche_parcours_vers_position(carte, pos_diamants[i], pos_diamants[i + 1])
+			if not trouve:
+				return False
+		trouve = recherche_parcours_vers_position(carte, pos_diamants[-1], (var["pos_sortie_x"], var["pos_sortie_y"]))
+		if not trouve:
+			return False
+	else:
+		trouve = recherche_parcours_vers_position(carte, (var["pos_x"], var["pos_y"]), (var["pos_sortie_x"], var["pos_sortie_y"]))
+		if not trouve:
+			return False
 	return True
 	
 
-def pathfinding(carte, nbdiamand, tempstotal, score, tempslumiere, position_suivante):
+def pathfinding(carte, nbdiamand, diamand, tempstotal, score, tempslumiere, position_suivante):
 	"""
 	Perso joue aléatoirement
 	
@@ -1341,7 +1347,10 @@ def pathfinding(carte, nbdiamand, tempstotal, score, tempslumiere, position_suiv
 	elif test_deplacement(carte, x, {"G", "."}):
 		deplace(carte, x)
 		return nbdiamand, tempstotal, score, tempslumiere
-	elif test_deplacement(carte, x, "E") and var["porte"] == 0:
+	if (
+		nbdiamand >= diamand
+		and test_deplacement(carte, x, "E")
+	):
 		deplace(carte, x)
 		return nbdiamand, tempstotal, score, tempslumiere
 	elif (

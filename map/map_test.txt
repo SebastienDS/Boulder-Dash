@@ -8,9 +8,9 @@ WWW...W.W
 W..WWW..W
 WD..D...W
 WWWWWWWWW
+pseudo  =  00024050
 pseudo  =  00023850
-Poil  =  00023550
-Kirby  =  00023450
+pseudo  =  00000000
 00000000
 map_test.txt
 0
