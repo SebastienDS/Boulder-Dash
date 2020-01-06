@@ -44,5 +44,10 @@ TO DO:
 				^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
+	pathfinding du pauvre
+
+	tester la map avant de pouvoir sauvegarder
+
+
 
 	NE JAMAIS SUPPRIMER / MODIFIER LE FICHIER TEST.TXT

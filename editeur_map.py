@@ -335,9 +335,10 @@ def main():
                 break
 
         elif type_ev == "ClicDroit":
-            carte[upemtk.clic_y(ev) // var["taille_case"]][
-                upemtk.clic_x(ev) // var["taille_case"]
-            ] = "."
+            if upemtk.clic_y(ev) // var["taille_case"] < len(carte):
+                carte[upemtk.clic_y(ev) // var["taille_case"]][
+                    upemtk.clic_x(ev) // var["taille_case"]
+                ] = "."
 
     return 0
 

@@ -1,12 +1,12 @@
-150s 1d
+150s 4d
 WWWWWWWWW
-WRDE....W
-W.G.....W
+WRD.....W
+W.G..D..W
 W.......W
-W.......W
+W..D..E.W
 W.G...G.W
 W..GGG..W
-W.......W
+W...D...W
 WWWWWWWWW
 personne = 00000000
 personne = 00000000
