@@ -5,6 +5,7 @@ var = {
     "debug": "d",
     "porte": 1,
     "lumiere": False,
+    "pathfinding": False,
     "personnage": None,  # mettre None ou False pour avoir kirby
 }
 

@@ -222,9 +222,6 @@ def main(cartes):
     diamand = int(diamand)
     fonction.initialiser_partie(carte)
 
-    trouve = fonction.recherche_parcours(carte, diamand)
-    if trouve:
-        print("CHEMIN TROUVE")
 
     if var["personnage"]:
         with open("personnage/{}".format(var["personnage"]), "rb") as f:
@@ -281,9 +278,21 @@ def main(cartes):
                     return 9, nommap
             elif t == "d":
                 debug *= -1
+            elif t == "p":
+                trouve = fonction.recherche_parcours(carte, diamand)
+                if trouve:
+                    print("CHEMIN TROUVE")
+                    var["pathfinding"] = True
+                else:
+                    print("PAS DE CHEMIN")
+                    var["pathfinding"] = False
         if debug == 1:
             nbdiamand, debug, tempstotal, score, tempslumiere = fonction.debug(
                 carte, nbdiamand, debug, tempstotal, score, tempslumiere
+            )
+        elif var["pathfinding"] and len(var["chemin"]):
+            nbdiamand, tempstotal, score, tempslumiere = fonction.pathfinding(
+                carte, nbdiamand, tempstotal, score, tempslumiere, var["chemin"].pop(0)
             )
         else:
             nbdiamand, tempstotal, score, tempslumiere = fonction.deplacer_perso(

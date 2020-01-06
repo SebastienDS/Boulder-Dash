@@ -1,16 +1,16 @@
-150s 4d
+150s 7d
 WWWWWWWWW
-WRD.....W
-W.G..D..W
+WRD....DW
+W.W..D.WW
 W.......W
-W..D..E.W
-W.G...G.W
-W..GGG..W
-W...D...W
+WD.D..E.W
+WWW...W.W
+W..WWW..W
+WD..D...W
 WWWWWWWWW
-personne = 00000000
-personne = 00000000
-personne = 00000000
+pseudo  =  00023850
+pseudo  =  00022750
+pseudo  =  00020100
 00000000
 map_test.txt
 0
