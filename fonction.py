@@ -872,7 +872,7 @@ def creation_map_aleatoire(x=40, y=22):
 
 	for j in range(1, y - 1):
 		for i in range(1, x - 1):
-			nb_random = randint(0, 1025)
+			nb_random = randint(0, 1075)
 			if nb_random < 650:
 				carte[j][i] = "G"
 			elif nb_random < 750:
@@ -882,7 +882,7 @@ def creation_map_aleatoire(x=40, y=22):
 			elif nb_random < 900:
 				carte[j][i] = "D"
 				nb_diam += 1
-			elif nb_random <= 925:
+			elif nb_random <= 975:
 				carte[j][i] = "L"
 
 	coord_entree = (randint(1, x - 2), randint(1, y - 2))
@@ -1044,6 +1044,20 @@ def affichageV2(carte, nbdiamand, diamand, taille, x_, y_, nbrcase):
 		y_ * taille + nbrcase * taille + 2 * taille,
 		var["dimension_fenetre"],
 		var["dimension_fenetre"] + 100,
+		remplissage="black",
+	)
+	upemtk.rectangle(
+		x_ * taille,
+		y_ * taille,
+		x_ * taille + 2 * taille,
+		var["dimension_fenetre"] + 100,
+		remplissage="black",
+	)
+	upemtk.rectangle(
+		x_ * taille,
+		y_ * taille,
+		var["dimension_fenetre"],
+		y_ * taille + 3 * taille,
 		remplissage="black",
 	)
 	upemtk.rectangle(

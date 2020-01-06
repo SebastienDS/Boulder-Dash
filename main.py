@@ -104,28 +104,16 @@ def menu(d, temps):
 def menu_map(d):
     numcarte = 0
     choisis_carte = 0
-
+    nombre_total = len(os.listdir('map'))
+    liste_map = os.listdir('map')
+    print(liste_map)
     while choisis_carte == 0:
         efface_tout()
-        if numcarte == 4:
+        if numcarte == nombre_total:
             esthetique.fond("black")
             esthetique.point_dinterogation()
-        elif numcarte == 5:
-            esthetique.fond("black")
-            fonction.encadrement(
-                "Map perso",
-                var["dimension_fenetre"] // 2,
-                var["dimension_fenetre"] * 2 / 5,
-                "white",
-                "white",
-                60,
-                10,
-                20,
-                "Calibri",
-            )
-
         else:
-            cartes = "default/map" + "{}".format(numcarte) + ".txt"
+            cartes = liste_map[numcarte]
             (
                 cartes1,
                 inutile,
@@ -172,17 +160,13 @@ def menu_map(d):
             coords = [clic_x(ev), clic_y(ev)]
             if fonction.test_suivant_menu(coords, suivant_menu):
                 numcarte += 1
-                numcarte = numcarte % 6
+                numcarte = numcarte % (nombre_total + 1)
             if fonction.test_precedent(coords, precedent):
                 numcarte -= 1
-                numcarte = numcarte % 6
+                numcarte = numcarte % (nombre_total + 1)
             if fonction.test_clic(coords, choix):
-                if numcarte == 4:
+                if numcarte == nombre_total:
                     return 6
-                elif numcarte == 5:
-                    nom = fonction.test_ouverture_custom_map()
-                    if nom:
-                        return nom
                 else:
                     return cartes
             if fonction.test_clic(coords, retour):

@@ -1,9 +1,9 @@
-176s 99d
+172s 99d
 WWWWWWW
 W.....W
 F.....W
-W.R...W
 W.....W
+WR....W
 WE....W
 WWWWWWW
 personne = 00000000
@@ -11,4 +11,4 @@ personne = 00000000
 personne = 00000000
 00000000
 portos.txt
--201.59391617774963
+-196.79957365989685

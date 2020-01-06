@@ -11,5 +11,5 @@ pseudoYEAH         = 00017300
 pseudo  =  00017300
 pseudo  =  00017200
 00000000
-default/map1.txt
+map1.txt
 0
