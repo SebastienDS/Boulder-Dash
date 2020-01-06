@@ -1219,7 +1219,7 @@ def recup_pos_diamant_requis(carte, diamand):
 
 direction = [(1, 0), (0, 1), (-1, 0), (0, -1)]
 def recherche_parcours_vers_position(carte, depart, fin):
-    M = [[None for _ in range(len(carte[0]))] for _ in range(len(carte))]
+    M = [[None if carte[j][i] in {".", "G", "L", "D"} else "NON" for i in range(len(carte[0]))] for j in range(len(carte))]
     return False
 
 
@@ -1244,6 +1244,7 @@ def recherche_rec(M, depart, fin, d_ou_je_viens):
         # va dans chaque direction et recursivement 
 
         # test si la pos suivante est possible
+        pass
 
 
 
