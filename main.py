@@ -112,6 +112,18 @@ def menu_map(d):
         if numcarte == nombre_total:
             esthetique.fond("black")
             esthetique.point_dinterogation()
+        elif numcarte == nombre_total + 1:
+            esthetique.fond("black")
+            fonction.encadrement(
+                "RECHERCHE", 
+                var["dimension_fenetre"] // 2,
+                var["dimension_fenetre"] // 2,
+                "White",
+                "White",
+                48,
+                5,
+                5,
+                "Impact",)
         else:
             cartes = liste_map[numcarte]
             (
@@ -160,13 +172,17 @@ def menu_map(d):
             coords = [clic_x(ev), clic_y(ev)]
             if fonction.test_suivant_menu(coords, suivant_menu):
                 numcarte += 1
-                numcarte = numcarte % (nombre_total + 1)
+                numcarte = numcarte % (nombre_total + 2)
             if fonction.test_precedent(coords, precedent):
                 numcarte -= 1
-                numcarte = numcarte % (nombre_total + 1)
+                numcarte = numcarte % (nombre_total + 2)
             if fonction.test_clic(coords, choix):
                 if numcarte == nombre_total:
                     return 6
+                elif numcarte == nombre_total + 1:
+                    nom = fonction.test_ouverture_custom_map()
+                    if nom:
+                        return nom
                 else:
                     return cartes
             if fonction.test_clic(coords, retour):
@@ -184,13 +200,6 @@ def main(cartes):
     if cartes == 6:
         fonction.creation_map_aleatoire()
         cartes = "map_aleatoire.txt"
-    elif cartes == 7:
-        nom = fonction.test_ouverture_custom_map()
-        if not nom:
-            cartes = "map_aleatoire.txt"
-        else:
-            cartes = nom
-
     (
         carte,
         tempstotal,
