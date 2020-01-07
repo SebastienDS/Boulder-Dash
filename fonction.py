@@ -633,6 +633,9 @@ def initialiser_partie(carte):
 				var["pos_sortie_y"] = y
 	var["porte"] = 1
 	var["taille_case"] = var["dimension_fenetre"] // var["nb_cases"]
+	if "chemin" in var:
+		del var["chemin"]
+	var["pathfinding"] = False
 
 
 def debug(carte, nbdiamand, debug, tempstotal, score, tempslumiere):
@@ -1290,7 +1293,6 @@ def recherche_parcours(carte, diamant):
 	"""
 	var["chemin"] = []
 	pos_diamants = recup_pos_diamant_requis(carte, diamant)
-	print(len(pos_diamants))
 	if pos_diamants:
 		trouve = recherche_parcours_vers_position(carte, (var["pos_x"], var["pos_y"]), pos_diamants[0])
 		if not trouve:
@@ -1306,22 +1308,12 @@ def recherche_parcours(carte, diamant):
 		trouve = recherche_parcours_vers_position(carte, (var["pos_x"], var["pos_y"]), (var["pos_sortie_x"], var["pos_sortie_y"]))
 		if not trouve:
 			return False
+	if "chemin_trouve" in var:
+		del var["chemin_trouve"]
 	return True
 	
 
 def pathfinding(carte, nbdiamand, diamand, tempstotal, score, tempslumiere, position_suivante):
-	"""
-	Perso joue aléatoirement
-	
-	:param list carte: liste 2D contenant le jeu
-	:param int nb_diamand: nombre de diamant deja recupere en jeu
-	:param int debut: test si le mode debut est activé (1, -1)
-	:param int tempstotal: temps restant de la partie
-	:param str score: score de la partie
-	:param int tempslumiere: temps de lumiere restant
-	:param tuple position_suivante: contient la position suivante trouvée par la recherche du chemin
-	:return: nbdiamand, debut, tempstotal, score, tempslumiere
-	"""
 	x_actuel, y_actuel = var["pos_x"], var["pos_y"]
 	x_suivant, y_suivant = position_suivante
 	if x_suivant > x_actuel:
