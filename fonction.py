@@ -1332,19 +1332,20 @@ def pathfinding(carte, nbdiamand, diamand, tempstotal, score, tempslumiere, posi
 			int(tempstotal) + 10,
 			(8 - (len(str(int(score) + 350)))) * "0" + (str(int(score) + 350)),
 			tempslumiere,
+			True,
 		)
 	if test_deplacement(carte, x, "L"):
 		deplace(carte, x)
-		return nbdiamand, tempstotal, score, tempslumiere + 10
+		return nbdiamand, tempstotal, score, tempslumiere + 10, True
 	elif test_deplacement(carte, x, {"G", "."}):
 		deplace(carte, x)
-		return nbdiamand, tempstotal, score, tempslumiere
+		return nbdiamand, tempstotal, score, tempslumiere, True
 	if (
 		nbdiamand >= diamand
 		and test_deplacement(carte, x, "E")
 	):
 		deplace(carte, x)
-		return nbdiamand, tempstotal, score, tempslumiere
+		return nbdiamand, tempstotal, score, tempslumiere, True
 	elif (
 		x == "Right"
 		and carte[var["pos_y"]][var["pos_x"] + 1] == "P"
@@ -1352,7 +1353,7 @@ def pathfinding(carte, nbdiamand, diamand, tempstotal, score, tempslumiere, posi
 	):
 		pousser_pierre(carte, x)
 		deplace(carte, x)
-		return nbdiamand, tempstotal, score, tempslumiere
+		return nbdiamand, tempstotal, score, tempslumiere, True
 	elif (
 		x == "Left"
 		and carte[var["pos_y"]][var["pos_x"] - 1] == "P"
@@ -1360,9 +1361,9 @@ def pathfinding(carte, nbdiamand, diamand, tempstotal, score, tempslumiere, posi
 	):
 		pousser_pierre(carte, x)
 		deplace(carte, x)
-		return nbdiamand, tempstotal, score, tempslumiere
+		return nbdiamand, tempstotal, score, tempslumiere, True
 	var["pathfinding"] = False
-	return nbdiamand, tempstotal, score, tempslumiere
+	return nbdiamand, tempstotal, score, tempslumiere, False
 
 
 

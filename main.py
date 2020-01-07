@@ -275,9 +275,17 @@ def main(cartes):
                 carte, nbdiamand, debug, tempstotal, score, tempslumiere
             )
         elif var["pathfinding"] and len(var["chemin"]):
-            nbdiamand, tempstotal, score, tempslumiere = fonction.pathfinding(
+            nbdiamand, tempstotal, score, tempslumiere, chemin_prevu = fonction.pathfinding(
                 carte, nbdiamand, diamand, tempstotal, score, tempslumiere, var["chemin"].pop(0)
             )
+            if not chemin_prevu:
+                trouve = fonction.recherche_parcours(carte, diamand - nbdiamand)
+                if trouve:
+                    print("CHEMIN TROUVE")
+                    var["pathfinding"] = True
+                else:
+                    print("PAS DE CHEMIN")
+                    var["pathfinding"] = False
         else:
             nbdiamand, tempstotal, score, tempslumiere = fonction.deplacer_perso(
                 carte, nbdiamand, ev, diamand, tempstotal, score, tempslumiere
