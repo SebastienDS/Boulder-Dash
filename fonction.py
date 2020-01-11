@@ -1231,7 +1231,7 @@ def recup_pos_diamant_requis(carte, diamand):
 		for i in range(len(carte[0])):
 			if carte[j][i] == "D":
 				list_pos_diams.append((i, j))     
-	return list_pos_diams[:diamand]
+	return list_pos_diams
 
 
 def recherche_parcours_vers_position(carte, depart, fin):
@@ -1293,6 +1293,7 @@ def recherche_parcours(carte, diamant):
 	"""
 	var["chemin"] = []
 	pos_diamants = recup_pos_diamant_requis(carte, diamant)
+	disponible = len(pos_diamants)
 	if pos_diamants:
 		trouve = recherche_parcours_vers_position(carte, (var["pos_x"], var["pos_y"]), pos_diamants[0])
 		if not trouve:

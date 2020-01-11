@@ -4,7 +4,7 @@ import fonction
 import esthetique
 from upemtk import *
 from variable import var
-from time import time
+from time import time, sleep
 import os
 from pickle import load
 import argparse
@@ -239,7 +239,7 @@ def main(cartes):
         elif type_ev == "Touche":
             t = touche(ev)
             if (
-                t == "Escape"
+                t == var["menu"]
             ):  # ALLUME UN MENU pour sauvegarder recommencer ou quitter si l'utilisateur appui sur echap
                 suite, tempscommencement, tempslumiere = fonction.menu_echap(
                     tempscommencement, tempslumiere
@@ -260,9 +260,9 @@ def main(cartes):
                     return 7, nommap
                 if suite == 9:
                     return 9, nommap
-            elif t == "d":
+            elif t == var["debug"]:
                 debug *= -1
-            elif t == "p":
+            elif t == var["pf"]:
                 trouve = fonction.recherche_parcours(carte, diamand - nbdiamand)
                 if trouve:
                     print("CHEMIN TROUVE")
