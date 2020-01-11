@@ -1292,23 +1292,19 @@ def recherche_parcours(carte, diamant):
 	recherche le parcours vers la sortie en passant par des diamants
 	"""
 	var["chemin"] = []
+	
+	if not diamant:
+		trouve = recherche_parcours_vers_position(carte, (var["pos_x"], var["pos_y"]), (var["pos_sortie_x"], var["pos_sortie_y"]))
+		if not trouve:
+			return False
+
 	pos_diamants = recup_pos_diamant_requis(carte, diamant)
-	disponible = len(pos_diamants)
+	pos_diamants = sorted(pos_diamants, key=lambda coord: ((coord[0] - var["pos_x"])**2 + (coord[1] - var["pos_y"])**2)**0.5)
 	if pos_diamants:
 		trouve = recherche_parcours_vers_position(carte, (var["pos_x"], var["pos_y"]), pos_diamants[0])
 		if not trouve:
 			return False
-		for i in range(len(pos_diamants) - 1):
-			trouve = recherche_parcours_vers_position(carte, pos_diamants[i], pos_diamants[i + 1])
-			if not trouve:
-				return False
-		trouve = recherche_parcours_vers_position(carte, pos_diamants[-1], (var["pos_sortie_x"], var["pos_sortie_y"]))
-		if not trouve:
-			return False
-	else:
-		trouve = recherche_parcours_vers_position(carte, (var["pos_x"], var["pos_y"]), (var["pos_sortie_x"], var["pos_sortie_y"]))
-		if not trouve:
-			return False
+	
 	if "chemin_trouve" in var:
 		del var["chemin_trouve"]
 	return True

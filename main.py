@@ -237,7 +237,7 @@ def main(cartes):
         if type_ev == "Quitte":  # Peut quitter avec la croix
             return -1, nommap
         elif type_ev == "Touche":
-            t = touche(ev)
+            t = touche(ev).lower()
             if (
                 t == var["menu"]
             ):  # ALLUME UN MENU pour sauvegarder recommencer ou quitter si l'utilisateur appui sur echap
@@ -274,11 +274,13 @@ def main(cartes):
             nbdiamand, debug, tempstotal, score, tempslumiere = fonction.debug(
                 carte, nbdiamand, debug, tempstotal, score, tempslumiere
             )
-        elif var["pathfinding"] and len(var["chemin"]):
-            nbdiamand, tempstotal, score, tempslumiere, chemin_prevu = fonction.pathfinding(
-                carte, nbdiamand, diamand, tempstotal, score, tempslumiere, var["chemin"].pop(0)
-            )
-            if not chemin_prevu:
+        elif var["pathfinding"]:
+            if len(var["chemin"]):
+                nbdiamand, tempstotal, score, tempslumiere, chemin_prevu = fonction.pathfinding(
+                    carte, nbdiamand, diamand, tempstotal, score, tempslumiere, var["chemin"].pop(0)
+                )
+
+            if not chemin_prevu or not len(var["chemin"]):
                 trouve = fonction.recherche_parcours(carte, diamand - nbdiamand)
                 if trouve:
                     print("CHEMIN TROUVE")
@@ -286,6 +288,7 @@ def main(cartes):
                 else:
                     print("PAS DE CHEMIN")
                     var["pathfinding"] = False
+
         else:
             nbdiamand, tempstotal, score, tempslumiere = fonction.deplacer_perso(
                 carte, nbdiamand, ev, diamand, tempstotal, score, tempslumiere
