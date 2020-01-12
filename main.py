@@ -140,6 +140,17 @@ def menu_map(d):
             fonction.initialiser_partie(cartes1)
             fonction.affichageV2(cartes1, 0, 1, 50, 0, -2, 8)
             esthetique.affiche_score([var["score1"], var["score2"], var["score3"]])
+            fonction.encadrement(
+                liste_map[numcarte], 
+                var["dimension_fenetre"] // 2,
+                5,
+                "White",
+                "black",
+                24,
+                1,
+                1,
+                'Impact'
+                )
         suivant_menu = esthetique.fleche_(11, 5, 50, 1)
         precedent = esthetique.fleche_(1, 5, 50, -1)
         choix = fonction.encadrement(
@@ -227,8 +238,8 @@ def main(cartes):
     while True:
         efface_tout()
         if time() - temps_pierre > 0.3:  # fait tomber pierre toute les ~ 0.3 sec
-            fonction.test_pierre_ou_diamand_eboulement(carte)
             fonction.tomber_de_pierre_ou_diamand(carte)
+            fonction.test_pierre_ou_diamand_eboulement(carte)
             fonction.tomber_pierre_laterale(carte)
             temps_pierre = time()
 
