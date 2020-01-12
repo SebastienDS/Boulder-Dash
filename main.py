@@ -4,7 +4,7 @@ import fonction
 import esthetique
 from upemtk import *
 from variable import var
-from time import time
+from time import time, sleep
 import os
 from pickle import load
 import argparse
@@ -246,9 +246,9 @@ def main(cartes):
         if type_ev == "Quitte":  # Peut quitter avec la croix
             return -1, nommap
         elif type_ev == "Touche":
-            t = touche(ev)
+            t = touche(ev).lower()
             if (
-                t == "Escape"
+                t == var["menu"]
             ):  # ALLUME UN MENU pour sauvegarder recommencer ou quitter si l'utilisateur appui sur echap
                 suite, tempscommencement, tempslumiere = fonction.menu_echap(
                     tempscommencement, tempslumiere
@@ -269,9 +269,9 @@ def main(cartes):
                     return 7, nommap
                 if suite == 9:
                     return 9, nommap
-            elif t == "d":
+            elif t == var["debug"]:
                 debug *= -1
-            elif t == "p":
+            elif t == var["pf"]:
                 trouve = fonction.recherche_parcours(carte, diamand - nbdiamand)
                 if trouve:
                     print("CHEMIN TROUVE")
@@ -283,10 +283,21 @@ def main(cartes):
             nbdiamand, debug, tempstotal, score, tempslumiere = fonction.debug(
                 carte, nbdiamand, debug, tempstotal, score, tempslumiere
             )
-        elif var["pathfinding"] and len(var["chemin"]):
-            nbdiamand, tempstotal, score, tempslumiere = fonction.pathfinding(
-                carte, nbdiamand, diamand, tempstotal, score, tempslumiere, var["chemin"].pop(0)
-            )
+        elif var["pathfinding"]:
+            if len(var["chemin"]):
+                nbdiamand, tempstotal, score, tempslumiere, chemin_prevu = fonction.pathfinding(
+                    carte, nbdiamand, diamand, tempstotal, score, tempslumiere, var["chemin"].pop(0)
+                )
+
+            if not chemin_prevu or not len(var["chemin"]):
+                trouve = fonction.recherche_parcours(carte, diamand - nbdiamand)
+                if trouve:
+                    print("CHEMIN TROUVE")
+                    var["pathfinding"] = True
+                else:
+                    print("PAS DE CHEMIN")
+                    var["pathfinding"] = False
+
         else:
             nbdiamand, tempstotal, score, tempslumiere = fonction.deplacer_perso(
                 carte, nbdiamand, ev, diamand, tempstotal, score, tempslumiere

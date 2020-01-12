@@ -633,6 +633,9 @@ def initialiser_partie(carte):
 				var["pos_sortie_y"] = y
 	var["porte"] = 1
 	var["taille_case"] = var["dimension_fenetre"] // var["nb_cases"]
+	if "chemin" in var:
+		del var["chemin"]
+	var["pathfinding"] = False
 
 
 def debug(carte, nbdiamand, debug, tempstotal, score, tempslumiere):
@@ -1228,7 +1231,7 @@ def recup_pos_diamant_requis(carte, diamand):
 		for i in range(len(carte[0])):
 			if carte[j][i] == "D":
 				list_pos_diams.append((i, j))     
-	return list_pos_diams[:diamand]
+	return list_pos_diams
 
 
 def recherche_parcours_vers_position(carte, depart, fin):
@@ -1289,39 +1292,25 @@ def recherche_parcours(carte, diamant):
 	recherche le parcours vers la sortie en passant par des diamants
 	"""
 	var["chemin"] = []
+	
+	if not diamant:
+		trouve = recherche_parcours_vers_position(carte, (var["pos_x"], var["pos_y"]), (var["pos_sortie_x"], var["pos_sortie_y"]))
+		if not trouve:
+			return False
+
 	pos_diamants = recup_pos_diamant_requis(carte, diamant)
-	print(len(pos_diamants))
+	pos_diamants = sorted(pos_diamants, key=lambda coord: ((coord[0] - var["pos_x"])**2 + (coord[1] - var["pos_y"])**2)**0.5)
 	if pos_diamants:
 		trouve = recherche_parcours_vers_position(carte, (var["pos_x"], var["pos_y"]), pos_diamants[0])
 		if not trouve:
 			return False
-		for i in range(len(pos_diamants) - 1):
-			trouve = recherche_parcours_vers_position(carte, pos_diamants[i], pos_diamants[i + 1])
-			if not trouve:
-				return False
-		trouve = recherche_parcours_vers_position(carte, pos_diamants[-1], (var["pos_sortie_x"], var["pos_sortie_y"]))
-		if not trouve:
-			return False
-	else:
-		trouve = recherche_parcours_vers_position(carte, (var["pos_x"], var["pos_y"]), (var["pos_sortie_x"], var["pos_sortie_y"]))
-		if not trouve:
-			return False
+	
+	if "chemin_trouve" in var:
+		del var["chemin_trouve"]
 	return True
 	
 
 def pathfinding(carte, nbdiamand, diamand, tempstotal, score, tempslumiere, position_suivante):
-	"""
-	Perso joue aléatoirement
-	
-	:param list carte: liste 2D contenant le jeu
-	:param int nb_diamand: nombre de diamant deja recupere en jeu
-	:param int debut: test si le mode debut est activé (1, -1)
-	:param int tempstotal: temps restant de la partie
-	:param str score: score de la partie
-	:param int tempslumiere: temps de lumiere restant
-	:param tuple position_suivante: contient la position suivante trouvée par la recherche du chemin
-	:return: nbdiamand, debut, tempstotal, score, tempslumiere
-	"""
 	x_actuel, y_actuel = var["pos_x"], var["pos_y"]
 	x_suivant, y_suivant = position_suivante
 	if x_suivant > x_actuel:
@@ -1340,19 +1329,20 @@ def pathfinding(carte, nbdiamand, diamand, tempstotal, score, tempslumiere, posi
 			int(tempstotal) + 10,
 			(8 - (len(str(int(score) + 350)))) * "0" + (str(int(score) + 350)),
 			tempslumiere,
+			True,
 		)
 	if test_deplacement(carte, x, "L"):
 		deplace(carte, x)
-		return nbdiamand, tempstotal, score, tempslumiere + 10
+		return nbdiamand, tempstotal, score, tempslumiere + 10, True
 	elif test_deplacement(carte, x, {"G", "."}):
 		deplace(carte, x)
-		return nbdiamand, tempstotal, score, tempslumiere
+		return nbdiamand, tempstotal, score, tempslumiere, True
 	if (
 		nbdiamand >= diamand
 		and test_deplacement(carte, x, "E")
 	):
 		deplace(carte, x)
-		return nbdiamand, tempstotal, score, tempslumiere
+		return nbdiamand, tempstotal, score, tempslumiere, True
 	elif (
 		x == "Right"
 		and carte[var["pos_y"]][var["pos_x"] + 1] == "P"
@@ -1360,7 +1350,7 @@ def pathfinding(carte, nbdiamand, diamand, tempstotal, score, tempslumiere, posi
 	):
 		pousser_pierre(carte, x)
 		deplace(carte, x)
-		return nbdiamand, tempstotal, score, tempslumiere
+		return nbdiamand, tempstotal, score, tempslumiere, True
 	elif (
 		x == "Left"
 		and carte[var["pos_y"]][var["pos_x"] - 1] == "P"
@@ -1368,9 +1358,9 @@ def pathfinding(carte, nbdiamand, diamand, tempstotal, score, tempslumiere, posi
 	):
 		pousser_pierre(carte, x)
 		deplace(carte, x)
-		return nbdiamand, tempstotal, score, tempslumiere
+		return nbdiamand, tempstotal, score, tempslumiere, True
 	var["pathfinding"] = False
-	return nbdiamand, tempstotal, score, tempslumiere
+	return nbdiamand, tempstotal, score, tempslumiere, False
 
 
 
