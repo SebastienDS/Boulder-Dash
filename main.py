@@ -234,6 +234,7 @@ def main(cartes):
                 var["forme_personnage"], var["taille_case"]
             )
 
+    chemin_prevu = False
     temps_pierre = time()
     while True:
         efface_tout()
