@@ -1,17 +1,21 @@
 import upemtk
 from variable import var
-from fonction import dico, my_input, encadrement, test_clic
+import fonction
 import esthetique
 import os
+from time import time
 from copy import deepcopy
 
 
-def affiche_map(carte):
+def affiche_map(carte, **kwargs):
     """
 	affiche la map en cours de creation
 	
 	:param list carte: liste 2D contenant le jeu
 	"""
+    if "nbdiamand" not in kwargs:
+        kwargs["nbdiamand"], kwargs["diamand"] = 0, 0
+
     esthetique.fond("white")
     upemtk.rectangle(
         0,
@@ -22,7 +26,7 @@ def affiche_map(carte):
     )
     for j in range(var["h_map"]):
         for i in range(var["w_map"]):
-            dico[carte[j][i]](i, j, var["taille_case"], 0, 0, "goldenrod3")
+            fonction.dico[carte[j][i]](i, j, var["taille_case"], kwargs["nbdiamand"], kwargs["diamand"], "goldenrod3")
 
 
 def affiche_tools(tools):
@@ -32,7 +36,7 @@ def affiche_tools(tools):
 	:param list tools: elements disponible a afficher dans la barre d'outil
 	"""
     for i, elem in enumerate(tools):
-        dico[elem](i, len(tools), var["bandeau"] * 6/len(tools), 0, 0, "goldenrod3")
+        fonction.dico[elem](i, len(tools), var["bandeau"] * 6/len(tools), 0, 0, "goldenrod3")
 
 
 def save_map(carte, file_name, temps, diamand):
@@ -85,7 +89,7 @@ def save(carte):
 	"""
     res = test_1_entree_1_sortie(carte)
     if res:
-        my_input(res, "str")
+        fonction.my_input(res, "str")
         return
 
     if not test_mur_autour(carte):
@@ -93,19 +97,34 @@ def save(carte):
     else:
         copy_carte = deepcopy(carte)
 
-    file_name = my_input("Nom de la map:", "str")
-    temps = my_input("temps limite:", "int")
-    diamand = my_input("diamant requis:", "int")
+    file_name = fonction.my_input("Nom de la map:", "str")
+    temps = fonction.my_input("temps limite:", "int")
+    diamand = fonction.my_input("diamant requis:", "int")
 
     if not test_nombre_diams_requis(copy_carte, diamand):
-        my_input("nombre de diamant\n requis trop grand", "str")
+        fonction.my_input("nombre de diamant\n requis trop grand", "str")
         return
+
+    if not test_1_entree_1_sortie(carte):
+        test_map(carte, temps, diamand)
+        # remet les bonnes tailles
+        var["w_map"] = len(carte[0])
+        var["h_map"] = len(carte)
+        var["taille_case"] = int(
+            var["dimension_fenetre"] / max([var["w_map"], var["h_map"]])
+        )  
+    else:
+        return
+
+    if var["porte"]:  
+        return
+    var["porte"] = 1
 
     if not os.path.isfile("map/{}.txt".format(file_name)):
         save_map(copy_carte, file_name, temps, diamand)
-        my_input("Map sauvegardée", "str")
+        fonction.my_input("Map sauvegardée", "str")
     else:
-        reponse = my_input("Nom déjà utilisé\n      Ecraser ?", "str")
+        reponse = fonction.my_input("Nom déjà utilisé\n      Ecraser ?", "str")
         if reponse.lower() in {
             "oui",
             "y",
@@ -119,9 +138,9 @@ def save(carte):
             "bien sur",
         }:
             save_map(copy_carte, file_name, temps, diamand)
-            my_input("Map sauvegardée", "str")
+            fonction.my_input("Map sauvegardée", "str")
         else:
-            my_input("Map non enregistrée", "str")
+            fonction.my_input("Map non enregistrée", "str")
 
 
 def test_nombre_diams_requis(carte, diamant):
@@ -262,8 +281,8 @@ def main():
     tools = ["G", "P", "W", "D", "R", "E", "L", "F", "K", "C"]  # block disponible dans la barre d'outil
 
     esthetique.fond("black")
-    var["w_map"] = my_input("Nombre de colonnes:", "int")
-    var["h_map"] = my_input("Nombre de lignes:", "int")
+    var["w_map"] = fonction.my_input("Nombre de colonnes:", "int")
+    var["h_map"] = fonction.my_input("Nombre de lignes:", "int")
 
     var["taille_case"] = int(
         var["dimension_fenetre"] / max([var["w_map"], var["h_map"]])
@@ -276,7 +295,7 @@ def main():
         affiche_map(carte)
         affiche_tools(tools)
 
-        quitter = encadrement(
+        quitter = fonction.encadrement(
             "Quitter",
             var["dimension_fenetre"] * 2 / 3,
             2,
@@ -288,7 +307,7 @@ def main():
             "Impact",
         )
 
-        sauvegarder = encadrement(
+        sauvegarder = fonction.encadrement(
             "Sauvegarder",
             var["dimension_fenetre"] / 3,
             2,
@@ -308,9 +327,9 @@ def main():
 
         if type_ev == "ClicGauche":
             x_, y_ = (upemtk.clic_x(ev), upemtk.clic_y(ev))
-            if test_clic((x_, y_), quitter):
+            if fonction.test_clic((x_, y_), quitter):
                 return 0
-            if test_clic((x_, y_), sauvegarder):
+            if fonction.test_clic((x_, y_), sauvegarder):
                 save(carte)
             else:
                 x = x_ // var["taille_case"]
@@ -323,13 +342,22 @@ def main():
 
         elif type_ev == "Touche":
             t = upemtk.touche(ev)
-            if t.upper() in dico:
+            if t.upper() in fonction.dico:
                 element = t.upper()
             elif t.lower() == "s":
                 save(carte)
             elif t.lower() == "t":
                 # touche pour les test
-                pass
+                if not test_1_entree_1_sortie(carte):
+                    test_map(carte, 150, 0)
+                    # remet les bonnes tailles
+                    var["w_map"] = len(carte[0])
+                    var["h_map"] = len(carte)
+                    var["taille_case"] = int(
+                        var["dimension_fenetre"] / max([var["w_map"], var["h_map"]])
+                    )  # fait en sorte que la map reste sur l'ecran
+                    var["porte"] = 1
+
             elif t == "Escape":
                 break
 
@@ -340,6 +368,115 @@ def main():
                 ] = "."
 
     return 0
+
+
+
+def test_map(carte_, tempstotal, diamand):
+    carte = ajout_mur_autour(carte_)
+    var["w_map"] = len(carte[0])
+    var["h_map"] = len(carte)
+    var["taille_case"] = int(
+        var["dimension_fenetre"] / max([var["w_map"], var["h_map"]])
+    )  # fait en sorte que la map reste sur l'ecran
+
+
+    for j in range(len(carte)):
+        for i in range(len(carte[0])):
+            if carte[j][i] == "R":
+                var["pos_x"] = i
+                var["pos_y"] = j
+            elif carte[j][i] == "E":
+                var["pos_sortie_x"] = i
+                var["pos_sortie_y"] = j
+
+    score = "00000000"
+    tempslumiere = 150
+    nbdiamand = 0
+    debug = -1
+    temps_pierre = time()
+    while True:
+        upemtk.efface_tout()
+        if time() - temps_pierre > 0.3:  # fait tomber pierre toute les ~ 0.3 sec
+            fonction.tomber_de_pierre_ou_diamand(carte)
+            fonction.test_pierre_ou_diamand_eboulement(carte)
+            fonction.tomber_pierre_laterale(carte)
+            temps_pierre = time()
+
+        if (
+            time() - temps_pierre > 0.15
+        ):  # transforme des pierre qui peuvent tomber en des pierres qui vont tomber
+            fonction.test_si_pierre_va_tomber(carte)
+        affiche_map(carte, nbdiamand=nbdiamand, diamand=diamand)
+
+        ev = upemtk.donne_evenement()
+        type_ev = upemtk.type_evenement(ev)
+        if fonction.test_pousser_pierre(carte, ev):
+            fonction.pousser_pierre(carte, upemtk.touche(ev))
+        if type_ev == "Quitte":  # Peut quitter avec la croix
+            return -1
+        elif type_ev == "Touche":
+            t = upemtk.touche(ev).lower()
+            if (
+                t == var["menu"]
+            ):
+                return False
+
+            elif t == var["debug"]:
+                debug *= -1
+            elif t == var["pf"]:
+                trouve = fonction.recherche_parcours(carte, diamand - nbdiamand)
+                if trouve:
+                    print("CHEMIN TROUVE")
+                    var["pathfinding"] = True
+                else:
+                    print("PAS DE CHEMIN")
+                    var["pathfinding"] = False
+        if debug == 1:
+            nbdiamand, debug, tempstotal, score, tempslumiere = fonction.debug(
+                carte, nbdiamand, debug, tempstotal, score, tempslumiere
+            )
+        elif var["pathfinding"]:
+            if len(var["chemin"]):
+                (
+                    nbdiamand,
+                    tempstotal,
+                    score,
+                    tempslumiere,
+                    chemin_prevu,
+                ) = fonction.pathfinding(
+                    carte,
+                    nbdiamand,
+                    diamand,
+                    tempstotal,
+                    score,
+                    tempslumiere,
+                    var["chemin"].pop(0),
+                )
+
+            if not chemin_prevu or not len(var["chemin"]):
+                trouve = fonction.recherche_parcours(carte, diamand - nbdiamand)
+                if trouve:
+                    print("CHEMIN TROUVE")
+                    var["pathfinding"] = True
+                else:
+                    print("PAS DE CHEMIN")
+                    var["pathfinding"] = False
+
+        else:
+            nbdiamand, tempstotal, score, tempslumiere = fonction.deplacer_perso(
+                carte, nbdiamand, ev, diamand, tempstotal, score, tempslumiere
+            )
+
+        if var["porte"] == 1:
+            fonction.enleve_porte(carte, ev, nbdiamand, diamand)
+        upemtk.mise_a_jour()
+
+        if (
+        var["pos_x"] == var["pos_sortie_x"]
+        and var["pos_y"] == var["pos_sortie_y"]
+        and nbdiamand >= diamand
+        ):
+            return 0
 
 
 if __name__ == "__main__":
