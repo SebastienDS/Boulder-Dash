@@ -32,7 +32,7 @@ def affiche_tools(tools):
 	:param list tools: elements disponible a afficher dans la barre d'outil
 	"""
     for i, elem in enumerate(tools):
-        dico[elem](i, 6, var["bandeau"], 0, 0, "goldenrod3")
+        dico[elem](i, len(tools), var["bandeau"] * 6/len(tools), 0, 0, "goldenrod3")
 
 
 def save_map(carte, file_name, temps, diamand):
@@ -259,7 +259,7 @@ def ajout_mur_autour(carte):
 
 
 def main():
-    tools = ["G", "P", "W", "D", "R", "E"]  # block disponible dans la barre d'outil
+    tools = ["G", "P", "W", "D", "R", "E", "L", "F", "K", "C"]  # block disponible dans la barre d'outil
 
     esthetique.fond("black")
     var["w_map"] = my_input("Nombre de colonnes:", "int")
@@ -319,7 +319,7 @@ def main():
                 if x < var["w_map"] and y < var["h_map"]:
                     carte[y][x] = element
                 elif y_ // var["bandeau"] == 6:
-                    element = tools[x_ // var["bandeau"]]
+                    element = tools[int(x_ // (var["bandeau"] * 6/len(tools)))]
 
         elif type_ev == "Touche":
             t = upemtk.touche(ev)
