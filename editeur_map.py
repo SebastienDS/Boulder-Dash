@@ -97,7 +97,6 @@ def save(carte):
     else:
         copy_carte = deepcopy(carte)
 
-    file_name = fonction.my_input("Nom de la map:", "str")
     temps = fonction.my_input("temps limite:", "int")
     diamand = fonction.my_input("diamant requis:", "int")
 
@@ -120,6 +119,7 @@ def save(carte):
         return
     var["porte"] = 1
 
+    file_name = fonction.my_input("Nom de la map:", "str")
     if not os.path.isfile("map/{}.txt".format(file_name)):
         save_map(copy_carte, file_name, temps, diamand)
         fonction.my_input("Map sauvegardée", "str")
