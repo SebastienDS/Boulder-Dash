@@ -39,6 +39,7 @@ Fonctionnalité:
             - temps limite
             - diamant requis
         - touche "echap" ou bouton retour pour quitter
+        - Doit tester si la map est possible avant de la sauvegarder
 
     - editeur de personnage:
         - permet de creer son propre personnage
