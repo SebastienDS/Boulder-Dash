@@ -275,10 +275,11 @@ def verif_1_cle_1_torche(historique):
     cle = 0
     torche = 0
     for elem in historique.values():
-        if elem[1] == "T":
-            torche += 1
-        elif elem[1] == "Y":
-            cle += 1
+        if elem:
+            if elem[1] == "T":
+                torche += 1
+            elif elem[1] == "Y":
+                cle += 1
 
     if cle != 1 and torche != 1:
         return "   nombre de cle\n          et de\n    torche incorrect"
@@ -486,7 +487,7 @@ def main():
                         fonction.my_input(res, "str")
                     else:
                         sauvegarde_historique(historique)
-                    return 0
+                        return 0
                 elif cle == "quitter":
                     return 0
 
