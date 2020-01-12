@@ -374,7 +374,7 @@ def main():
                 )
                 for cle, valeur in historique.items():
                     if valeur and valeur[0] == nom_forme_a_suppr:
-                        historique[cle] = None
+                        historique[cle] = []
                         affiche_historique(historique)
                         break
 
@@ -481,7 +481,7 @@ def main():
                     )
                     for cle, valeur in historique.items():
                         if valeur and valeur[0] == nom_forme_a_suppr:
-                            historique[cle] = None
+                            historique[cle] = []
                             affiche_historique(historique)
                             break
 
