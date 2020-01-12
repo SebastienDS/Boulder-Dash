@@ -104,9 +104,9 @@ def menu(d, temps):
 def menu_map(d):
     numcarte = 0
     choisis_carte = 0
-    nombre_total = len(os.listdir('map'))
-    liste_map = os.listdir('map')
-    print(list(map(lambda x : x[:-4], liste_map)))
+    nombre_total = len(os.listdir("map"))
+    liste_map = os.listdir("map")
+    print(list(map(lambda x: x[:-4], liste_map)))
     while choisis_carte == 0:
         efface_tout()
         if numcarte == nombre_total:
@@ -115,7 +115,7 @@ def menu_map(d):
         elif numcarte == nombre_total + 1:
             esthetique.fond("black")
             fonction.encadrement(
-                "RECHERCHE", 
+                "RECHERCHE",
                 var["dimension_fenetre"] // 2,
                 var["dimension_fenetre"] // 2,
                 "White",
@@ -123,7 +123,8 @@ def menu_map(d):
                 48,
                 5,
                 5,
-                "Impact",)
+                "Impact",
+            )
         else:
             cartes = liste_map[numcarte]
             (
@@ -141,7 +142,7 @@ def menu_map(d):
             fonction.affichageV2(cartes1, 0, 1, 50, 0, -2, 8)
             esthetique.affiche_score([var["score1"], var["score2"], var["score3"]])
             fonction.encadrement(
-                liste_map[numcarte], 
+                liste_map[numcarte],
                 var["dimension_fenetre"] // 2,
                 5,
                 "White",
@@ -149,8 +150,8 @@ def menu_map(d):
                 24,
                 1,
                 1,
-                'Impact'
-                )
+                "Impact",
+            )
         suivant_menu = esthetique.fleche_(11, 5, 50, 1)
         precedent = esthetique.fleche_(1, 5, 50, -1)
         choix = fonction.encadrement(
@@ -222,10 +223,9 @@ def main(cartes):
         nommap,
         tempslumiere,
     ) = fonction.creer_map(cartes)
-    
+
     diamand = int(diamand)
     fonction.initialiser_partie(carte)
-
 
     if var["personnage"]:
         with open("personnage/{}".format(var["personnage"]), "rb") as f:
@@ -296,8 +296,20 @@ def main(cartes):
             )
         elif var["pathfinding"]:
             if len(var["chemin"]):
-                nbdiamand, tempstotal, score, tempslumiere, chemin_prevu = fonction.pathfinding(
-                    carte, nbdiamand, diamand, tempstotal, score, tempslumiere, var["chemin"].pop(0)
+                (
+                    nbdiamand,
+                    tempstotal,
+                    score,
+                    tempslumiere,
+                    chemin_prevu,
+                ) = fonction.pathfinding(
+                    carte,
+                    nbdiamand,
+                    diamand,
+                    tempstotal,
+                    score,
+                    tempslumiere,
+                    var["chemin"].pop(0),
                 )
 
             if not chemin_prevu or not len(var["chemin"]):

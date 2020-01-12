@@ -8,11 +8,11 @@ from tkinter.colorchooser import askcolor
 
 def cree_torche(historique, points):
     """
-    ajoute la torche dans l'historique
-    
-    :param dict historique: contient les formes du personnage deja cree
-    :param list points: contient le point placant la torche
-    """
+	ajoute la torche dans l'historique
+	
+	:param dict historique: contient les formes du personnage deja cree
+	:param list points: contient le point placant la torche
+	"""
     historique[len(historique) + 1] = [
         "torche",
         "T",
@@ -24,11 +24,11 @@ def cree_torche(historique, points):
 
 def cree_cle(historique, points):
     """
-    ajoute la cle dans l'historique
-    
-    :param dict historique: contient les formes du personnage deja cree
-    :param list points: contient le point placant la cle
-    """
+	ajoute la cle dans l'historique
+	
+	:param dict historique: contient les formes du personnage deja cree
+	:param list points: contient le point placant la cle
+	"""
     historique[len(historique) + 1] = [
         "cle",
         "Y",
@@ -40,12 +40,12 @@ def cree_cle(historique, points):
 
 def cree_cercle(historique, points):
     """
-    ajoute le cercle dans l'historique
-    
-    :param dict historique: contient les formes du personnage deja cree
-    :param list points: contient les points permettant de realisé un cercle 
-        (centre puis rayon)
-    """
+	ajoute le cercle dans l'historique
+	
+	:param dict historique: contient les formes du personnage deja cree
+	:param list points: contient les points permettant de realisé un cercle 
+		(centre puis rayon)
+	"""
     pos1, pos2 = points
     r = round(((pos2[0] - pos1[0]) ** 2 + (pos2[1] - pos1[1]) ** 2) ** 0.5, 3)
 
@@ -60,12 +60,12 @@ def cree_cercle(historique, points):
 
 def cree_rect(historique, points):
     """
-    ajoute le rectangle dans l'historique
+	ajoute le rectangle dans l'historique
 
-    :param dict historique: contient les formes du personnage deja cree
-    :param list points: contient les points permettant de realisé un rect
-        (point_haut_gauche puis point_bas_droite)
-    """
+	:param dict historique: contient les formes du personnage deja cree
+	:param list points: contient les points permettant de realisé un rect
+		(point_haut_gauche puis point_bas_droite)
+	"""
     pos1, pos2 = points
 
     historique[len(historique) + 1] = [
@@ -79,12 +79,12 @@ def cree_rect(historique, points):
 
 def cree_polygone(historique, points):
     """
-    ajoute le polygone dans l'historique
-    
-    :param dict historique: contient les formes du personnage deja cree
-    :param list points: contient les points permettant de realisé un polygone
-        (nombre de points illimité)
-    """
+	ajoute le polygone dans l'historique
+	
+	:param dict historique: contient les formes du personnage deja cree
+	:param list points: contient les points permettant de realisé un polygone
+		(nombre de points illimité)
+	"""
     historique[len(historique) + 1] = [
         choix_nom_forme(historique),
         "P",
@@ -95,31 +95,31 @@ def cree_polygone(historique, points):
 
 def affiche_croix(x, y, taille):
     """
-    affiche une croix pour le curseur et pour les visualiser les points 
-    lors de la creation d'une forme
-    
-    :param int x: position x de la croix
-    :param int y: position y de la croix
-    :param int taille: taille de la croix
-    """
+	affiche une croix pour le curseur et pour les visualiser les points 
+	lors de la creation d'une forme
+	
+	:param int x: position x de la croix
+	:param int y: position y de la croix
+	:param int taille: taille de la croix
+	"""
     upemtk.ligne(x - taille, y, x + taille, y, couleur="red")
     upemtk.ligne(x, y - taille, x, y + taille, couleur="red")
 
 
 def choix_couleur_remplissage_epaisseur(historique):
     """
-    recupere les valeurs de la derniere forme afin de les mettre 
-    par defaut dans l'input
-    
-    :param dict historique: contient les formes du personnage deja cree
-    :return: (couleur, remplissage, epaisseur)
+	recupere les valeurs de la derniere forme afin de les mettre 
+	par defaut dans l'input
+	
+	:param dict historique: contient les formes du personnage deja cree
+	:return: (couleur, remplissage, epaisseur)
 
-    >>> choix_couleur_remplissage_epaisseur({})
-    ('white', '', '1')
-    >>> historique = {1: ['cercle', 'C', 100, 200, 123.45, '#ff0080', '#ff0080', 1]}
-    >>> choix_couleur_remplissage_epaisseur(historique)
-    ('#ff0080', '#ff0080', '1')
-    """
+	>>> choix_couleur_remplissage_epaisseur({})
+	('white', '', '1')
+	>>> historique = {1: ['cercle', 'C', 100, 200, 123.45, '#ff0080', '#ff0080', 1]}
+	>>> choix_couleur_remplissage_epaisseur(historique)
+	('#ff0080', '#ff0080', '1')
+	"""
     if (
         not len(historique)
         or not historique[len(historique)]
@@ -135,10 +135,10 @@ def choix_couleur_remplissage_epaisseur(historique):
 
 def choix_couleur(historique):
     """
-    demande la couleur, le remplissage ainsi que lepaisseur
-    
-    :param dict historique: contient les formes du personnage deja cree
-    """
+	demande la couleur, le remplissage ainsi que lepaisseur
+	
+	:param dict historique: contient les formes du personnage deja cree
+	"""
     couleur_, remplissage_, epaisseur_ = choix_couleur_remplissage_epaisseur(historique)
 
     couleur = fonction.my_input("Couleur:", "str", couleur_)
@@ -156,39 +156,39 @@ def choix_couleur(historique):
 
 def choix_nom_forme(historique):
     """
-    demande le nom de la forme
+	demande le nom de la forme
 
-    :param dict historique: contient les formes du personnage deja cree
-    :return: str
-    """
+	:param dict historique: contient les formes du personnage deja cree
+	:return: str
+	"""
     return fonction.my_input("Nom de la forme:", "str", str(len(historique) + 1))
 
 
 def redimensionner_forme(historique, multiplicateur):
     """
-    redimensionne les formes afin de pouvoir les ouvrir dans de differente taille
-    
-    
-    :param dict historique: contient les formes du personnage deja cree
-    :param int multiplicateur: permet d'agrandir ou de diminuer la taille des formes
-    
-    >>> historique = {
-    ...     1: ['cercle', 'C', 100, 200, 123.45, '#ff0080', '#ff0080', 1],
-    ...     2: ['2', 'R', 300, 350, 400, 500, 'red', '', 1],
-    ... }
-    >>> redimensionner_forme(historique, 2)
-    >>> historique
-    {1: ['cercle', 'C', 200, 400, 246.9, '#ff0080', '#ff0080', 1], \
+	redimensionne les formes afin de pouvoir les ouvrir dans de differente taille
+	
+	
+	:param dict historique: contient les formes du personnage deja cree
+	:param int multiplicateur: permet d'agrandir ou de diminuer la taille des formes
+	
+	>>> historique = {
+	...     1: ['cercle', 'C', 100, 200, 123.45, '#ff0080', '#ff0080', 1],
+	...     2: ['2', 'R', 300, 350, 400, 500, 'red', '', 1],
+	... }
+	>>> redimensionner_forme(historique, 2)
+	>>> historique
+	{1: ['cercle', 'C', 200, 400, 246.9, '#ff0080', '#ff0080', 1], \
 2: ['2', 'R', 600, 700, 800, 1000, 'red', '', 1]}
-    >>> redimensionner_forme(historique, 1/2)
-    >>> historique
-    {1: ['cercle', 'C', 100.0, 200.0, 123.45, '#ff0080', '#ff0080', 1], \
+	>>> redimensionner_forme(historique, 1/2)
+	>>> historique
+	{1: ['cercle', 'C', 100.0, 200.0, 123.45, '#ff0080', '#ff0080', 1], \
 2: ['2', 'R', 300.0, 350.0, 400.0, 500.0, 'red', '', 1]}
-    >>> redimensionner_forme(historique, 0.1)
-    >>> historique
-    {1: ['cercle', 'C', 10.0, 20.0, 12.345, '#ff0080', '#ff0080', 1], \
+	>>> redimensionner_forme(historique, 0.1)
+	>>> historique
+	{1: ['cercle', 'C', 10.0, 20.0, 12.345, '#ff0080', '#ff0080', 1], \
 2: ['2', 'R', 30.0, 35.0, 40.0, 50.0, 'red', '', 1]}
-    """
+	"""
     for forme in historique:
         if historique[forme][1] in {"C", "R"}:
             for i in range(2, 2 + len(historique[forme][2:-3])):
@@ -207,28 +207,28 @@ def redimensionner_forme(historique, multiplicateur):
 
 def affiche_historique(historique, pos=None):
     """
-    affiche l'historique dans le terminal
+	affiche l'historique dans le terminal
 
-    :param dict historique: contient les formes du personnage deja cree
-    :param int pos: cle de la forme souhaitant etre affiché
+	:param dict historique: contient les formes du personnage deja cree
+	:param int pos: cle de la forme souhaitant etre affiché
 
-    >>> historique = {
-    ...     1: ['cercle', 'C', 100, 200, 123.45, '#ff0080', '#ff0080', 1],
-    ...     2: ['2', 'R', 300, 350, 400, 500, 'red', '', 1],
-    ... }
-    >>> affiche_historique(historique)
-    <BLANKLINE>
-    <BLANKLINE>
-    ['cercle', 'C', 100, 200, 123.45, '#ff0080', '#ff0080', 1]
-    ['2', 'R', 300, 350, 400, 500, 'red', '', 1]
-    >>> affiche_historique(historique, 2)
-    ['2', 'R', 300, 350, 400, 500, 'red', '', 1]
-    >>> affiche_historique(historique, 1)
-    ['cercle', 'C', 100, 200, 123.45, '#ff0080', '#ff0080', 1]
-    >>> affiche_historique({})
-    <BLANKLINE>
-    <BLANKLINE>
-    """
+	>>> historique = {
+	...     1: ['cercle', 'C', 100, 200, 123.45, '#ff0080', '#ff0080', 1],
+	...     2: ['2', 'R', 300, 350, 400, 500, 'red', '', 1],
+	... }
+	>>> affiche_historique(historique)
+	<BLANKLINE>
+	<BLANKLINE>
+	['cercle', 'C', 100, 200, 123.45, '#ff0080', '#ff0080', 1]
+	['2', 'R', 300, 350, 400, 500, 'red', '', 1]
+	>>> affiche_historique(historique, 2)
+	['2', 'R', 300, 350, 400, 500, 'red', '', 1]
+	>>> affiche_historique(historique, 1)
+	['cercle', 'C', 100, 200, 123.45, '#ff0080', '#ff0080', 1]
+	>>> affiche_historique({})
+	<BLANKLINE>
+	<BLANKLINE>
+	"""
     if not pos:
         print("\n")
         for elem in historique.values():
@@ -239,40 +239,39 @@ def affiche_historique(historique, pos=None):
 
 def verif_1_cle_1_torche(historique):
     """
-    verifie <ue le personnage contient bien 1 cle et 1 torche
+	verifie <ue le personnage contient bien 1 cle et 1 torche
 
-    :param dict historique: contient les formes du personnage deja cree
-    :return: None si la condition est verifié sinon le message d'erreur a afficher
+	:param dict historique: contient les formes du personnage deja cree
+	:return: None si la condition est verifié sinon le message d'erreur a afficher
 
-    >>> historique = {
-    ...     1: ['cercle', 'C', 100, 200, 120, '#ff0080', '#ff0080', 1],
-    ...     2: ['2', 'R', 300, 350, 400, 500, 'red', '', 1],
-    ... }
-    >>> print(verif_1_cle_1_torche(historique))
-       nombre de cle
-              et de
-        torche incorrect
-    >>> historique = {
-    ...     1: ['cle', 'Y', 200, 200, 600],
-    ...     2: ['2', 'R', 300, 350, 400, 500, 'red', '', 1],
-    ... }
-    >>> print(verif_1_cle_1_torche(historique))
-    nombre de torche
-           incorrect
-    >>> historique = {
-    ...     1: ['torche', 'T', 300, 200, 600],
-    ...     2: ['2', 'R', 300, 350, 400, 500, 'red', '', 1],
-    ... }
-    >>> print(verif_1_cle_1_torche(historique))
-    nombre de cle
-        incorrect
-    >>> historique = {
-    ...     1: ['torche', 'T', 300, 200, 600],
-    ...     2: ['cle', 'Y', 200, 200, 600],
-    ... }
-    >>> print(verif_1_cle_1_torche(historique))
-    None
-    """
+	>>> historique = {
+	...     1: ['cercle', 'C', 100, 200, 120, '#ff0080', '#ff0080', 1],
+	...     2: ['2', 'R', 300, 350, 400, 500, 'red', '', 1],
+	... }
+	>>> retour = verif_1_cle_1_torche(historique)
+	>>> list(map(str.strip, retour.split("\\n")))
+	['nombre de cle', 'et de', 'torche incorrect']
+	>>> historique = {
+	...     1: ['cle', 'Y', 200, 200, 600],
+	...     2: ['2', 'R', 300, 350, 400, 500, 'red', '', 1],
+	... }
+	>>> retour = verif_1_cle_1_torche(historique)
+	>>> list(map(str.strip, retour.split("\\n")))
+	['nombre de torche', 'incorrect']
+	>>> historique = {
+	...     1: ['torche', 'T', 300, 200, 600],
+	...     2: ['2', 'R', 300, 350, 400, 500, 'red', '', 1],
+	... }
+	>>> retour = verif_1_cle_1_torche(historique)
+	>>> list(map(str.strip, retour.split("\\n")))
+	['nombre de cle', 'incorrect']
+	>>> historique = {
+	...     1: ['torche', 'T', 300, 200, 600],
+	...     2: ['cle', 'Y', 200, 200, 600],
+	... }
+	>>> print(verif_1_cle_1_torche(historique))
+	None
+	"""
     cle = 0
     torche = 0
     for elem in historique.values():
@@ -291,10 +290,10 @@ def verif_1_cle_1_torche(historique):
 
 def sauvegarde_historique(historique):
     """
-    sauvegarde l'historique dans un fichier
+	sauvegarde l'historique dans un fichier
 
-    :param dict historique: contient les formes du personnage deja cree
-    """
+	:param dict historique: contient les formes du personnage deja cree
+	"""
     for i in range(1, len(historique) + 1):
         if not historique[i]:
             del historique[i]
@@ -333,8 +332,28 @@ def main():
         "P": ("polygone", 152, 655, "green", "black", 20, 1, 2, "Impact"),
         "Y": ("cle", 160, 610, "#ff0080", "black", 20, 1, 2, "Impact"),
         "T": ("torche", 257, 655, "#ff0080", "black", 20, 1, 2, "Impact"),
-        "suppr (backspace)": ("supprimer (dernier)", 302, 610, "red", "black", 20, 1, 2, "Impact"),
-        "suppr (enter)": ("supprimer (nom)", 402, 655, "red", "black", 20, 1, 2, "Impact"),
+        "suppr (backspace)": (
+            "supprimer (dernier)",
+            302,
+            610,
+            "red",
+            "black",
+            20,
+            1,
+            2,
+            "Impact",
+        ),
+        "suppr (enter)": (
+            "supprimer (nom)",
+            402,
+            655,
+            "red",
+            "black",
+            20,
+            1,
+            2,
+            "Impact",
+        ),
         "sauvegarder": ("sauvegarder", 500, 610, "black", "black", 20, 1, 2, "Impact"),
         "quitter": ("quitter", 548, 655, "black", "black", 20, 1, 2, "Impact"),
     }
