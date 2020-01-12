@@ -2,9 +2,14 @@ Projet Python de Quentin Boulet, Sébastien Dos Santos
 
 Fonctionnalité:
     - jeu directement lancable sur une map si elle est mis en parametre au lancement du programme:
-        - ex: python3 main.py -m "map_test.txt"
-        - python3 main.py -h (pour plus d'infos )
-    - il y a aussi moyen de choisir son personnage avec la commande python3 -p "nomperso"
+           - ex: python3 main.py -m map_test.txt
+    - jeu lancable avec un personnage personnalisé:
+        - ex: python3 main.py -p test
+    - jeu lancable sans restriction de lumiere:
+        - ex: python3 main.py -l
+    - ces arguments peuvent etre combiné:
+        - ex: python3 main.py -m map_test.txt -p test -l 
+    - python3 main.py -h (pour plus d'infos)
 
     - Menu principal permettant:
         - lancer une map
