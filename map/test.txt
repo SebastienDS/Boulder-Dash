@@ -4,7 +4,7 @@ WREW
 WD.W
 WWWW
 pseudo  =  00011250
-personne = 00000000
+pseudo  =  00011050
 personne = 00000000
 00000000
 test.txt
