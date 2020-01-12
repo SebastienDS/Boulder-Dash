@@ -106,7 +106,7 @@ def menu_map(d):
     choisis_carte = 0
     nombre_total = len(os.listdir('map'))
     liste_map = os.listdir('map')
-    print(liste_map)
+    print(list(map(lambda x : x[:-4], liste_map)))
     while choisis_carte == 0:
         efface_tout()
         if numcarte == nombre_total:
