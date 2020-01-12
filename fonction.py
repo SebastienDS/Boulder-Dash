@@ -816,7 +816,7 @@ def my_input(msg, type_retour, reponse_defaut=""):
         _var = _input(msg, reponse_defaut)
         if type_retour == "int":
             if _var.isdigit():
-                if int(_var) < 500 and int(_var) > 0:
+                if int(_var) < 500 and int(_var) >= 0:
                     upemtk.efface("msg")
                     upemtk.efface("msg_erreur")
                     upemtk.efface("texte_input")
