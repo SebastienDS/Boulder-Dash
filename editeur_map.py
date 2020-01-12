@@ -393,13 +393,14 @@ def test_map(carte_, tempstotal, diamand):
     tempslumiere = 150
     nbdiamand = 0
     debug = -1
+    chemin_prevu = False
     debut = time()
     temps_pierre = time()
     while True:
         if time() - debut >= tempstotal:
             fonction.my_input("Temps écoulé", "str")
             return False
-            
+
         upemtk.efface_tout()
         if time() - temps_pierre > 0.3:  # fait tomber pierre toute les ~ 0.3 sec
             fonction.tomber_de_pierre_ou_diamand(carte)
