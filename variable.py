@@ -5,7 +5,7 @@ var = {
     "debug": "d",
     "pf": "p",
     "restart": "r",
-    "menu": "Escape",
+    "menu": "escape",
     "porte": 1,
     "lumiere": False,
     "pathfinding": False,
