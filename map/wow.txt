@@ -6,7 +6,7 @@ WGGGPWW
 WG.GGFW
 WDWWEWW
 WWWWWWW
-personne = 00000000
+pseudo  =  00002950
 personne = 00000000
 personne = 00000000
 00000000

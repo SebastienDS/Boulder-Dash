@@ -1,0 +1,11 @@
+2s 1d
+WWWW
+WREW
+WDLW
+WWWW
+personne = 00000000
+personne = 00000000
+personne = 00000000
+00000000
+.txt
+0
